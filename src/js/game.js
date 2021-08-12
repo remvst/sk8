@@ -25,10 +25,13 @@ class Game {
     }
 
     render() {
-        DOODLE_RNG = createNumberGenerator(~~(Date.now() / 500));
+        DOODLE_RNG = createNumberGenerator(~~(Date.now() / 1000));
         DETAILS_RNG = createNumberGenerator(1);
 
         doodleFactor(4);
+
+        R.lineWidth = 10;
+        R.lineCap = R.lineJoin = nomangle('round');
 
         fs('#fff');
         fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -37,16 +40,13 @@ class Game {
         wrap(() => {
             doodleFactor(10);
             R.lineWidth = 40;
-            R.lineCap = R.lineJoin = 'round';
+            R.lineCap = R.lineJoin = nomangle('round');
             R.fs('#fff');
             R.fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             R.globalAlpha = 0.5;
             R.ss('#080');
             R.scribble(40, 40, CANVAS_WIDTH - 80, CANVAS_HEIGHT - 80, 1, 50);
         });
-
-        R.lineWidth = 10;
-        R.lineCap = R.lineJoin = 'round';
 
         ss('#0f0');
         for (let i = 0 ; i < 10 ; i++) {
@@ -55,6 +55,17 @@ class Game {
                 translate(DETAILS_RNG.between(0, CANVAS_WIDTH), DETAILS_RNG.between(0, CANVAS_HEIGHT));
                 line(-50, 0, 50, 0);
             }).stroke();
+        }
+
+        fs('blue');
+        for (let i = 0 ; i < 10 ; i++) {
+            path(() => {
+                translate(DETAILS_RNG.between(0, CANVAS_WIDTH), DETAILS_RNG.between(0, CANVAS_HEIGHT));
+
+                R.globalAlpha = DETAILS_RNG.between(0.1, 0.5);
+                arc(0, 0, DETAILS_RNG.between(5, 20), 0, PI * 2);
+                fill()
+            });
         }
 
         ss('#000');
@@ -169,6 +180,21 @@ class Game {
                 );
                 fill();
             }).stroke();
+        });
+
+        wrap(() => {
+            R.lineWidth = 15;
+
+            doodleFactor(2);
+
+            translate(CANVAS_WIDTH / 2, 100);
+            renderCenteredString(nomangle("doodle boy's"), 50, 100, 20);
+
+
+            R.lineWidth = 10;
+
+            translate(0, 120);
+            renderCenteredString(nomangle('crazy adventure'), 34, 50, 20);
         });
     }
 

@@ -89,6 +89,8 @@ canvasProto.rectangle = function(x, y, w, h) {
 };
 
 canvasProto.polygon = function(...coords) {
+    this.moveTo(coords[0], coords[1]);
+
     for (let i = 0 ; i < coords.length - 2 ; i += 2) {
         this.line(
             coords[i], coords[i + 1],
@@ -135,8 +137,8 @@ canvasProto.scribble = function(x, y, w, h, targetLength = 1, factor = 20) {
             const addedLength = min(remainingLength, step);
             remainingLength -= addedLength;
 
-            targetX = prevX + (addedLength / step) * (targetX - prevX),
-            targetY = prevY + (addedLength / step) * (targetY - prevY),
+            targetX = prevX + (addedLength / step) * (targetX - prevX);
+            targetY = prevY + (addedLength / step) * (targetY - prevY);
 
             this.lineTo(targetX, targetY);
 
