@@ -107,7 +107,7 @@ canvasProto.circle = function(x, y, r) {
     }
 };
 
-canvasProto.scribble = function(x, y, w, h, targetLength = 0.5) {
+canvasProto.scribble = function(x, y, w, h, targetLength = 1, factor = 20) {
     const diagLength = distP(0, 0, w, h);
     const slope = tan(-PI / 3);
 
@@ -117,11 +117,9 @@ canvasProto.scribble = function(x, y, w, h, targetLength = 0.5) {
     let prevX = x,
         prevY = y;
 
-    const step = 20 / diagLength;
+    const step = factor / diagLength;
 
     this.wrap(() => this.path(() => {
-        R.lineWidth = 20;
-
         for (let k = 0 ; remainingLength > 0 ; k += step) {
             const diagX = x + k * w;
             const diagY = y + k * h;
@@ -134,13 +132,13 @@ canvasProto.scribble = function(x, y, w, h, targetLength = 0.5) {
                 targetY = slope * (targetX - diagX) + diagY;
             }
 
-            const addedLength = Math.min(remainingLength, step);
+            const addedLength = min(remainingLength, step);
             remainingLength -= addedLength;
 
             targetX = prevX + (addedLength / step) * (targetX - prevX),
             targetY = prevY + (addedLength / step) * (targetY - prevY),
 
-            lineTo(targetX, targetY);
+            this.lineTo(targetX, targetY);
 
             prevX = targetX;
             prevY = targetY;

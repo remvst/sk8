@@ -1,5 +1,4 @@
 [
-    "src/js/debug.js",
     "src/js/globals.js",
     "src/js/math.js",
     "src/js/canvas-additions.js",

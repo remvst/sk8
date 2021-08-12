@@ -1,3 +1,16 @@
+DOODLE_RNG = createNumberGenerator(1);
+
+// const scribbleBg = createCanvasPattern(CANVAS_WIDTH, CANVAS_HEIGHT, (r) => {
+//     r.lineWidth = 40;
+//     r.lineCap = r.lineJoin = 'round';
+//
+//     r.fs('#fff');
+//     r.fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+//     // r.globalAlpha = 0.5;
+//     r.ss('#080');
+//     r.scribble(20, 20, CANVAS_WIDTH - 40, CANVAS_HEIGHT - 40, 1, 50);
+// });
+
 class Game {
 
     constructor() {
@@ -8,25 +21,43 @@ class Game {
     cycle(elapsed) {
         G.clock += elapsed;
 
-        const seed = ~~(Date.now() / 500);
-        DOODLE_RNG = createNumberGenerator(seed);
-
         // TODO
     }
 
     render() {
+        DOODLE_RNG = createNumberGenerator(~~(Date.now() / 500));
+        DETAILS_RNG = createNumberGenerator(1);
+
         doodleFactor(4);
 
         fs('#fff');
         fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
+
+        wrap(() => {
+            doodleFactor(10);
+            R.lineWidth = 40;
+            R.lineCap = R.lineJoin = 'round';
+            R.fs('#fff');
+            R.fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            R.globalAlpha = 0.5;
+            R.ss('#080');
+            R.scribble(40, 40, CANVAS_WIDTH - 80, CANVAS_HEIGHT - 80, 1, 50);
+        });
+
         R.lineWidth = 10;
         R.lineCap = R.lineJoin = 'round';
-        ss('#000');
 
-        path(() => {
-            line(100, 100, 500, 100);
-        }).stroke();
+        ss('#0f0');
+        for (let i = 0 ; i < 10 ; i++) {
+            path(() => {
+                doodleFactor(20);
+                translate(DETAILS_RNG.between(0, CANVAS_WIDTH), DETAILS_RNG.between(0, CANVAS_HEIGHT));
+                line(-50, 0, 50, 0);
+            }).stroke();
+        }
+
+        ss('#000');
 
         const leftOffsetY = sin(G.clock * PI * 4) * 5;
         const rightOffsetY = sin(G.clock * PI * 4) * -5;
