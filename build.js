@@ -6,6 +6,9 @@ const JS_FILES = require('./config/js');
 const CONSTANTS = require('./config/constants');
 const MANGLE_SETTINGS = require('./config/mangle');
 
+// const optimizeMatrix = require('./macros/optimize-matrix');
+const rawFile = require('./macros/raw-file');
+
 function copy(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
@@ -29,9 +32,11 @@ compiler.run((tasks) => {
             tasks.label('Building JS'),
             tasks.loadFiles(JS_FILES),
             tasks.concat(),
+            // tasks.macro('optimizeMatrix', optimizeMatrix),
             tasks.constants(constants),
             tasks.macro('evaluate'),
             tasks.macro('nomangle'),
+            tasks.macro('rawFile', rawFile),
         ];
 
         if (mangle) {

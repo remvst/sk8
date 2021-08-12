@@ -5,4 +5,12 @@ class Game {
         G.clock = 0;
     }
 
+    cycle(elapsed) {
+        // console.log('cycle');
+    }
+
+    render() {
+        // console.log('render');
+    }
+
 }
