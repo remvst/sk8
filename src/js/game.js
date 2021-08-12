@@ -6,11 +6,12 @@ class Game {
     }
 
     cycle(elapsed) {
-        // console.log('cycle');
+        // TODO
     }
 
     render() {
-        // console.log('render');
+        fs('#fff');
+        fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     }
 
 }
