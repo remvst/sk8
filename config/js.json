@@ -13,6 +13,7 @@
     "src/js/graphics/create-canvas.js",
     "src/js/graphics/create-pattern.js",
     "src/js/graphics/particle.js",
+    "src/js/graphics/character.js",
 
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",
@@ -20,6 +21,7 @@
     "src/js/keyboard.js",
     "src/js/touch.js",
     "src/js/gamepad.js",
+    "src/js/mouse.js",
     "src/js/input.js",
     "src/js/difficulty.js",
     "src/js/game.js",
