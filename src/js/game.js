@@ -27,6 +27,15 @@ const scribbleBg = createCanvasPattern(CANVAS_WIDTH, CANVAS_HEIGHT, (r) => {
     r.fr(-CANVAS_WIDTH / 2, -CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT);
 });
 
+const linesBg = createCanvasPattern(20, 50, (r) => {
+    r.fs('#fff');
+    r.fr(0, 0, 99, 99);
+
+    r.globalAlpha = 0.5;
+    r.fs('#000');
+    r.fr(0, 0, 50, 1);
+});
+
 class Game {
 
     constructor() {
@@ -56,7 +65,7 @@ class Game {
         R.lineWidth = 10;
         R.lineCap = R.lineJoin = nomangle('round');
 
-        fs('#fff');
+        fs(linesBg);
         fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         fs('blue');
