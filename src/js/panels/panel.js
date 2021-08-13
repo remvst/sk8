@@ -17,6 +17,12 @@ class Panel {
         remove(this.elements, x);
     }
 
+    restart() {
+        interp(G.camera, 'centerX', G.camera.centerX, this.x + this.panelWidth / 2, 1);
+        interp(G.camera, 'centerY', G.camera.centerY, this.y + this.panelHeight / 2, 1);
+        this.start();
+    }
+
     start() {
 
     }
@@ -27,8 +33,8 @@ class Panel {
 
     cycle(elapsed) {
         this.mousePosition = {
-            'x': MOUSE_POSITION.x - this.x,
-            'y': MOUSE_POSITION.y - this.y,
+            'x': MOUSE_POSITION.x - this.x + G.camera.x,
+            'y': MOUSE_POSITION.y - this.y + G.camera.y,
         };
 
         this.elements.forEach(x => x.cycle(elapsed));

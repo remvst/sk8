@@ -31,7 +31,7 @@ const linesBg = createCanvasPattern(20, 50, (r) => {
     r.fs('#fff');
     r.fr(0, 0, 99, 99);
 
-    r.globalAlpha = 0.5;
+    r.globalAlpha = 0.25;
     r.fs('#000');
     r.fr(0, 0, 50, 1);
 });
@@ -42,16 +42,21 @@ class Game {
         G = this;
         G.clock = 0;
 
+        G.camera = new Camera();
+
         G.panels = [
-            new IntroPanel(50, 50, 1500, 700),
+            new IntroPanel(50, 50, 1000, 700),
+            new Panel(1100, 50, 1000, 700),
+            new Panel(50, 800, 1000, 700),
         ];
-        G.panels[0].start();
+        G.panels[0].restart();
     }
 
     cycle(elapsed) {
         G.clock += elapsed;
 
         this.panels.forEach(p => p.cycle(elapsed));
+        INTERPOLATIONS.forEach(x => x.cycle(elapsed));
 
         // TODO
     }
@@ -65,21 +70,25 @@ class Game {
         R.lineWidth = 10;
         R.lineCap = R.lineJoin = nomangle('round');
 
-        fs(linesBg);
-        fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        wrap(() => {
+            translate(-this.camera.x, -this.camera.y);
 
-        fs('blue');
-        for (let i = 0 ; i < 10 ; i++) {
-            path(() => {
-                translate(DETAILS_RNG.between(0, CANVAS_WIDTH), DETAILS_RNG.between(0, CANVAS_HEIGHT));
+            fs(linesBg);
+            fr(this.camera.x, this.camera.y, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-                R.globalAlpha = DETAILS_RNG.between(0.1, 0.5);
-                arc(0, 0, DETAILS_RNG.between(5, 20), 0, PI * 2);
-                fill()
-            });
-        }
+            fs('blue');
+            for (let i = 0 ; i < 10 ; i++) {
+                path(() => {
+                    translate(DETAILS_RNG.between(0, CANVAS_WIDTH), DETAILS_RNG.between(0, CANVAS_HEIGHT));
 
-        this.panels.forEach(p => p.render());
+                    R.globalAlpha = DETAILS_RNG.between(0.1, 0.5);
+                    arc(0, 0, DETAILS_RNG.between(5, 20), 0, PI * 2);
+                    fill()
+                });
+            }
+
+            this.panels.forEach(p => p.render());
+        });
     }
 
 }
