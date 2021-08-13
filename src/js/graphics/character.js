@@ -37,7 +37,7 @@ canvasProto.leg = function(x, y) {
 
 canvasProto.legs = function(x, y, spacing, walkingClock) {
     [1, -1].forEach((sign) => this.wrap(() => {
-        const offsetY = sin(walkingClock * PI * 4) * 5 * sign;
+        const offsetY = sin(walkingClock * PI * 10) * 5 * sign;
 
         // this.fs();
 
@@ -47,9 +47,9 @@ canvasProto.legs = function(x, y, spacing, walkingClock) {
     }));
 };
 
-canvasProto.mainCharacter = function(x, y, targetPosition) {
+canvasProto.mainCharacter = function(x, y, targetPosition, walking) {
     wrap(() => {
-        this.legs(0, 40, 20, G.clock);
+        this.legs(0, 40, 20, walking * G.clock);
 
         this.closedPath(() => {
             this.circle(0, 0, 50);

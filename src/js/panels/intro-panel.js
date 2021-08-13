@@ -1,7 +1,9 @@
 class IntroPanel extends Panel {
     start() {
         this.addElement(new Element([
+            new CharacterTrait(),
             new HeroTrait(),
+            new BoundTrait(50),
         ], initPosition(this.panelWidth / 2, this.panelHeight * 2 / 3)));
     }
 

@@ -8,11 +8,13 @@ class Element {
         this.x = this.y = 0;
 
         this.traits = traits;
+        this.traitMap = {};
         if (init) init(this);
     }
 
     bind(panel) {
         this.traits.forEach(trait => {
+            this.traitMap[trait.key] = trait;
             trait.element = this;
             trait.panel = this.panel = panel;
         });

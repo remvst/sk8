@@ -21,7 +21,7 @@ class HeroTrait extends Trait {
             'x': this.panel.mousePosition.x - this.x,
             'y': this.panel.mousePosition.y - this.y,
         };
-        mainCharacter(0, 0, targetPosition);
+        mainCharacter(0, 0, targetPosition, this.trait('character').walking);
 
         fs('#000');
 
