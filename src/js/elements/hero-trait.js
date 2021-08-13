@@ -15,10 +15,31 @@ class HeroTrait extends Trait {
     }
 
     render() {
+        ss('#000');
+
         const targetPosition = {
             'x': this.panel.mousePosition.x - this.x,
             'y': this.panel.mousePosition.y - this.y,
         };
         mainCharacter(0, 0, targetPosition);
+
+        fs('#000');
+
+        path(() => {
+            doodleFactor(2);
+
+            // translate(gunPosition.x, gunPosition.y);
+
+            const angle = angleBetween(this, this.panel.mousePosition);
+            rotate(angle);
+
+            if (cos(angle) < 0) {
+                scale(1, -1);
+            }
+
+            rectangle(60, -15, 50, 10);
+            rectangle(60, -5, 10, 10);
+            fill();
+        }).stroke();
     }
 }

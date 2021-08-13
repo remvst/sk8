@@ -52,6 +52,8 @@ class Panel {
     }
 
     renderEdges() {
+        ss('#000');
+
         closedPath(() => {
             rectangle(0, 0, this.panelWidth, this.panelHeight);
         }).stroke();
@@ -65,5 +67,16 @@ class Panel {
             ss('#080');
             scribble(40, 40, this.panelWidth - 80, this.panelHeight - 80, 1, 50);
         });
+    }
+
+    grassBackground() {
+        ss('#0f0');
+        for (let i = 0 ; i < 20 ; i++) {
+            path(() => {
+                doodleFactor(20);
+                translate(DETAILS_RNG.between(0, this.panelWidth), DETAILS_RNG.between(0, this.panelHeight));
+                line(-50, 0, 50, 0);
+            }).stroke();
+        }
     }
 }

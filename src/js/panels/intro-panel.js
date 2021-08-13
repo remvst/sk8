@@ -9,6 +9,8 @@ class IntroPanel extends Panel {
         super.renderContent();
 
         wrap(() => {
+            ss('#000');
+
             R.lineWidth = 15;
 
             doodleFactor(2);
@@ -24,6 +26,7 @@ class IntroPanel extends Panel {
     }
 
     renderBackground() {
-        this.scribbleBackground('#080');
+        this.grassBackground();
+        // this.scribbleBackground('#080');
     }
 }

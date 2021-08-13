@@ -59,15 +59,6 @@ class Game {
         fs('#fff');
         fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        ss('#0f0');
-        for (let i = 0 ; i < 10 ; i++) {
-            path(() => {
-                doodleFactor(20);
-                translate(DETAILS_RNG.between(0, CANVAS_WIDTH), DETAILS_RNG.between(0, CANVAS_HEIGHT));
-                line(-50, 0, 50, 0);
-            }).stroke();
-        }
-
         fs('blue');
         for (let i = 0 ; i < 10 ; i++) {
             path(() => {
@@ -78,31 +69,6 @@ class Game {
                 fill()
             });
         }
-
-        ss('#000');
-
-        // mainCharacter(200, 200);
-
-        const gunPosition = {'x': 200, 'y': 200};
-
-        fs('#000');
-
-        path(() => {
-            doodleFactor(2);
-
-            translate(gunPosition.x, gunPosition.y);
-
-            const angle = angleBetween(gunPosition, MOUSE_POSITION);
-            rotate(angle);
-
-            if (cos(angle) < 0) {
-                scale(1, -1);
-            }
-
-            rectangle(60, -15, 50, 10);
-            rectangle(60, -5, 10, 10);
-            fill();
-        }).stroke();
 
         this.panels.forEach(p => p.render());
     }
