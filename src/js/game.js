@@ -210,17 +210,17 @@ class Game {
             R.lineWidth = 10;
 
             translate(0, 120);
-            renderCenteredString(nomangle('crazy adventure'), 34, 50, 20);
+            renderCenteredString(nomangle('goes to space'), 44, 50, 20);
         });
 
-        wrap(() => {
-            R.lineWidth = 30;
-            const radius = 200;
-            scribble(0, 0, MOUSE_POSITION.x - radius, CANVAS_HEIGHT, 1);
-            scribble(MOUSE_POSITION.x + radius, 0, CANVAS_WIDTH - (MOUSE_POSITION.x + radius), CANVAS_HEIGHT, 1);
-            scribble(MOUSE_POSITION.x - radius, 0, radius * 2, MOUSE_POSITION.y - radius, 1);
-            scribble(MOUSE_POSITION.x - radius, MOUSE_POSITION.y + radius, radius * 2, CANVAS_HEIGHT - (MOUSE_POSITION.y + radius), 1);
-        });
+        // wrap(() => {
+        //     R.lineWidth = 30;
+        //     const radius = 200;
+        //     scribble(0, 0, MOUSE_POSITION.x - radius, CANVAS_HEIGHT, 1);
+        //     scribble(MOUSE_POSITION.x + radius, 0, CANVAS_WIDTH - (MOUSE_POSITION.x + radius), CANVAS_HEIGHT, 1);
+        //     scribble(MOUSE_POSITION.x - radius, 0, radius * 2, MOUSE_POSITION.y - radius, 1);
+        //     scribble(MOUSE_POSITION.x - radius, MOUSE_POSITION.y + radius, radius * 2, CANVAS_HEIGHT - (MOUSE_POSITION.y + radius), 1);
+        // });
 
         // wrap(() => {
         //     translate(MOUSE_POSITION.x - CANVAS_WIDTH / 2, MOUSE_POSITION.y - CANVAS_HEIGHT / 2);
