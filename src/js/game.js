@@ -32,10 +32,17 @@ class Game {
     constructor() {
         G = this;
         G.clock = 0;
+
+        G.panels = [
+            new IntroPanel(50, 50, 1500, 700),
+        ];
+        G.panels[0].start();
     }
 
     cycle(elapsed) {
         G.clock += elapsed;
+
+        this.panels.forEach(p => p.cycle(elapsed));
 
         // TODO
     }
@@ -51,18 +58,6 @@ class Game {
 
         fs('#fff');
         fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-
-        wrap(() => {
-            doodleFactor(10);
-            R.lineWidth = 40;
-            R.lineCap = R.lineJoin = nomangle('round');
-            R.fs('#fff');
-            R.fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-            R.globalAlpha = 0.5;
-            R.ss('#080');
-            R.scribble(40, 40, CANVAS_WIDTH - 80, CANVAS_HEIGHT - 80, 1, 50);
-        });
 
         ss('#0f0');
         for (let i = 0 ; i < 10 ; i++) {
@@ -86,21 +81,9 @@ class Game {
 
         ss('#000');
 
-        legs(200, 240, 20, G.clock);
+        // mainCharacter(200, 200);
 
-        closedPath(() => {
-            circle(200, 200, 50);
-
-            fs('#f00');
-            fill();
-        }).stroke();
-
-        const leftEyePosition = {'x': 180, 'y': 190};
-        const rightEyePosition = {'x': 220, 'y': 190};
         const gunPosition = {'x': 200, 'y': 200};
-
-        renderEye(leftEyePosition.x, leftEyePosition.y, 15, angleBetween(leftEyePosition, MOUSE_POSITION));
-        renderEye(rightEyePosition.x, rightEyePosition.y, 15, angleBetween(rightEyePosition, MOUSE_POSITION));
 
         fs('#000');
 
@@ -121,94 +104,7 @@ class Game {
             fill();
         }).stroke();
 
-
-        // closedPath(() => {
-        //     R.lineWidth = 2;
-        //     fs('#fff');
-        //
-        //     doodleFactor(2);
-        //     circle(180, 190, 15);
-        //     fill();
-        // }).stroke();
-        //
-        // fs('#000');
-        //
-        // closedPath(() => {
-        //     doodleFactor(2);
-        //     circle(180, 190, 5);
-        //     fill();
-        // });
-        //
-        // closedPath(() => {
-        //     R.lineWidth = 2;
-        //     doodleFactor(2);
-        //     circle(220, 190, 15);
-        // }).stroke();
-        //
-        // closedPath(() => {
-        //     doodleFactor(2);
-        //     circle(220, 190, 5);
-        //     fill();
-        // });
-
-        closedPath(() => {
-            rectangle(300, 300, 200, 100);
-        }).stroke();
-
-        const animationTime = 2000;
-        const prct = (Date.now() % animationTime) / animationTime;
-        const penPosition = scribble(300, 300, 200, 100, prct);
-
-        wrap(() => {
-            translate(penPosition.x, penPosition.y);
-            rotate(-PI / 8);
-            fs('brown')
-
-            R.lineWidth = 1;
-            doodleFactor(0);
-
-            closedPath(() => {
-                polygon(
-                    0, 0,
-                    20, 10,
-                    200, 10,
-                    200, -10,
-                    20, -10,
-                );
-                fill();
-            }).stroke();
-        });
-
-        wrap(() => {
-            R.lineWidth = 15;
-
-            doodleFactor(2);
-
-            translate(CANVAS_WIDTH / 2, 100);
-            renderCenteredString(nomangle("doodle boy's"), 50, 100, 20);
-
-
-            R.lineWidth = 10;
-
-            translate(0, 120);
-            renderCenteredString(nomangle('goes to space'), 44, 50, 20);
-        });
-
-        // wrap(() => {
-        //     R.lineWidth = 30;
-        //     const radius = 200;
-        //     scribble(0, 0, MOUSE_POSITION.x - radius, CANVAS_HEIGHT, 1);
-        //     scribble(MOUSE_POSITION.x + radius, 0, CANVAS_WIDTH - (MOUSE_POSITION.x + radius), CANVAS_HEIGHT, 1);
-        //     scribble(MOUSE_POSITION.x - radius, 0, radius * 2, MOUSE_POSITION.y - radius, 1);
-        //     scribble(MOUSE_POSITION.x - radius, MOUSE_POSITION.y + radius, radius * 2, CANVAS_HEIGHT - (MOUSE_POSITION.y + radius), 1);
-        // });
-
-        // wrap(() => {
-        //     translate(MOUSE_POSITION.x - CANVAS_WIDTH / 2, MOUSE_POSITION.y - CANVAS_HEIGHT / 2);
-        //
-        //     fs(scribbleBg);
-        //     fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        // });
+        this.panels.forEach(p => p.render());
     }
 
 }

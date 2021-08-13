@@ -16,6 +16,13 @@
     "src/js/graphics/font.js",
     "src/js/graphics/doodling.js",
 
+    "src/js/panels/panel.js",
+    "src/js/panels/intro-panel.js",
+
+    "src/js/elements/element.js",
+    "src/js/elements/trait.js",
+    "src/js/elements/hero-trait.js",
+
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",
 

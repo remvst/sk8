@@ -9,6 +9,7 @@ onload = () => {
     onresize(); // trigger initial sizing pass
 
     R = CANVAS.getContext('2d');
+    R.lineCap = R.lineJoin = nomangle('round');
 
     // Shortcut for all canvas methods to the main canvas
     Object.getOwnPropertyNames(canvasProto).forEach(n => {

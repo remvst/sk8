@@ -46,3 +46,23 @@ canvasProto.legs = function(x, y, spacing, walkingClock) {
         this.leg(0, 0);
     }));
 };
+
+canvasProto.mainCharacter = function(x, y, targetPosition) {
+    wrap(() => {
+        this.legs(0, 40, 20, G.clock);
+
+        this.closedPath(() => {
+            this.circle(0, 0, 50);
+
+            this.fs('#f00');
+            this.fill();
+        }).stroke();
+
+        const leftEyePosition = {'x': -20, 'y': -10};
+        const rightEyePosition = {'x': 20, 'y': -10};
+        // const gunPosition = {'x': 200, 'y': 200};
+
+        this.renderEye(leftEyePosition.x, leftEyePosition.y, 15, angleBetween(leftEyePosition, targetPosition));
+        this.renderEye(rightEyePosition.x, rightEyePosition.y, 15, angleBetween(rightEyePosition, targetPosition));
+    });
+};
