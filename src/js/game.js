@@ -86,26 +86,7 @@ class Game {
 
         ss('#000');
 
-        const leftOffsetY = sin(G.clock * PI * 4) * 5;
-        const rightOffsetY = sin(G.clock * PI * 4) * -5;
-
-        path(() => {
-            translate(0, leftOffsetY);
-            polygon(
-                180, 240,
-                180, 260,
-                160, 260,
-            );
-        }).stroke();
-
-        path(() => {
-            translate(0, rightOffsetY);
-            polygon(
-                220, 240,
-                220, 260,
-                240, 260,
-            );
-        }).stroke();
+        legs(200, 240, 20, G.clock);
 
         closedPath(() => {
             circle(200, 200, 50);
