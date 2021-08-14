@@ -14,9 +14,14 @@ class Panel {
         this.mousePosition = {'x': 0, 'y': 0};
     }
 
-    addElement(x) {
-        this.elements.push(x);
+    addElement(x, first) {
+        if (first) {
+            this.elements.push(x);
+        } else {
+            this.elements.unshift(x);
+        }
         x.bind(this);
+        return x;
     }
 
     removeElement(x) {
@@ -100,7 +105,7 @@ class Panel {
             doodleFactor(10);
             R.lineWidth = 40;
             R.globalAlpha = 0.5;
-            ss('#080');
+            ss(color);
             scribble(40, 40, this.panelWidth - 80, this.panelHeight - 80, 1, 50);
         });
     }

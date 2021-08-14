@@ -4,6 +4,7 @@ easeOutQuint = t => 1 + (--t) * t * t * t * t;
 easeInQuint = t => t * t * t * t * t;
 easeInOutCubic = t => t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
 easeInOutQuad = t => t<.5 ? 2*t*t : -1+(4-2*t)*t;
+easeInExpo = t => !t ? 0 : pow(2, 10 * t - 10)
 
 interp = (
     obj,

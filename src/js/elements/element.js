@@ -23,6 +23,10 @@ class Element {
         this.init(this);
     }
 
+    trait(key) {
+        return this.traitMap[key];
+    }
+
     cycle(elapsed) {
         this.age += elapsed;
         this.traits.forEach(trait => trait.cycle(elapsed));

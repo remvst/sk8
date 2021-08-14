@@ -10,7 +10,7 @@ class Trait {
     set angle(x) { this.element.angle = x; }
 
     trait(key) {
-        return this.element.traitMap[key];
+        return this.element.trait(key);
     }
 
     cycle(elapsed) {

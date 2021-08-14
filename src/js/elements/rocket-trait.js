@@ -6,6 +6,8 @@ class RocketTrait extends Trait {
     render() {
         ss('#000');
 
+        rotate(this.angle);
+
         closedPath(() => {
             doodleFactor(2);
 
@@ -42,15 +44,17 @@ class RocketTrait extends Trait {
             fill();
         }).stroke();
 
-        ss('#f80');
-        path(() => {
-            for (let i = 0 ; i < 5 ; i++) {
-                const x = rnd(-80, 80);
-                line(
-                    x, 140,
-                    x, 180,
-                );
-            }
-        }).stroke();
+        if (this.flying) {
+            ss('#f80');
+            path(() => {
+                for (let i = 0 ; i < 5 ; i++) {
+                    const x = rnd(-80, 80);
+                    line(
+                        x, 140,
+                        x, 180,
+                    );
+                }
+            }).stroke();
+        }
     }
 }

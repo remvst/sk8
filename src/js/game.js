@@ -1,32 +1,5 @@
 DOODLE_RNG = createNumberGenerator(1);
 
-const scribbleBg = createCanvasPattern(CANVAS_WIDTH, CANVAS_HEIGHT, (r) => {
-    r.lineWidth = 40;
-    r.lineCap = r.lineJoin = 'round';
-
-    r.fs('#fff');
-    r.fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    // r.globalAlpha = 0.5;
-    r.ss('#000');
-    r.scribble(20, 20, CANVAS_WIDTH - 40, CANVAS_HEIGHT - 40, 1, 50);
-
-    const grad = r.createRadialGradient(0, 0, 0, 0, 0, 200);
-    grad.addColorStop(0, 'rgba(0, 0, 0, 1)');
-    grad.addColorStop(0.75, 'rgba(0, 0, 0, 1)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-
-    r.globalCompositeOperation = 'destination-out';
-    r.fs(grad);
-    // r.path(() => {
-    //     r.translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-    //     r.arc(0, 0, 200, 0, PI * 2);
-    //     r.fill();
-    // });
-
-    r.translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-    r.fr(-CANVAS_WIDTH / 2, -CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT);
-});
-
 const linesBg = createCanvasPattern(20, 50, (r) => {
     r.fs('#fff');
     r.fr(0, 0, 99, 99);
@@ -47,7 +20,8 @@ class Game {
         G.panels = [
             new IntroPanel(50, 50, 1000, 700),
             new TestPanel(1100, 50, 1000, 700),
-            new Panel(50, 800, 500, 700),
+            new TravellingPanel(50, 800, 500, 700),
+            new Panel(600, 800, 1500, 700),
         ];
         this.startPanel(G.panels[0]);
 

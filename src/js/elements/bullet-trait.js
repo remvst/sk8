@@ -11,10 +11,12 @@ class BulletTrait extends Trait {
 
     render() {
         ss('#000');
+        fs('#fff');
 
         closedPath(() => {
             R.lineWidth = 5;
             circle(0, 0, 20);
+            fill();
         }).stroke();
     }
 }
