@@ -1,5 +1,7 @@
 class TravellingPanel extends Panel {
     start() {
+        this.caption = nomangle('travelled for many days');
+
         this.rocket = this.addElement(new Element([
             new RocketTrait(),
         ], initPosition(this.panelWidth / 2, this.panelHeight / 2, PI / 8)));

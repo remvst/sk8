@@ -14,6 +14,7 @@ class LandingPanel extends Panel {
                     new HeroTrait(),
                     new BoundTrait(50),
                     new WeaponHolderTrait(),
+                    new CollidableTrait(50),
                 ], initPosition(this.rocket.x + 100, this.rocket.y)));
             }, 1000);
         });
@@ -21,17 +22,20 @@ class LandingPanel extends Panel {
         this.addElement(new Element([
             new CharacterTrait(),
             new KamikazeTrait(),
+            new CollidableTrait(50, 99),
         ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2)));
 
-        this.addElement(new Element([
-            new CharacterTrait(),
-            new KamikazeTrait(),
-        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 + 50)));
-
-        this.addElement(new Element([
-            new CharacterTrait(),
-            new KamikazeTrait(),
-        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 - 50)));
+        // this.addElement(new Element([
+        //     new CharacterTrait(),
+        //     new KamikazeTrait(),
+        //     new CollidableTrait(50),
+        // ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 + 50)));
+        //
+        // this.addElement(new Element([
+        //     new CharacterTrait(),
+        //     new KamikazeTrait(),
+        //     new CollidableTrait(50),
+        // ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 - 50)));
     }
 
     renderBackground() {

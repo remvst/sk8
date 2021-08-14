@@ -12,6 +12,8 @@ class Panel {
         this.age = 0;
 
         this.mousePosition = {'x': 0, 'y': 0};
+
+        this.caption = null;
     }
 
     addElement(x, first) {
@@ -77,6 +79,23 @@ class Panel {
 
                 this.renderBackground();
                 this.renderContent();
+
+                if (this.caption) {
+                    const w = stringWidth(this.caption, 20, 10);;
+
+                    R.lineWidth = 4;
+
+                    fs('#fff');
+                    ss('#000');
+                    path(() => {
+                        rectangle(0, 0, w + 40, 70);
+                        fill();
+                    }).stroke()
+
+                    doodleFactor(2);
+                    translate(20, 20);
+                    renderString(this.caption, 20, 30, 10);
+                }
             });
 
             this.renderEdges();

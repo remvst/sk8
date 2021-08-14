@@ -27,15 +27,22 @@ class KamikazeTrait extends Trait {
         this.y += sin(angle) * elapsed * 200;
 
         if (dist(this, hero) < 100) {
-            die();
+            // this.explode();
         }
     }
 
-    die() {
-        super.die();
+    explode() {
+        this.trait('character').die();
 
         this.panel.addElement(new Element([
-            new PuffTrait('#ff0', 70),
-        ], initPosition(this.x, this.y)));
+            new PuffTrait('#ff0', 100),
+        ], initPosition(this.x + rnd(-50, 50), this.y + rnd(-50, 50))));
+
+        for (const element of this.panel.elements) {
+            const characterTrait = element.trait('character');
+            if (characterTrait && dist(element, this) < 150) {
+                characterTrait.hurt(1);
+            }
+        }
     }
 }

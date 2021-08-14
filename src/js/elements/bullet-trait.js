@@ -9,10 +9,12 @@ class BulletTrait extends Trait {
         this.y += sin(this.angle) * elapsed * 500;
 
         this.panel.elements.forEach(element => {
-            const characterTrait = element.trait('character');
-            if (characterTrait && dist(element, this) < 50) {
+            const collidableTrait = element.trait('collidable');
+            if (collidableTrait && dist(element, this) < collidableTrait.collisionRadius) {
                 this.element.remove();
-                characterTrait.hurt(0.4);
+
+                const characterTrait = element.trait('character');
+                if (characterTrait) characterTrait.hurt(0.4);
 
                 this.panel.addElement(new Element([
                     new PuffTrait('#fed', 20),

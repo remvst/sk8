@@ -26,7 +26,7 @@ class WeaponHolderTrait extends Trait {
                 scale(1, -1);
             }
 
-            rectangle(60, -15, 50, 10);
+            rectangle(60, -15, 20, 10);
             rectangle(60, -5, 10, 10);
             fill();
         }).stroke();

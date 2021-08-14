@@ -1,5 +1,7 @@
 class TakeOffPanel extends Panel {
     start() {
+        this.caption = nomangle('doodle boy went to his rocket');
+
         this.hero = this.addElement(new Element([
             new CharacterTrait(),
             new HeroTrait(),
