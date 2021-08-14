@@ -6,15 +6,10 @@ class Panel {
         this.scale = 1;
         this.panelWidth = w;
         this.panelHeight = h;
-        this.elements = [];
 
-        this.scribbleProgress = 0;
-        this.scribbleAlpha = 0;
-        this.age = 0;
+        this.reset();
 
         this.mousePosition = {'x': 0, 'y': 0};
-
-        this.caption = null;
     }
 
     get visualWidth() { return this.panelWidth / this.scale; }
@@ -44,10 +39,22 @@ class Panel {
         interp(G.camera, 'centerY', G.camera.centerY, this.y + this.panelHeight / 2, interpDuration, 0, easeInOutQuad);
     }
 
+    reset() {
+        this.rng = createNumberGenerator(1);
+
+        this.elements = [];
+
+        this.caption = null;
+
+        this.scribbleProgress = 0;
+        this.scribbleAlpha = 0;
+        this.age = 0;
+    }
+
     restart() {
         this.focus(1);
 
-        this.elements = [];
+        this.reset();
 
         interp(this, 'scribbleProgress', 0, 1, 1);
         interp(this, 'scribbleAlpha', 1, 0, 0.2, 1.5);
@@ -74,6 +81,8 @@ class Panel {
     }
 
     render() {
+        this.detailsRng = createNumberGenerator(2);
+
         wrap(() => {
             translate(this.x, this.y);
 
@@ -100,12 +109,12 @@ class Panel {
         for (let i = 0 ; i < 10 ; i++) {
             path(() => {
                 translate(
-                    DETAILS_RNG.between(0, this.panelWidth),
-                    DETAILS_RNG.between(0, this.panelHeight),
+                    this.detailsRng.between(0, this.panelWidth),
+                    this.detailsRng.between(0, this.panelHeight),
                 );
 
-                R.globalAlpha = DETAILS_RNG.between(0.1, 0.5);
-                arc(0, 0, DETAILS_RNG.between(5, 20), 0, PI * 2);
+                R.globalAlpha = this.detailsRng.between(0.1, 0.5);
+                arc(0, 0, this.detailsRng.between(5, 20), 0, PI * 2);
                 fill()
             });
         }
@@ -167,7 +176,7 @@ class Panel {
         for (let i = 0 ; i < 20 ; i++) {
             path(() => {
                 doodleFactor(10);
-                translate(DETAILS_RNG.between(0, this.panelWidth), DETAILS_RNG.between(0, this.panelHeight));
+                translate(this.detailsRng.between(0, this.panelWidth), this.detailsRng.between(0, this.panelHeight));
                 line(-50, 0, 50, 0);
             }).stroke();
         }
@@ -193,8 +202,8 @@ class Panel {
     fillRectangle(x, y, w, h, count, spawn) {
         for (let i = 0 ; i < count ; i++) {
             spawn(
-                rnd(x, x + w),
-                rnd(y, y + h),
+                this.rng.between(x, x + w),
+                this.rng.between(y, y + h),
             );
         }
     }
