@@ -110,11 +110,11 @@ class Panel {
         });
     }
 
-    grassBackground() {
-        ss('#0f0');
+    grassBackground(color = '#0f0') {
+        ss(color);
         for (let i = 0 ; i < 20 ; i++) {
             path(() => {
-                doodleFactor(20);
+                doodleFactor(10);
                 translate(DETAILS_RNG.between(0, this.panelWidth), DETAILS_RNG.between(0, this.panelHeight));
                 line(-50, 0, 50, 0);
             }).stroke();

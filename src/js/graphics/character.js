@@ -49,6 +49,8 @@ canvasProto.legs = function(x, y, spacing, walkingClock) {
 
 canvasProto.mainCharacter = function(x, y, targetPosition, walking) {
     wrap(() => {
+        ss('#000');
+
         this.legs(0, 40, 20, walking * G.clock);
 
         this.closedPath(() => {

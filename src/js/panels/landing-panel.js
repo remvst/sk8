@@ -20,7 +20,7 @@ class LandingPanel extends Panel {
     }
 
     renderBackground() {
-        this.grassBackground();
+        this.grassBackground('#00f');
         // this.scribbleBackground('#080');
     }
 

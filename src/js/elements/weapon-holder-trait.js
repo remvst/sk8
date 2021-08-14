@@ -16,6 +16,7 @@ class WeaponHolderTrait extends Trait {
 
     render() {
         fs('#000');
+        ss('#000');
 
         path(() => {
             doodleFactor(2);
