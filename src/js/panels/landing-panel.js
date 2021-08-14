@@ -1,11 +1,13 @@
 class LandingPanel extends Panel {
     start() {
+        this.scale = 0.5;
+
         this.rocket = this.addElement(new Element([
             new RocketTrait(),
         ], initPosition(400, 0)));
         this.rocket.trait('rocket').flying = true;
 
-        interp(this.rocket, 'y', -200, this.panelHeight / 2, 1, 2, null, () => {
+        interp(this.rocket, 'y', -200, this.visualHeight / 2, 1, 2, null, () => {
             this.rocket.trait('rocket').flying = false;
 
             setTimeout(() => {
@@ -23,19 +25,24 @@ class LandingPanel extends Panel {
             new CharacterTrait(),
             new KamikazeTrait(),
             new CollidableTrait(50, 99),
-        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2)));
+        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2)));
 
-        // this.addElement(new Element([
-        //     new CharacterTrait(),
-        //     new KamikazeTrait(),
-        //     new CollidableTrait(50),
-        // ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 + 50)));
-        //
-        // this.addElement(new Element([
-        //     new CharacterTrait(),
-        //     new KamikazeTrait(),
-        //     new CollidableTrait(50),
-        // ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 - 50)));
+        this.addElement(new Element([
+            new CharacterTrait(),
+            new KamikazeTrait(),
+            new CollidableTrait(50),
+        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 + 50)));
+
+        this.addElement(new Element([
+            new CharacterTrait(),
+            new KamikazeTrait(),
+            new CollidableTrait(50),
+        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 - 50)));
+
+        this.addElement(new Element([
+            new RockTrait(),
+            new CollidableTrait(50, 999),
+        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 + 50)));
     }
 
     renderBackground() {

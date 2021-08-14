@@ -1,16 +1,18 @@
 class TakeOffPanel extends Panel {
     start() {
+        this.scale = 0.5;
+
         this.caption = nomangle('doodle boy went to his rocket');
 
         this.hero = this.addElement(new Element([
             new CharacterTrait(),
             new HeroTrait(),
             new BoundTrait(50),
-        ], initPosition(this.panelWidth / 3, this.panelHeight / 2)));
+        ], initPosition(this.visualWidth / 3, this.visualHeight / 2)));
 
         this.rocket = this.addElement(new Element([
             new RocketTrait(),
-        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2)));
+        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2)));
     }
 
     renderBackground() {

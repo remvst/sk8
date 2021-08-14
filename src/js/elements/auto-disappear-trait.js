@@ -4,7 +4,7 @@ class AutoDisappearTrait extends Trait {
     }
 
     cycle(elapsed) {
-        if (!between(0, this.x, this.panel.panelWidth) || !between(0, this.y, this.panel.panelHeight)) {
+        if (!between(0, this.x, this.panel.visualWidth) || !between(0, this.y, this.panel.visualHeight)) {
             this.element.remove();
         }
     }

@@ -9,7 +9,7 @@ class BoundTrait extends Trait {
     }
 
     cycle(elapsed) {
-        this.x = limit(this.boundRadius, this.x, this.panel.panelWidth - this.boundRadius);
-        this.y = limit(this.boundRadius, this.y, this.panel.panelHeight - this.boundRadius);
+        this.x = limit(this.boundRadius, this.x, this.panel.visualWidth - this.boundRadius);
+        this.y = limit(this.boundRadius, this.y, this.panel.visualHeight - this.boundRadius);
     }
 }

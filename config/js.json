@@ -35,6 +35,7 @@
     "src/js/elements/puff-trait.js",
     "src/js/elements/kamikaze-trait.js",
     "src/js/elements/collidable-trait.js",
+    "src/js/elements/rock-trait.js",
 
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",

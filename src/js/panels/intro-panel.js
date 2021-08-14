@@ -4,11 +4,11 @@ class IntroPanel extends Panel {
             new CharacterTrait(),
             new HeroTrait(),
             new BoundTrait(50),
-        ], initPosition(this.panelWidth / 2, this.panelHeight * 2 / 3)));
+        ], initPosition(this.visualWidth / 2, this.visualHeight * 2 / 3)));
     }
 
-    renderContent() {
-        super.renderContent();
+    renderCaption() {
+        super.renderCaption();
 
         wrap(() => {
             ss('#000');

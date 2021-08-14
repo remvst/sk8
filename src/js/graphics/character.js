@@ -48,8 +48,9 @@ canvasProto.legs = function(x, y, spacing, walkingClock) {
 };
 
 canvasProto.mainCharacter = function(x, y, targetPosition, walking) {
-    wrap(() => {
-        ss('#000');
+    this.wrap(() => {
+        this.ss('#000');
+
 
         this.legs(0, 40, 20, walking * G.clock);
 
@@ -62,7 +63,6 @@ canvasProto.mainCharacter = function(x, y, targetPosition, walking) {
 
         const leftEyePosition = {'x': -20, 'y': -10};
         const rightEyePosition = {'x': 20, 'y': -10};
-        // const gunPosition = {'x': 200, 'y': 200};
 
         this.renderEye(leftEyePosition.x, leftEyePosition.y, 15, angleBetween(leftEyePosition, targetPosition));
         this.renderEye(rightEyePosition.x, rightEyePosition.y, 15, angleBetween(rightEyePosition, targetPosition));

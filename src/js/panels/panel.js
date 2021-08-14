@@ -3,6 +3,7 @@ class Panel {
     constructor(x, y, w, h) {
         this.x = x;
         this.y = y;
+        this.scale = 1;
         this.panelWidth = w;
         this.panelHeight = h;
         this.elements = [];
@@ -15,6 +16,9 @@ class Panel {
 
         this.caption = null;
     }
+
+    get visualWidth() { return this.panelWidth / this.scale; }
+    get visualHeight() { return this.panelHeight / this.scale; }
 
     addElement(x, first) {
         if (first) {
@@ -63,8 +67,8 @@ class Panel {
     cycle(elapsed) {
         this.age += elapsed;
 
-        this.mousePosition.x = MOUSE_POSITION.x - this.x + G.camera.x;
-        this.mousePosition.y = MOUSE_POSITION.y - this.y + G.camera.y;
+        this.mousePosition.x = (MOUSE_POSITION.x - this.x + G.camera.x) / this.scale;
+        this.mousePosition.y = (MOUSE_POSITION.y - this.y + G.camera.y) / this.scale;
 
         this.elements.forEach(x => x.cycle(elapsed));
     }
@@ -78,24 +82,11 @@ class Panel {
                 clip();
 
                 this.renderBackground();
-                this.renderContent();
-
-                if (this.caption) {
-                    const w = stringWidth(this.caption, 20, 10);;
-
-                    R.lineWidth = 4;
-
-                    fs('#fff');
-                    ss('#000');
-                    path(() => {
-                        rectangle(0, 0, w + 40, 70);
-                        fill();
-                    }).stroke()
-
-                    doodleFactor(2);
-                    translate(20, 20);
-                    renderString(this.caption, 20, 30, 10);
-                }
+                wrap(() => {
+                    scale(this.scale, this.scale);
+                    this.renderContent();
+                });
+                this.renderCaption();
             });
 
             this.renderEdges();
@@ -108,6 +99,25 @@ class Panel {
 
     renderContent() {
         this.elements.forEach(x => x.render());
+    }
+
+    renderCaption() {
+        if (this.caption) {
+            const w = stringWidth(this.caption, 20, 10);;
+
+            R.lineWidth = 4;
+
+            fs('#fff');
+            ss('#000');
+            path(() => {
+                rectangle(0, 0, w + 40, 70);
+                fill();
+            }).stroke()
+
+            doodleFactor(2);
+            translate(20, 20);
+            renderString(this.caption, 20, 30, 10);
+        }
     }
 
     renderEdges() {
