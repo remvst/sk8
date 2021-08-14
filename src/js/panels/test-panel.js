@@ -5,7 +5,11 @@ class TestPanel extends Panel {
             new HeroTrait(),
             new BoundTrait(50),
             new WeaponHolderTrait(),
-        ], initPosition(this.panelWidth / 2, this.panelHeight * 2 / 3)));
+        ], initPosition(this.panelWidth / 3, this.panelHeight / 2)));
+
+        this.addElement(new Element([
+            new RocketTrait(),
+        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2)));
     }
 
     renderBackground() {

@@ -35,7 +35,6 @@ class WeaponHolderTrait extends Trait {
         if (this.age - this.lastShot > 0.1) {
             this.lastShot = this.age;
 
-            console.log('PEW');
             this.panel.addElement(new Element([
                 new BulletTrait(),
                 new AutoDisappearTrait(),

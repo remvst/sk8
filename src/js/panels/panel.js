@@ -60,8 +60,15 @@ class Panel {
     render() {
         wrap(() => {
             translate(this.x, this.y);
-            this.renderBackground();
-            this.renderContent();
+
+            wrap(() => {
+                rect(0, 0, this.panelWidth, this.panelHeight);
+                clip();
+
+                this.renderBackground();
+                this.renderContent();
+            });
+
             this.renderEdges();
         });
     }
