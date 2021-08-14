@@ -19,7 +19,7 @@ class Game {
 
         G.panels = [
             new IntroPanel(50, 50, 1000, 700),
-            new TestPanel(1100, 50, 1000, 700),
+            new TakeOffPanel(1100, 50, 1000, 700),
             new TravellingPanel(50, 800, 500, 700),
             new LandingPanel(600, 800, 1500, 700),
             new Panel(50, 1600, 1500, 700),

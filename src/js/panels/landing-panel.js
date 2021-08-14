@@ -20,7 +20,18 @@ class LandingPanel extends Panel {
 
         this.addElement(new Element([
             new CharacterTrait(),
+            new KamikazeTrait(),
         ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2)));
+
+        this.addElement(new Element([
+            new CharacterTrait(),
+            new KamikazeTrait(),
+        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 + 50)));
+
+        this.addElement(new Element([
+            new CharacterTrait(),
+            new KamikazeTrait(),
+        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2 - 50)));
     }
 
     renderBackground() {

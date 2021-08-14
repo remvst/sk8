@@ -30,8 +30,18 @@ class CharacterTrait extends Trait {
         if (this.health) {
             this.health -= x;
             if (this.health <= 0) {
-                this.element.remove();
+                this.die();
             }
         }
+    }
+
+    die() {
+        for (let i = 0 ; i < 5 ; i++) {
+            this.panel.addElement(new Element([
+                new PuffTrait(i % 2 ? '#ff0' : '#f00', 25),
+            ], initPosition(this.x + rnd(-50, 50), this.y + rnd(-50, 50))));
+        }
+
+        this.element.remove();
     }
 }

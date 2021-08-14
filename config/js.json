@@ -21,6 +21,7 @@
     "src/js/panels/test-panel.js",
     "src/js/panels/travelling-panel.js",
     "src/js/panels/landing-panel.js",
+    "src/js/panels/take-off-panel.js",
 
     "src/js/elements/element.js",
     "src/js/elements/trait.js",
@@ -32,6 +33,7 @@
     "src/js/elements/auto-disappear-trait.js",
     "src/js/elements/rocket-trait.js",
     "src/js/elements/puff-trait.js",
+    "src/js/elements/kamikaze-trait.js",
 
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",

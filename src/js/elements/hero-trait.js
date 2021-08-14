@@ -9,8 +9,8 @@ class HeroTrait extends Trait {
 
         if (dX || dY) {
             const angle = atan2(dY, dX);
-            this.x += cos(angle) * elapsed * 300;
-            this.y += sin(angle) * elapsed * 300;
+            this.x += cos(angle) * elapsed * 500;
+            this.y += sin(angle) * elapsed * 500;
         }
 
         const weaponHolderTrait = this.trait('weapon-holder');

@@ -21,6 +21,11 @@ class Panel {
             this.elements.push(x);
         }
         x.bind(this);
+
+        if (x.trait('hero')) {
+            this.hero = x;
+        }
+
         return x;
     }
 

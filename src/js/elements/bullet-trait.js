@@ -15,7 +15,7 @@ class BulletTrait extends Trait {
                 characterTrait.hurt(0.4);
 
                 this.panel.addElement(new Element([
-                    new PuffTrait(),
+                    new PuffTrait('#fed', 20),
                 ], initPosition(
                     this.x,
                     this.y,

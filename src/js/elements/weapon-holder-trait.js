@@ -33,7 +33,7 @@ class WeaponHolderTrait extends Trait {
     }
 
     shoot() {
-        if (this.age - this.lastShot > 0.1) {
+        if (this.age - this.lastShot > 0.2) {
             this.lastShot = this.age;
 
             this.panel.addElement(new Element([
