@@ -20,6 +20,7 @@
     "src/js/panels/intro-panel.js",
     "src/js/panels/test-panel.js",
     "src/js/panels/travelling-panel.js",
+    "src/js/panels/landing-panel.js",
 
     "src/js/elements/element.js",
     "src/js/elements/trait.js",
