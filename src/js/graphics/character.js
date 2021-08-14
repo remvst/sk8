@@ -73,7 +73,7 @@ canvasProto.mainCharacter = function(x, y, targetPosition, walking) {
         this.closedPath(() => {
             this.circle(0, 0, 50);
 
-            this.fs('#f00');
+            this.fs('#00f');
             this.fill();
         }).stroke();
 

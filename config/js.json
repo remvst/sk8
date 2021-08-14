@@ -22,6 +22,7 @@
     "src/js/panels/travelling-panel.js",
     "src/js/panels/landing-panel.js",
     "src/js/panels/take-off-panel.js",
+    "src/js/panels/night-panel.js",
 
     "src/js/elements/element.js",
     "src/js/elements/trait.js",

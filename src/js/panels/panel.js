@@ -7,9 +7,10 @@ class Panel {
         this.panelWidth = w;
         this.panelHeight = h;
 
-        this.reset();
-
         this.mousePosition = {'x': 0, 'y': 0};
+
+        this.reset();
+        this.start();
     }
 
     get visualWidth() { return this.panelWidth / this.scale; }

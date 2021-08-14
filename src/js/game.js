@@ -23,6 +23,7 @@ class Game {
             new TravellingPanel(50, 800, 800, 700),
             new LandingPanel(900, 800, 1500, 700),
             new TestPanel(50, 1600, 700, 700),
+            new NightPanel(800, 1600, 700, 700),
             // new Panel(50, 1600, 1500, 700),
         ];
         this.startPanel(G.panels[G.panels.length - 1]);
