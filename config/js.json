@@ -18,12 +18,16 @@
 
     "src/js/panels/panel.js",
     "src/js/panels/intro-panel.js",
+    "src/js/panels/test-panel.js",
 
     "src/js/elements/element.js",
     "src/js/elements/trait.js",
     "src/js/elements/hero-trait.js",
     "src/js/elements/bound-trait.js",
     "src/js/elements/character-trait.js",
+    "src/js/elements/weapon-holder-trait.js",
+    "src/js/elements/bullet-trait.js",
+    "src/js/elements/auto-disappear-trait.js",
 
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",

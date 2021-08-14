@@ -1,15 +1,16 @@
-const initPosition = (x, y) => (element) => {
+const initPosition = (x, y, angle = 0) => (element) => {
     element.x = x;
     element.y = y;
+    element.angle = angle;
 };
 
 class Element {
     constructor(traits, init) {
-        this.x = this.y = 0;
+        this.x = this.y = this.age = this.angle = 0;
 
         this.traits = traits;
         this.traitMap = {};
-        if (init) init(this);
+        this.init = init || (() => 0);
     }
 
     bind(panel) {
@@ -18,9 +19,12 @@ class Element {
             trait.element = this;
             trait.panel = this.panel = panel;
         });
+
+        this.init(this);
     }
 
     cycle(elapsed) {
+        this.age += elapsed;
         this.traits.forEach(trait => trait.cycle(elapsed));
     }
 
@@ -33,9 +37,13 @@ class Element {
     }
 
     renderElement() {
-        fs('#f00');
-        fr(-10, -10, 20, 20);
+        // fs('#f00');
+        // fr(-10, -10, 20, 20);
 
         this.traits.forEach(trait => trait.render());
+    }
+
+    remove() {
+        this.panel.removeElement(this);
     }
 }

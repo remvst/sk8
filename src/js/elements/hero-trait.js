@@ -23,23 +23,11 @@ class HeroTrait extends Trait {
         };
         mainCharacter(0, 0, targetPosition, this.trait('character').walking);
 
-        fs('#000');
+        this.angle = angleBetween(this, this.panel.mousePosition);
 
-        path(() => {
-            doodleFactor(2);
-
-            // translate(gunPosition.x, gunPosition.y);
-
-            const angle = angleBetween(this, this.panel.mousePosition);
-            rotate(angle);
-
-            if (cos(angle) < 0) {
-                scale(1, -1);
-            }
-
-            rectangle(60, -15, 50, 10);
-            rectangle(60, -5, 10, 10);
-            fill();
-        }).stroke();
+        const weaponHolderTrait = this.trait('weapon-holder');
+        if (weaponHolderTrait) {
+            weaponHolderTrait.triggerDown = INPUT.shoot();
+        }
     }
 }

@@ -46,16 +46,24 @@ class Game {
 
         G.panels = [
             new IntroPanel(50, 50, 1000, 700),
-            new Panel(1100, 50, 1000, 700),
-            new Panel(50, 800, 1000, 700),
+            new TestPanel(1100, 50, 1000, 700),
+            new Panel(50, 800, 500, 700),
         ];
-        G.panels[0].restart();
+        this.startPanel(G.panels[0]);
+
+        INTERPOLATIONS = [];
+        G.panels[0].focus(0);
+    }
+
+    startPanel(panel) {
+        this.currentPanel = panel;
+        panel.restart();
     }
 
     cycle(elapsed) {
         G.clock += elapsed;
 
-        this.panels.forEach(p => p.cycle(elapsed));
+        this.currentPanel.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
 
         // TODO

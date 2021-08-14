@@ -5,7 +5,7 @@ class BoundTrait extends Trait {
     }
 
     get key() {
-        return 'bound'
+        return 'bound';
     }
 
     cycle(elapsed) {
