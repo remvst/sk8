@@ -16,9 +16,9 @@ class Panel {
 
     addElement(x, first) {
         if (first) {
-            this.elements.push(x);
-        } else {
             this.elements.unshift(x);
+        } else {
+            this.elements.push(x);
         }
         x.bind(this);
         return x;

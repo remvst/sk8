@@ -31,6 +31,7 @@
     "src/js/elements/bullet-trait.js",
     "src/js/elements/auto-disappear-trait.js",
     "src/js/elements/rocket-trait.js",
+    "src/js/elements/puff-trait.js",
 
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",

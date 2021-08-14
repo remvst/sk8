@@ -43,7 +43,7 @@ class WeaponHolderTrait extends Trait {
                 this.x + cos(this.angle) * 70,
                 this.y + sin(this.angle) * 70,
                 this.angle,
-            )));
+            )), true);
         }
     }
 }

@@ -2,6 +2,7 @@ class CharacterTrait extends Trait {
     constructor(characterType) {
         super();
         this.characterType = characterType;
+        this.health = 1;
     }
 
     get key() {
@@ -23,5 +24,14 @@ class CharacterTrait extends Trait {
             'y': this.panel.mousePosition.y - this.y,
         };
         mainCharacter(0, 0, targetPosition, this.walking);
+    }
+
+    hurt(x) {
+        if (this.health) {
+            this.health -= x;
+            if (this.health <= 0) {
+                this.element.remove();
+            }
+        }
     }
 }

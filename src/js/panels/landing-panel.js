@@ -17,6 +17,10 @@ class LandingPanel extends Panel {
                 ], initPosition(this.rocket.x + 100, this.rocket.y)));
             }, 1000);
         });
+
+        this.addElement(new Element([
+            new CharacterTrait(),
+        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2)));
     }
 
     renderBackground() {
