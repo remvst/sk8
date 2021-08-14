@@ -1,10 +1,6 @@
 class IntroPanel extends Panel {
     start() {
-        this.addElement(new Element([
-            new CharacterTrait('enemy'),
-            new HeroTrait(),
-            new BoundTrait(50),
-        ], initPosition(this.visualWidth / 2, this.visualHeight * 2 / 3)));
+        this.spawnHero(this.visualWidth / 2, this.visualHeight * 2 / 3);
     }
 
     renderCaption() {
