@@ -23,7 +23,11 @@ class CharacterTrait extends Trait {
             'x': this.panel.mousePosition.x - this.x,
             'y': this.panel.mousePosition.y - this.y,
         };
-        mainCharacter(0, 0, targetPosition, this.walking);
+
+        switch (this.characterType) {
+            case 'hero': mainCharacter(0, 0, targetPosition, this.walking); break;
+            case 'enemy': enemyCharacter(0, 0, targetPosition, this.walking); break;
+        }
     }
 
     hurt(x) {

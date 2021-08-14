@@ -1,12 +1,12 @@
 DOODLE_RNG = createNumberGenerator(1);
 
-const linesBg = createCanvasPattern(20, 50, (r) => {
+const linesBg = createCanvasPattern(1, 50, (r) => {
     r.fs('#fff');
-    r.fr(0, 0, 99, 99);
+    r.fr(0, 0, 1, 99);
 
     r.globalAlpha = 0.25;
     r.fs('#000');
-    r.fr(0, 0, 50, 1);
+    r.fr(0, 0, 1, 1);
 });
 
 class Game {
@@ -22,12 +22,13 @@ class Game {
             new TakeOffPanel(1100, 50, 1000, 700),
             new TravellingPanel(50, 800, 800, 700),
             new LandingPanel(900, 800, 1500, 700),
-            new Panel(50, 1600, 1500, 700),
+            new TestPanel(50, 1600, 700, 700),
+            // new Panel(50, 1600, 1500, 700),
         ];
-        this.startPanel(G.panels[0]);
+        this.startPanel(G.panels[G.panels.length - 1]);
 
         INTERPOLATIONS = [];
-        G.panels[0].focus(0);
+        this.currentPanel.focus(0);
     }
 
     startPanel(panel) {
@@ -59,18 +60,11 @@ class Game {
             fs(linesBg);
             fr(this.camera.x, this.camera.y, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-            fs('blue');
-            for (let i = 0 ; i < 10 ; i++) {
-                path(() => {
-                    translate(DETAILS_RNG.between(0, CANVAS_WIDTH), DETAILS_RNG.between(0, CANVAS_HEIGHT));
-
-                    R.globalAlpha = DETAILS_RNG.between(0.1, 0.5);
-                    arc(0, 0, DETAILS_RNG.between(5, 20), 0, PI * 2);
-                    fill()
-                });
-            }
-
-            this.panels.forEach(p => p.render());
+            this.panels.forEach(p => {
+                if (p.x > this.camera.x + CANVAS_WIDTH || p.x + p.panelWidth < this.camera.x) return;
+                if (p.y > this.camera.y + CANVAS_HEIGHT || p.y + p.panelHeight < this.camera.y) return;
+                p.render();
+            });
         });
     }
 

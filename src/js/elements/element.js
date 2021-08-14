@@ -41,9 +41,6 @@ class Element {
     }
 
     renderElement() {
-        // fs('#f00');
-        // fr(-10, -10, 20, 20);
-
         this.traits.forEach(trait => trait.render());
     }
 

@@ -1,33 +1,21 @@
 class TestPanel extends Panel {
     start() {
-        this.hero = this.addElement(new Element([
-            new CharacterTrait(),
+        this.scale = 0.5;
+
+        this.addElement(new Element([
+            new CharacterTrait('hero'),
             new HeroTrait(),
             new BoundTrait(50),
             new WeaponHolderTrait(),
+            new CollidableTrait(50, ),
         ], initPosition(this.panelWidth / 3, this.panelHeight / 2)));
 
-        this.rocket = this.addElement(new Element([
-            new RocketTrait(),
-        ], initPosition(this.panelWidth * 2 / 3, this.panelHeight / 2)));
+        this.fillRectangle(0, 0, this.visualWidth, this.visualHeight, 20, (x, y) => {
+            this.spawnRock(x, y);
+        });
     }
 
     renderBackground() {
-        this.grassBackground();
-        // this.scribbleBackground('#080');
-    }
-
-    cycle(elapsed) {
-        super.cycle(elapsed);
-
-        if (!this.absorbed) {
-            if (dist(this.hero, this.rocket) < 50) {
-                this.hero.remove();
-
-                this.rocket.trait('rocket').flying = true;
-
-                interp(this.rocket, 'y', this.rocket.y, -200, 2, 0, easeInExpo);
-            }
-        }
+        this.scribbleBackground('#db588d');
     }
 }

@@ -77,6 +77,8 @@ class Panel {
         wrap(() => {
             translate(this.x, this.y);
 
+            this.renderInkDrops();
+
             wrap(() => {
                 rect(0, 0, this.panelWidth, this.panelHeight);
                 clip();
@@ -91,6 +93,22 @@ class Panel {
 
             this.renderEdges();
         });
+    }
+
+    renderInkDrops() {
+        fs('blue');
+        for (let i = 0 ; i < 10 ; i++) {
+            path(() => {
+                translate(
+                    DETAILS_RNG.between(0, this.panelWidth),
+                    DETAILS_RNG.between(0, this.panelHeight),
+                );
+
+                R.globalAlpha = DETAILS_RNG.between(0.1, 0.5);
+                arc(0, 0, DETAILS_RNG.between(5, 20), 0, PI * 2);
+                fill()
+            });
+        }
     }
 
     renderBackground() {
@@ -134,13 +152,13 @@ class Panel {
         }
     }
 
-    scribbleBackground(color) {
+    scribbleBackground(color, alpha = 0.5) {
         wrap(() => {
             doodleFactor(10);
             R.lineWidth = 40;
-            R.globalAlpha = 0.5;
+            R.globalAlpha = alpha;
             ss(color);
-            scribble(40, 40, this.panelWidth - 80, this.panelHeight - 80, 1, 50);
+            scribble(40, 40, this.panelWidth - 80, this.panelHeight - 80, 1, 30);
         });
     }
 
@@ -152,6 +170,32 @@ class Panel {
                 translate(DETAILS_RNG.between(0, this.panelWidth), DETAILS_RNG.between(0, this.panelHeight));
                 line(-50, 0, 50, 0);
             }).stroke();
+        }
+    }
+
+    spawnRock(x, y) {
+        this.addElement(new Element([
+            new RockTrait(),
+            new CollidableTrait(50, 999),
+        ], initPosition(x, y)));
+    }
+
+    spawnHero(x, y) {
+        this.addElement(new Element([
+            new CharacterTrait('hero'),
+            new HeroTrait(),
+            new BoundTrait(50),
+            new WeaponHolderTrait(),
+            new CollidableTrait(50, 1),
+        ], initPosition(x, y)));
+    }
+
+    fillRectangle(x, y, w, h, count, spawn) {
+        for (let i = 0 ; i < count ; i++) {
+            spawn(
+                rnd(x, x + w),
+                rnd(y, y + h),
+            );
         }
     }
 }

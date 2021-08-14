@@ -10,11 +10,6 @@ class TravellingPanel extends Panel {
     }
 
     renderBackground() {
-        wrap(() => {
-            doodleFactor(10);
-            R.lineWidth = 40;
-            ss('#000');
-            scribble(40, 40, this.panelWidth - 80, this.panelHeight - 80, 1, 20);
-        });
+        this.scribbleBackground('#000', 1);
     }
 }

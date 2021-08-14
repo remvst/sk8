@@ -1,6 +1,7 @@
 class LandingPanel extends Panel {
     start() {
-        this.scale = 0.5;
+        this.scale = 1;
+        this.caption = nomangle('then landed on a mysterious planet');
 
         this.rocket = this.addElement(new Element([
             new RocketTrait(),
@@ -12,7 +13,7 @@ class LandingPanel extends Panel {
 
             setTimeout(() => {
                 this.addElement(new Element([
-                    new CharacterTrait(),
+                    new CharacterTrait('hero'),
                     new HeroTrait(),
                     new BoundTrait(50),
                     new WeaponHolderTrait(),
@@ -21,33 +22,33 @@ class LandingPanel extends Panel {
             }, 1000);
         });
 
-        this.addElement(new Element([
-            new CharacterTrait(),
-            new KamikazeTrait(),
-            new CollidableTrait(50, 99),
-        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2)));
-
-        this.addElement(new Element([
-            new CharacterTrait(),
-            new KamikazeTrait(),
-            new CollidableTrait(50),
-        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 + 50)));
-
-        this.addElement(new Element([
-            new CharacterTrait(),
-            new KamikazeTrait(),
-            new CollidableTrait(50),
-        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 - 50)));
-
-        this.addElement(new Element([
-            new RockTrait(),
-            new CollidableTrait(50, 999),
-        ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 + 50)));
+        // this.addElement(new Element([
+        //     new CharacterTrait(),
+        //     new KamikazeTrait(),
+        //     new CollidableTrait(50, 99),
+        // ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2)));
+        //
+        // this.addElement(new Element([
+        //     new CharacterTrait(),
+        //     new KamikazeTrait(),
+        //     new CollidableTrait(50),
+        // ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 + 50)));
+        //
+        // this.addElement(new Element([
+        //     new CharacterTrait(),
+        //     new KamikazeTrait(),
+        //     new CollidableTrait(50),
+        // ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 - 50)));
+        //
+        // this.addElement(new Element([
+        //     new RockTrait(),
+        //     new CollidableTrait(50, 999),
+        // ], initPosition(this.visualWidth * 2 / 3, this.visualHeight / 2 + 50)));
     }
 
     renderBackground() {
-        this.grassBackground('#00f');
-        // this.scribbleBackground('#080');
+        // this.grassBackground('#f80');
+        this.scribbleBackground('#db588d');
     }
 
     cycle(elapsed) {

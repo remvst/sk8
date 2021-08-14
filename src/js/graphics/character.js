@@ -2,6 +2,8 @@ canvasProto.renderEye = function(x, y, radius, angle) {
     this.wrap(() => {
         this.doodleFactor(2);
 
+        this.ss('#000');
+
         this.closedPath(() => {
             R.lineWidth = 2;
             this.fs('#fff');
@@ -23,6 +25,20 @@ canvasProto.renderEye = function(x, y, radius, angle) {
         });
     });
 };
+
+canvasProto.renderEyebrow = function(x, y, sign) {
+    this.wrap(() => {
+        R.lineWidth = 10;
+        this.doodleFactor(2);
+        this.ss('#000');
+        this.translate(x, y);
+        this.scale(sign, 1);
+
+        this.path(() => {
+            this.line(15, -10, -20, 10);
+        }).stroke();
+    });
+}
 
 canvasProto.leg = function(x, y) {
     this.path(() => {
@@ -63,6 +79,29 @@ canvasProto.mainCharacter = function(x, y, targetPosition, walking) {
 
         const leftEyePosition = {'x': -20, 'y': -10};
         const rightEyePosition = {'x': 20, 'y': -10};
+
+        this.renderEye(leftEyePosition.x, leftEyePosition.y, 15, angleBetween(leftEyePosition, targetPosition));
+        this.renderEye(rightEyePosition.x, rightEyePosition.y, 15, angleBetween(rightEyePosition, targetPosition));
+    });
+};
+
+canvasProto.enemyCharacter = function(x, y, targetPosition, walking) {
+    this.wrap(() => {
+        this.ss('#000');
+
+        this.legs(0, 40, 20, walking * G.clock);
+
+        this.closedPath(() => {
+            this.rectangle(-40, -40, 80, 80);
+            this.fs('#f00');
+            this.fill();
+        }).stroke();
+
+        const leftEyePosition = {'x': -20, 'y': -10};
+        const rightEyePosition = {'x': 20, 'y': -10};
+
+        this.renderEyebrow(leftEyePosition.x, leftEyePosition.y - 15, -1);
+        this.renderEyebrow(rightEyePosition.x, rightEyePosition.y - 15, 1);
 
         this.renderEye(leftEyePosition.x, leftEyePosition.y, 15, angleBetween(leftEyePosition, targetPosition));
         this.renderEye(rightEyePosition.x, rightEyePosition.y, 15, angleBetween(rightEyePosition, targetPosition));
