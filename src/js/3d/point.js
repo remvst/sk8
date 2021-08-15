@@ -4,27 +4,30 @@ class Point {
     }
 
     projectToActual() {
-        return new Point(
+        this.actualPoint = this.actualPoint || new Point();
+        return this.actualPoint.set(
             this.x,
             this.y - this.z * 0.25,
         );
     }
 
     projectToShadow() {
-        return new Point(
+        this.shadowPoint = this.shadowPoint || new Point();
+        return this.shadowPoint.set(
             this.x + this.z * 0.25,
             this.y - this.z * 0.25,
         );
     }
 
     reset() {
-        this.set(0, 0, 0);
+        return this.set(0, 0, 0);
     }
 
     set(x, y, z) {
         this.x = x;
         this.y = y;
         this.z = z;
+        return this;
     }
 
     get zIndex() { return this.y; }

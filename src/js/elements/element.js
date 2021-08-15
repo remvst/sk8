@@ -13,16 +13,8 @@ class Element {
         this.updateRenderables();
     }
 
-    renderShadow() {
-        this.renderables.forEach((renderable) => {
-            renderable.renderShadow();
-        });
-    }
-
-    renderElement() {
-        this.renderables.forEach((renderable) => {
-            renderable.renderActual();
-        });
+    updateRenderables() {
+        
     }
 
     newPoint() {

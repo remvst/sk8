@@ -1,14 +1,3 @@
-DOODLE_RNG = createNumberGenerator(1);
-
-const linesBg = createCanvasPattern(1, 50, (r) => {
-    r.fs('#fff');
-    r.fr(0, 0, 1, 99);
-
-    r.globalAlpha = 0.25;
-    r.fs('#000');
-    r.fr(0, 0, 1, 1);
-});
-
 class Game {
 
     constructor() {

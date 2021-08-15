@@ -18,16 +18,11 @@ class Hero extends Element {
         this.boardEndTop = this.newPoint();
 
         this.renderables = [
-
-            // new Plane([boardLeftTop, boardLeftBottom, boardRightBottom, boardEnd, boardRightTop], '#f80'),
-
-            // new Segment(this.boardStartTop, this.boardEndBottom),
-            // new Segment(boardStartBottom, boardEndTop),
+            // Board
             new Segment(this.boardEndBottom, this.boardEndTop),
             new Segment(this.boardStartBottom, this.boardStartTop),
             new Segment(this.boardStartBottom, this.boardEndBottom),
             new Segment(this.boardStartTop, this.boardEndTop),
-            // new Segment(this.boardStartBottom, this.boardEndBottom),
 
             // Character
             new Segment(this.leftFoot, this.hips),
@@ -70,29 +65,9 @@ class Hero extends Element {
             this.rightFoot.z = progress * rightFootKicker.height;
         }
 
-        // if (kicker1.contains(leftFoot)) {
-        //     const relative = kicker1.relativePosition(leftFoot);
-        //     const progress = 1 - (kicker1.radius - relative.x) / kicker1.length;
-        //     leftFoot.z = progress * kicker1.height;
-        // }
-        //
-        // if (kicker1.contains(rightFoot)) {
-        //     const relative = kicker1.relativePosition(rightFoot);
-        //     const progress = 1 - (kicker1.radius - relative.x) / kicker1.length;
-        //     rightFoot.z = progress * kicker1.height;
-        //     // console.log(rightFoot.z);
-        // }
-
-        // const boardLeftTop = new Point(leftF, boardTop);
-        // const boardLeftBottom = new Point(boardLeft, boardBottom);
-        // const boardRightTop = new Point(boardRight, boardTop);
-        // const boardRightBottom = new Point(boardRight, boardBottom);
-
         const footDistance = dist(this.leftFoot, this.rightFoot);
         const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
-        //
-        // console.log(slope);
-        //
+
         this.boardStartTop.set(
             this.leftFoot.x - Math.cos(this.angle) * 20 - Math.cos(anglePlus90) * 10,
             this.leftFoot.y - Math.sin(this.angle) * 20 - Math.sin(anglePlus90) * 10,

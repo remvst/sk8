@@ -65,13 +65,9 @@ class Kicker extends Element {
         pt.y -= this.y;
         pt.z -= this.z;
 
-        // const r = dist(pos, pt);
-
         const rotated = new Point();
         rotated.x = pt.x * Math.cos(this.angle) + pt.y * Math.sin(this.angle);
         rotated.y = -pt.x * Math.sin(this.angle) + pt.y * Math.cos(this.angle);
-
-        // pt.x += r * Math.cos()
 
         return rotated;
     }
@@ -94,30 +90,5 @@ class Kicker extends Element {
         this.highBottom.set(radius, radius, this.height);
 
         this.adjustPoints();
-    }
-
-    renderElement() {
-        super.renderElement();
-
-        return;
-
-        const distanceToEdge = this.distanceToEdge(hero);
-        ctx.beginPath();
-        ctx.moveTo(this.edgeCenter().x, this.edgeCenter().y);
-        ctx.lineTo(
-            this.edgeCenter().x + Math.cos(this.angle) * distanceToEdge,
-            this.edgeCenter().y + Math.sin(this.angle) * distanceToEdge,
-        );
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-        const relativePosition = this.relativePosition(hero);
-        ctx.fillStyle = 'purple';
-        ctx.fillRect(relativePosition.x - 5, relativePosition.y - 5, 10, 10);
-        ctx.restore();
-
-        ctx.restore();
     }
 }

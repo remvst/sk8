@@ -18,6 +18,7 @@
     "src/js/elements/element.js",
     "src/js/elements/hero.js",
     "src/js/elements/kicker.js",
+    "src/js/elements/rail.js",
 
     "src/js/3d/renderable.js",
     "src/js/3d/point.js",

@@ -16,6 +16,11 @@ class World {
         kicker2.y = -200;
         kicker2.angle = PI / 4;
         this.addElement(kicker2);
+
+        this.addElement(new Rail([
+            new Point(100, 100, 50),
+            new Point(200, 200, 50),
+        ]));
     }
 
     addElement(element) {
