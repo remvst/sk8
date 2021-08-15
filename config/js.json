@@ -25,6 +25,7 @@
     "src/js/3d/plane.js",
     "src/js/3d/segment.js",
     "src/js/3d/sphere.js",
+    "src/js/3d/debug-renderable.js",
 
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",

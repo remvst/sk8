@@ -20,5 +20,68 @@ class Rail extends Element {
                 new Point(current.x, current.y, 0)
             ));
         }
+
+        this.renderables.push(new DebugRenderable(() => {
+            const hero = this.world.hero;
+            const collides = this.collides(hero);
+
+            if (collides) {
+                wrap(() => {
+                    fs('#f00');
+
+                    const projected = collides.positionOnRail.projectToActual();
+                    fr(projected.x - 10, projected.y - 10, 20, 20);
+                });
+            }
+        }));
+    }
+
+    collides(hero) {
+        let res = null;
+
+        for (let i = 0 ; i < this.points.length - 1 ; i++) {
+            const current = this.points[i];
+            const nextPoint = this.points[i+1];
+            const distance = dist(current, nextPoint);
+            const distanceToHero = dist(current, hero);
+
+            const relativePosition = this.relativePosition(current, nextPoint, hero);
+
+            const relativeProgress = relativePosition.x / distance;
+
+            if (
+                between(-RAIL_PADDING, relativePosition.x, distance + RAIL_PADDING) &&
+                between(-RAIL_PADDING, relativePosition.y, RAIL_PADDING)
+                // TODO add z check for collision
+            ) {
+                res = {
+                    'positionOnRail': new Point().set(
+                        relativeProgress * (nextPoint.x - current.x) + current.x,
+                        relativeProgress * (nextPoint.y - current.y) + current.y,
+                        relativeProgress * (nextPoint.z - current.z) + current.z,
+                    ),
+                };
+
+                if (between(0, relativePosition.x, distance)) {
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    relativePosition(p1, p2, pos) {
+        const angle = angleBetween(p1, p2);
+
+        const pt = new Point(pos.x, pos.y, pos.z);
+        pt.x -= p1.x;
+        pt.y -= p1.y;
+        pt.z -= p1.z;
+
+        const rotated = new Point();
+        rotated.x = pt.x * Math.cos(angle) + pt.y * Math.sin(angle);
+        rotated.y = -pt.x * Math.sin(angle) + pt.y * Math.cos(angle);
+
+        return rotated;
     }
 }

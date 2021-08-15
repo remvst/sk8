@@ -6,6 +6,7 @@ class World {
         this.mousePosition = new Point();
 
         const hero = new Hero();
+        this.hero = hero;
         this.addElement(hero);
 
         const kicker = new Kicker();
@@ -20,6 +21,14 @@ class World {
         this.addElement(new Rail([
             new Point(100, 100, 50),
             new Point(200, 200, 50),
+            new Point(300, 200, 200),
+            new Point(400, 200, 200),
+        ]));
+
+        this.addElement(new Rail([
+            new Point(-100, -100, 50),
+            new Point(-200, -100, 50),
+            new Point(-300, -150, 50),
         ]));
     }
 

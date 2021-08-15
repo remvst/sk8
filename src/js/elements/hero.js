@@ -51,19 +51,8 @@ class Hero extends Element {
 
         this.adjustPoints();
 
-        const leftFootKicker = this.world.elements.filter(element => element instanceof Kicker && element.contains(this.leftFoot))[0];
-        if (leftFootKicker) {
-            const relative = leftFootKicker.relativePosition(this.leftFoot);
-            const progress = 1 - (leftFootKicker.radius - relative.x) / leftFootKicker.length;
-            this.leftFoot.z = progress * leftFootKicker.height;
-        }
-
-        const rightFootKicker = this.world.elements.filter(element => element instanceof Kicker && element.contains(this.rightFoot))[0];
-        if (rightFootKicker) {
-            const relative = rightFootKicker.relativePosition(this.rightFoot);
-            const progress = 1 - (rightFootKicker.radius - relative.x) / rightFootKicker.length;
-            this.rightFoot.z = progress * rightFootKicker.height;
-        }
+        this.adjustFootPosition(this.leftFoot);
+        this.adjustFootPosition(this.rightFoot);
 
         const footDistance = dist(this.leftFoot, this.rightFoot);
         const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
@@ -101,6 +90,41 @@ class Hero extends Element {
         if (MOUSE_IS_DOWN || true) {
             this.x += elapsed * cos(this.angle) * 100;
             this.y += elapsed * sin(this.angle) * 100;
+        }
+
+        if (this.shouldFall()) {
+            // TODO
+            console.log('ya should fall');
+        }
+    }
+
+    adjustFootPosition(foot) {
+        const kicker = this.world.elements.filter(element => element instanceof Kicker && element.contains(foot))[0];
+        if (kicker) {
+            const relative = kicker.relativePosition(foot);
+            const progress = 1 - (kicker.radius - relative.x) / kicker.length;
+            foot.z = progress * kicker.height;
+        }
+    }
+
+    shouldFall() {
+        const footDistance = dist(this.leftFoot, this.rightFoot);
+        const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
+        if (abs(slope > 2)) {
+            return true;
+        }
+
+        for (const rail of this.world.elements) {
+            if (rail instanceof Rail) {
+                const collides = rail.collides(this);
+                if (collides) {
+                    this.x = collides.positionOnRail.x;
+                    this.y = collides.positionOnRail.y;
+                    this.z = collides.positionOnRail.z;
+
+                    this.velocityZ = 0;
+                }
+            }
         }
     }
 }
