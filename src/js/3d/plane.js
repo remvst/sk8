@@ -27,4 +27,10 @@ class Plane {
 
         fill();
     }
+
+    get zIndex() {
+        return this.points.reduce((acc, pt) => {
+            return min(acc, pt.zIndex);
+        }, Number.MAX_SAFE_INTEGER);
+    }
 }

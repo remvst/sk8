@@ -26,4 +26,6 @@ class Point {
         this.y = y;
         this.z = z;
     }
+
+    get zIndex() { return this.y; }
 }

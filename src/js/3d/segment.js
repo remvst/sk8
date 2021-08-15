@@ -23,4 +23,8 @@ class Segment {
         lineTo(this.p2.projectToShadow().x, this.p2.projectToShadow().y);
         stroke();
     }
+
+    get zIndex() {
+        return min(this.p1.zIndex, this.p2.zIndex);
+    }
 }

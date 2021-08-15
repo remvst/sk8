@@ -21,6 +21,10 @@ class World {
     addElement(element) {
         element.world = this;
         this.elements.push(element);
+
+        element.renderables.forEach((renderable) => {
+            this.renderables.push(renderable);
+        });
     }
 
     cycle(elapsed) {
@@ -28,14 +32,24 @@ class World {
         this.elements.forEach(e => e.cycle(elapsed));
     }
 
+    sortRenderables() {
+        // TODO can probably avoid sorting what's not visible
+
+        for (let i = 0 ; i < this.renderables.length - 1 ; i++) {
+            if (this.renderables[i].zIndex > this.renderables[i + 1].zIndex) {
+                const z = this.renderables[i];
+                this.renderables[i] = this.renderables[i + 1];
+                this.renderables[i + 1] = z;
+            }
+        }
+    }
+
     render() {
-        // wrap(() => {
-        //     fs('#f00');
-        //     fr(this.mouse);
-        // });
+        this.sortRenderables();
 
         this.elements.forEach(e => e.prerender());
-        this.elements.forEach(e => e.renderShadow());
-        this.elements.forEach(e => e.renderElement());
+
+        this.renderables.forEach(renderable => renderable.renderShadow());
+        this.renderables.forEach(renderable => renderable.renderActual());
     }
 }

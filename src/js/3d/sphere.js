@@ -17,4 +17,8 @@ class Sphere {
         arc(this.center.projectToShadow().x, this.center.projectToShadow().y, this.radius, 0, Math.PI * 2);
         fill();
     }
+
+    get zIndex() {
+        return this.center.zIndex;
+    }
 }
