@@ -1,50 +1,51 @@
-const initPosition = (x, y, angle = 0) => (element) => {
-    element.x = x;
-    element.y = y;
-    element.angle = angle;
-};
-
 class Element {
-    constructor(traits, init) {
-        this.x = this.y = this.age = this.angle = 0;
-
-        this.traits = traits;
-        this.traitMap = {};
-        this.init = init || (() => 0);
-    }
-
-    bind(panel) {
-        this.traits.forEach(trait => {
-            this.traitMap[trait.key] = trait;
-            trait.element = this;
-            trait.panel = this.panel = panel;
-        });
-
-        this.init(this);
-    }
-
-    trait(key) {
-        return this.traitMap[key];
+    constructor() {
+        this.x = this.y = this.z = this.angle = 0;
+        this.renderables = [];
+        this.points = [];
     }
 
     cycle(elapsed) {
-        this.age += elapsed;
-        this.traits.forEach(trait => trait.cycle(elapsed));
+
     }
 
-    render() {
-        // console.log('render element');
-        wrap(() => {
-            translate(this.x, this.y);
-            this.renderElement();
+    prerender() {
+        this.updateRenderables();
+    }
+
+    renderShadow() {
+        this.renderables.forEach((renderable) => {
+            renderable.renderShadow();
         });
     }
 
     renderElement() {
-        this.traits.forEach(trait => trait.render());
+        this.renderables.forEach((renderable) => {
+            renderable.renderActual();
+        });
     }
 
-    remove() {
-        this.panel.removeElement(this);
+    newPoint() {
+        const point = new Point();
+        this.points.push(point);
+        return point;
+    }
+
+    resetPoints() {
+        this.points.forEach(point => point.reset());
+    }
+
+    adjustPoints() {
+        this.points.forEach(pt => {
+            const currentAngle = atan2(pt.y, pt.x);
+            const currentDist = sqrt(pow(pt.x, 2) + pow(pt.y, 2));
+
+            pt.x = currentDist * cos(this.angle + currentAngle);
+            pt.y = currentDist * sin(this.angle + currentAngle);
+
+            pt.x += this.x;
+            pt.y += this.y;
+            pt.z += this.z;
+        });
     }
 }

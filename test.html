@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <style>
+            body { background: black; }
+        </style>
+
+    </head>
+
+    <body>
+        <canvas id=can></canvas>
+
+        <script>
+            can.width = 320;
+            can.height = 460;
+
+            const ctx = can.getContext('2d');
+
+            class Point {
+                constructor(x = 0, y = 0, z = 0) {
+                    this.x = x;
+                    this.y = y;
+                    this.z = z;
+                }
+
+                projectToActual() {
+                    return new Point(
+                        this.x,
+                        this.y - this.z * 0.25,
+                    );
+                }
+
+                projectToShadow() {
+                    return new Point(
+                        this.x + this.z * 0.25,
+                        this.y - this.z * 0.25,
+                    );
+                }
+            }
+
+            class Line {
+                constructor(p1, p2) {
+                    this.p1 = p1;
+                    this.p2 = p2;
+                }
+
+                renderActual() {
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#f00';
+                    // ctx.globalAlpha = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(this.p1.projectToActual().x, this.p1.projectToActual().y);
+                    ctx.lineTo(this.p2.projectToActual().x, this.p2.projectToActual().y);
+                    ctx.stroke();
+                }
+
+                renderShadow() {
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+                    // ctx.globalAlpha = 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(this.p1.projectToShadow().x, this.p1.projectToShadow().y);
+                    ctx.lineTo(this.p2.projectToShadow().x, this.p2.projectToShadow().y);
+                    ctx.stroke();
+                }
+            }
+
+            class Disk {
+                constructor(center, radius) {
+                    this.center = center;
+                    this.radius = radius;
+                }
+
+                renderActual() {
+                    // ctx.lineWidth = 2;
+                    ctx.fillStyle = '#f00';
+                    // ctx.globalAlpha = 1;
+                    ctx.beginPath();
+                    ctx.arc(this.center.projectToActual().x, this.center.projectToActual().y, this.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                renderShadow() {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                    // ctx.globalAlpha = 0.5;
+                    ctx.beginPath();
+                    ctx.arc(this.center.projectToShadow().x, this.center.projectToShadow().y, this.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            class Plane {
+                constructor(points, color = '#00f') {
+                    this.points = points;
+                    this.color = color;
+                }
+
+                renderActual() {
+                    ctx.fillStyle = this.color;
+                    // ctx.globalAlpha = 1;
+                    ctx.beginPath();
+
+                    this.points.forEach(pt => {
+                        ctx.lineTo(pt.projectToActual().x, pt.projectToActual().y);
+                    });
+
+                    ctx.fill();
+                }
+
+                renderShadow() {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+                    // ctx.globalAlpha = 0.5;
+                    ctx.beginPath();
+
+                    this.points.forEach(pt => {
+                        ctx.lineTo(pt.projectToShadow().x, pt.projectToShadow().y);
+                    });
+
+                    ctx.fill();
+                }
+            }
+
+            const floorRail = new Line(
+                new Point(100, 100, 50),
+                new Point(200, 200, 50),
+            );
+
+            class Hero {
+
+                constructor() {
+                    this.x = 200;
+                    this.y = 100;
+                    this.z = 0;
+
+                    this.angle = 0;
+
+                    this.velocityZ = 0;
+                }
+
+                computeRenderables() {
+                    const animationRatio = (Date.now() % 1000) / 1000;
+                    // const angle = animationRatio * Math.PI;
+                    const angle = this.angle;
+                    // console.log(angle);
+
+                    const leftFoot = new Point( -10, 0, 0);
+                    const rightFoot = new Point(10, 0, 0);
+                    const hips = new Point(0, 0, 50);
+                    const shoulders = new Point(0, 0, 100);
+                    const leftHand = new Point(-10, 0, 50);
+                    const rightHand = new Point(10, 0, 50);
+                    const headCenter = new Point(0, 0, 120);
+
+                    const anglePlus90 = angle + Math.PI / 2;
+
+                    const boardLeft = -20;
+                    const boardRight = 20;
+                    const boardTop = -5;
+                    const boardBottom = 5;
+
+                    // const boardLeftTop = new Point(boardLeft, boardTop);
+                    // const boardLeftBottom = new Point(boardLeft, boardBottom);
+                    // const boardRightTop = new Point(boardRight, boardTop);
+                    // const boardRightBottom = new Point(boardRight, boardBottom);
+                    // const boardEnd = new Point(boardRight + 5, 0);
+
+                    const addedZ = Math.sin(animationRatio * Math.PI * 2) * 50 + 50;
+
+                    const characterPoints = [
+                        leftFoot,
+                        rightFoot,
+                        hips,
+                        shoulders,
+                        leftHand,
+                        rightHand,
+                        headCenter,
+                        // boardLeftTop,
+                        // boardLeftBottom,
+                        // boardRightTop,
+                        // boardRightBottom,
+                        // boardEnd,
+                    ];
+                    characterPoints.forEach(pt => {
+                        const currentAngle = Math.atan2(pt.y, pt.x);
+                        const currentDist = Math.sqrt(Math.pow(pt.x, 2) + Math.pow(pt.y, 2));
+
+                        pt.x = currentDist * Math.cos(angle + currentAngle);
+                        pt.y = currentDist * Math.sin(angle + currentAngle);
+
+                        pt.x += this.x;
+                        pt.y += this.y;
+                        pt.z += this.z;
+                    });
+
+                    if (kicker1.contains(leftFoot)) {
+                        const relative = kicker1.relativePosition(leftFoot);
+                        const progress = 1 - (kicker1.radius - relative.x) / kicker1.length;
+                        leftFoot.z = progress * kicker1.height;
+                        // console.log(leftFoot.z);
+                    }
+
+                    if (kicker1.contains(rightFoot)) {
+                        const relative = kicker1.relativePosition(rightFoot);
+                        const progress = 1 - (kicker1.radius - relative.x) / kicker1.length;
+                        rightFoot.z = progress * kicker1.height;
+                        // console.log(rightFoot.z);
+                    }
+
+                    // const boardLeftTop = new Point(leftF, boardTop);
+                    // const boardLeftBottom = new Point(boardLeft, boardBottom);
+                    // const boardRightTop = new Point(boardRight, boardTop);
+                    // const boardRightBottom = new Point(boardRight, boardBottom);
+
+                    const footDistance = dist(leftFoot, rightFoot);
+                    const slope = (rightFoot.z - leftFoot.z) / footDistance;
+
+                    console.log(slope);
+
+                    const boardStartTop = new Point(
+                        leftFoot.x - Math.cos(this.angle) * 20 - Math.cos(anglePlus90) * 10,
+                        leftFoot.y - Math.sin(this.angle) * 20 - Math.sin(anglePlus90) * 10,
+                        leftFoot.z - slope * 20
+                    );
+                    const boardStartBottom = new Point(
+                        leftFoot.x - Math.cos(this.angle) * 20 + Math.cos(anglePlus90) * 10,
+                        leftFoot.y - Math.sin(this.angle) * 20 + Math.sin(anglePlus90) * 10,
+                        leftFoot.z - slope * 20
+                    );
+                    const boardEndBottom = new Point(
+                        rightFoot.x + Math.cos(this.angle) * 20 + Math.cos(anglePlus90) * 10,
+                        rightFoot.y + Math.sin(this.angle) * 20 + Math.sin(anglePlus90) * 10,
+                        rightFoot.z + slope * 20
+                    );
+                    const boardEndTop = new Point(
+                        rightFoot.x + Math.cos(this.angle) * 20 - Math.cos(anglePlus90) * 10,
+                        rightFoot.y + Math.sin(this.angle) * 20 - Math.sin(anglePlus90) * 10,
+                        rightFoot.z + slope * 20
+                    );
+
+                    return [
+
+                        // new Plane([boardLeftTop, boardLeftBottom, boardRightBottom, boardEnd, boardRightTop], '#f80'),
+
+                        // new Line(boardStartTop, boardEndBottom),
+                        // new Line(boardStartBottom, boardEndTop),
+                        new Line(boardEndBottom, boardEndTop),
+                        new Line(boardStartBottom, boardStartTop),
+                        new Line(boardStartBottom, boardEndBottom),
+                        new Line(boardStartTop, boardEndTop),
+                        // new Line(boardStartBottom, boardEndBottom),
+
+                        // Character
+                        new Line(leftFoot, hips),
+                        new Line(rightFoot, hips),
+                        new Line(hips, shoulders),
+                        new Line(shoulders, leftHand),
+                        new Line(shoulders, rightHand),
+                        new Disk(headCenter, 5),
+                    ]
+                }
+
+                cycle(elapsed) {
+                    this.velocityZ -= elapsed * 10;
+                    this.z = Math.max(0, this.z + this.velocityZ);
+
+                    if (this.z === 0) this.velocityZ = 0;
+                    // console.log(this.z);
+
+                    if (!mouseIsDown) return;
+
+                    this.x += elapsed * Math.cos(this.angle) * 100;
+                    this.y += elapsed * Math.sin(this.angle) * 100;
+                }
+            }
+
+            const dist = (a, b) => Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+            const toDeg = angle => angle / Math.PI * 180;
+            const between = (a, b, c) => b >= a && b <= c;
+
+            class Kicker {
+
+                constructor() {
+                    this.x = 200;
+                    this.y = 200;
+                    this.z = 0;
+
+                    this.angle = 0;
+
+                    this.length = 50;
+                    this.height = 100;
+                    this.radius = this.length / 2;
+                }
+
+                cycle(elapsed) {
+                    const animationRatio = (Date.now() % 5000) / 5000;
+                    // this.angle = animationRatio * Math.PI;
+
+                    // const distanceToEdge = this.distanceToEdge(hero);
+                    // if (distanceToEdge > 0) {
+                    //     hero.z = 0;
+                    //     return;
+                    // }
+                    // // hero.z = Math.max(0, distanceToEdge / this.length);
+                    // // console.log(distanceToEdge / this.length);
+                    // const ratio = Math.max(0, Math.min(1, Math.abs(distanceToEdge) / this.length));
+                    // hero.z = (1 - ratio) * this.height;
+                    // console.log(hero.z, distanceToEdge);
+
+                    if (this.contains(hero)) {
+                        const relative = this.relativePosition(hero);
+                        const progress = 1 - (this.radius - relative.x) / this.length;
+                        hero.z = progress * this.height;
+                        hero.velocityZ = 0;
+                    }
+
+
+                    // const relative = this.relativePosition(hero);
+                    //
+                    // if ()
+
+                    // hero.z = z;
+                    // console.log(z);
+                }
+
+                contains(pos) {
+                    const relative = this.relativePosition(pos);
+                    return between(-this.radius, relative.x, this.radius) &&
+                        between(-this.radius, relative.y, this.radius);
+                }
+
+                distanceToEdge(pos) {
+                    const distance = dist(pos, this.edgeCenter());
+                    const angleToPos = Math.atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x)
+
+                    const angle = Math.atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x) - this.angle;
+                    const distanceToEdge = Math.cos(angle) * distance;
+                    return distanceToEdge;
+                }
+
+                relativePosition(pos) {
+                    const pt = new Point(pos.x, pos.y, pos.z);
+                    pt.x -= this.x;
+                    pt.y -= this.y;
+                    pt.z -= this.z;
+
+                    // const r = dist(pos, pt);
+
+                    const rotated = new Point();
+                    rotated.x = pt.x * Math.cos(this.angle) + pt.y * Math.sin(this.angle);
+                    rotated.y = -pt.x * Math.sin(this.angle) + pt.y * Math.cos(this.angle);
+
+                    // pt.x += r * Math.cos()
+
+                    return rotated;
+                }
+
+                edgeCenter() {
+                    return new Point(this.x + Math.cos(this.angle) * 25, this.y + Math.sin(this.angle) * 25);
+                }
+
+                computeRenderables() {
+                    const animationRatio = (Date.now() % 5000) / 5000;
+                    const angle = this.angle;
+
+                    const radius = this.length / 2;
+
+                    const leftTop = new Point(-radius, -radius, 0);
+                    const leftBottom = new Point(-radius, radius, 0);
+                    const rightTop = new Point(radius, -radius, 0);
+                    const rightBottom = new Point(radius, radius, 0);
+                    const highTop = new Point(radius, -radius, this.height);
+                    const highBottom = new Point(radius, radius, this.height);
+
+                    [
+                        leftTop,
+                        leftBottom,
+                        rightTop,
+                        rightBottom,
+                        highTop,
+                        highBottom,
+                    ].forEach((pt) => {
+                        const currentAngle = Math.atan2(pt.y, pt.x);
+                        const currentDist = Math.sqrt(Math.pow(pt.x, 2) + Math.pow(pt.y, 2));
+
+                        // console.log(currentDist);
+
+                        pt.x = currentDist * Math.cos(angle + currentAngle);
+                        pt.y = currentDist * Math.sin(angle + currentAngle);
+                        // pt.y = Math.sin(angle) * pt.y + Math.cos(angle) * pt.x;
+
+                        pt.x += this.x;
+                        pt.y += this.y;
+                        pt.z += this.z;
+                    });
+
+
+                    return [
+                        new Line(leftTop, leftBottom),
+                        new Line(rightTop, rightBottom),
+                        // new Line(leftTop, rightTop),
+                        // new Line(leftBottom, rightBottom),
+                        new Line(highTop, highBottom),
+                        new Line(leftTop, highTop),
+                        new Line(leftBottom, highBottom),
+                        new Line(highTop, rightTop),
+                        new Line(highBottom, rightBottom),
+
+                        new Plane([leftTop, highTop, highBottom, leftBottom]),
+
+                        new Disk(this.edgeCenter(), 10),
+                    ];
+                }
+
+                render() {
+                    ctx.save();
+
+                    // ctx.globalAlpha = this.contains(hero) ? 1 : 0.5;
+
+                    const r = this.computeRenderables();
+                    r.forEach((line) => {
+                        line.renderShadow();
+                    });
+
+                    r.forEach((line) => {
+                        line.renderActual();
+                    });
+
+                    const distanceToEdge = this.distanceToEdge(hero);
+                    ctx.beginPath();
+                    ctx.moveTo(this.edgeCenter().x, this.edgeCenter().y);
+                    ctx.lineTo(
+                        this.edgeCenter().x + Math.cos(this.angle) * distanceToEdge,
+                        this.edgeCenter().y + Math.sin(this.angle) * distanceToEdge,
+                    );
+                    ctx.stroke();
+
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle);
+                    const relativePosition = this.relativePosition(hero);
+                    ctx.fillStyle = 'purple';
+                    ctx.fillRect(relativePosition.x - 5, relativePosition.y - 5, 10, 10);
+                    ctx.restore();
+
+                    ctx.restore();
+                }
+            }
+
+            const lines = [
+                // Rail
+                new Line(
+                    new Point(100, 100, 50),
+                    new Point(200, 200, 50),
+                ),
+                new Line(
+                    new Point(200, 200, 50),
+                    new Point(250, 200, 50),
+                ),
+                new Line(
+                    new Point(100, 100, 50),
+                    new Point(100, 100, 0),
+                ),
+                new Line(
+                    new Point(200, 200, 50),
+                    new Point(200, 200, 0),
+                ),
+                new Line(
+                    new Point(250, 200, 50),
+                    new Point(250, 200, 0),
+                ),
+
+                // Kicker
+                // new Line(
+                //     new Point(100, 300, 0),
+                //     new Point(150, 300, 0),
+                // ),
+                // new Line(
+                //     new Point(100, 250, 0),
+                //     new Point(150, 250, 0),
+                // ),
+                // new Line(
+                //     new Point(100, 300, 0),
+                //     new Point(100, 250, 0),
+                // ),
+                // new Line(
+                //     new Point(150, 300, 0),
+                //     new Point(150, 250, 0),
+                // ),
+                // new Line(
+                //     new Point(110, 300, 50),
+                //     new Point(140, 300, 50),
+                // ),
+                // new Line(
+                //     new Point(100, 250, 0),
+                //     new Point(110, 300, 50),
+                // ),
+                // new Line(
+                //     new Point(150, 250, 0),
+                //     new Point(140, 300, 50),
+                // ),
+                // new Line(
+                //     new Point(150, 300, 0),
+                //     new Point(140, 300, 50),
+                // ),
+                // new Line(
+                //     new Point(100, 300, 0),
+                //     new Point(110, 300, 50),
+                // ),
+            ];
+
+            const hero = new Hero();
+            const kicker1 = new Kicker();
+
+            const kicker2 = new Kicker();
+            kicker2.x -= 50;
+            kicker2.y += 100;
+            kicker2.angle = Math.PI / 4;
+
+            const mousePosition = {'x': 0, 'y': 0};
+            let mouseIsDown = false;
+            onmousemove = e => {
+                const canvasCoords = can.getBoundingClientRect();
+
+                mousePosition.x = can.width * (e.pageX - canvasCoords.left) / canvasCoords.width;
+                mousePosition.y = can.height * (e.pageY - canvasCoords.top) / canvasCoords.height;
+
+                hero.angle = Math.atan2(mousePosition.y - hero.y, mousePosition.x - hero.x);
+            }
+            onmousedown = () => mouseIsDown = true;
+            onmouseup = () => mouseIsDown = false;
+
+            let lastFrame = Date.now();
+
+            function frame() {
+                const now = Date.now();
+                const elapsed = (now - lastFrame) / 1000;
+                lastFrame = now;
+
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(0, 0, can.width, can.height);
+
+                lines.forEach((line) => {
+                    line.renderShadow();
+                });
+
+                lines.forEach((line) => {
+                    line.renderActual();
+                });
+
+                hero.cycle(elapsed);
+                kicker1.cycle(elapsed);
+                kicker2.cycle(elapsed);
+
+                kicker1.render();
+                kicker2.render();
+
+                const characterLines = hero.computeRenderables();
+
+                characterLines.forEach((line) => {
+                    line.renderShadow();
+                });
+
+                characterLines.forEach((line) => {
+                    line.renderActual();
+                });
+
+                requestAnimationFrame(frame);
+            }
+
+            frame();
+
+        </script>
+    </body>
+
+</html>
