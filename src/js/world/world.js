@@ -14,7 +14,8 @@ class World {
         this.addElement(kicker);
 
         const kicker2 = new Kicker();
-        kicker2.y = -200;
+        kicker2.y = -175;
+        kicker2.x = -350;
         kicker2.angle = PI / 4;
         this.addElement(kicker2);
 

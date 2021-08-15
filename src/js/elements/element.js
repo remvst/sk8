@@ -1,12 +1,13 @@
 class Element {
     constructor() {
         this.x = this.y = this.z = this.angle = 0;
+        this.previous = new Point();
         this.renderables = [];
         this.points = [];
     }
 
     cycle(elapsed) {
-
+        this.previous.set(this.x, this.y, this.z);
     }
 
     prerender() {
@@ -14,7 +15,7 @@ class Element {
     }
 
     updateRenderables() {
-        
+
     }
 
     newPoint() {

@@ -37,8 +37,8 @@ class Kicker extends Element {
             if (element instanceof Hero && this.contains(element)) {
                 const relative = this.relativePosition(element);
                 const progress = 1 - (this.radius - relative.x) / this.length;
-                element.z = progress * this.height;
-                element.velocityZ = 0;
+                element.z = Math.max(element.z, progress * this.height);
+                element.velocityZ = Math.max(element.velocityZ, 0);
             }
         });
     }

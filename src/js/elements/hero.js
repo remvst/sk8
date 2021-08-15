@@ -17,6 +17,9 @@ class Hero extends Element {
         this.boardEndBottom = this.newPoint();
         this.boardEndTop = this.newPoint();
 
+        this.squatting = false;
+        this.grinding = false;
+
         this.renderables = [
             // Board
             new Segment(this.boardEndBottom, this.boardEndTop),
@@ -80,6 +83,8 @@ class Hero extends Element {
     }
 
     cycle(elapsed) {
+        super.cycle(elapsed);
+
         this.velocityZ -= elapsed * 10;
         this.z = max(0, this.z + this.velocityZ);
 
@@ -94,8 +99,14 @@ class Hero extends Element {
 
         if (this.shouldFall()) {
             // TODO
-            console.log('ya should fall');
+            // console.log('ya should fall');
         }
+
+        const squatting = MOUSE_IS_DOWN;
+        if (this.squatting && !squatting) {
+            this.jump();
+        }
+        this.squatting = squatting;
     }
 
     adjustFootPosition(foot) {
@@ -103,8 +114,13 @@ class Hero extends Element {
         if (kicker) {
             const relative = kicker.relativePosition(foot);
             const progress = 1 - (kicker.radius - relative.x) / kicker.length;
-            foot.z = progress * kicker.height;
+            foot.z = Math.max(foot.z, progress * kicker.height);
         }
+    }
+
+    jump() {
+        this.velocityZ = 5;
+        this.grinding = false;
     }
 
     shouldFall() {
@@ -114,17 +130,39 @@ class Hero extends Element {
             return true;
         }
 
+        let collidesWithRail = false;
+
         for (const rail of this.world.elements) {
             if (rail instanceof Rail) {
                 const collides = rail.collides(this);
                 if (collides) {
-                    this.x = collides.positionOnRail.x;
-                    this.y = collides.positionOnRail.y;
-                    this.z = collides.positionOnRail.z;
+                    collidesWithRail = true;
 
-                    this.velocityZ = 0;
+                    if (!this.grinding) {
+                        if (this.z <= collides.positionOnRail.z) {
+                            if (this.previous.z >= collides.positionOnRail.z) {
+                                this.grinding = true;
+                                console.log('we grind now!');
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
+
+                    if (this.grinding) {
+                        this.x = collides.positionOnRail.x;
+                        this.y = collides.positionOnRail.y;
+                        this.z = collides.positionOnRail.z;
+
+                        this.velocityZ = 0;
+                    }
                 }
             }
+        }
+
+        if (!collidesWithRail && this.grinding) {
+            console.log('stop grinding');
+            this.grinding = false;
         }
     }
 }
