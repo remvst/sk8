@@ -3,8 +3,8 @@ class Kicker extends Element {
     constructor() {
         super();
 
-        this.length = 50;
-        this.height = 100;
+        this.length = 200;
+        this.height = 400;
         this.radius = this.length / 2;
 
         this.leftTop = this.newPoint();
@@ -16,15 +16,15 @@ class Kicker extends Element {
 
 
         this.renderables = [
-            new Segment(this.leftTop, this.leftBottom),
-            new Segment(this.rightTop, this.rightBottom),
+            new Segment(this.leftTop, this.leftBottom, '#000', 8),
+            new Segment(this.rightTop, this.rightBottom, '#000', 8),
             // new Segment(this.leftTop, this.rightTop),
             // new Segment(this.leftBottom, this.rightBottom),
-            new Segment(this.highTop, this.highBottom),
-            new Segment(this.leftTop, this.highTop),
-            new Segment(this.leftBottom, this.highBottom),
-            new Segment(this.highTop, this.rightTop),
-            new Segment(this.highBottom, this.rightBottom),
+            new Segment(this.highTop, this.highBottom, '#000', 8),
+            new Segment(this.leftTop, this.highTop, '#000', 8),
+            new Segment(this.leftBottom, this.highBottom, '#000', 8),
+            new Segment(this.highTop, this.rightTop, '#000', 8),
+            new Segment(this.highBottom, this.rightBottom, '#000', 8),
 
             new Plane([this.leftTop, this.highTop, this.highBottom, this.leftBottom]),
 
@@ -37,8 +37,12 @@ class Kicker extends Element {
             if (element instanceof Hero && this.contains(element)) {
                 const relative = this.relativePosition(element);
                 const progress = 1 - (this.radius - relative.x) / this.length;
-                element.z = Math.max(element.z, progress * this.height);
-                element.velocityZ = Math.max(element.velocityZ, 0);
+                const kickerZ = progress * this.height;
+
+                if (element.z < kickerZ) {
+                    element.z = kickerZ;
+                    element.velocityZ = Math.max(element.velocityZ, 0);
+                }
             }
         });
     }

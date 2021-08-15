@@ -20,16 +20,16 @@ class World {
         this.addElement(kicker2);
 
         this.addElement(new Rail([
-            new Point(100, 100, 50),
-            new Point(200, 200, 50),
-            new Point(300, 200, 200),
-            new Point(400, 200, 200),
+            new Point(400, 400, 200),
+            new Point(800, 800, 200),
+            new Point(1200, 400, 400),
+            new Point(1600, 400, 400),
         ]));
 
         this.addElement(new Rail([
-            new Point(-100, -100, 50),
-            new Point(-200, -100, 50),
-            new Point(-300, -150, 50),
+            new Point(-400, -400, 200),
+            new Point(-800, -400, 200),
+            new Point(-1200, -600, 200),
         ]));
     }
 
@@ -64,7 +64,7 @@ class World {
 
         this.elements.forEach(e => e.prerender());
 
-        this.renderables.forEach(renderable => renderable.renderShadow());
-        this.renderables.forEach(renderable => renderable.renderActual());
+        this.renderables.forEach(renderable => wrap(() => renderable.renderShadow()));
+        this.renderables.forEach(renderable => wrap(() => renderable.renderActual()));
     }
 }

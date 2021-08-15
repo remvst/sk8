@@ -1,11 +1,12 @@
 class Sphere {
-    constructor(center, radius) {
+    constructor(center, radius, color = '#f00') {
         this.center = center;
         this.radius = radius;
+        this.color = color;
     }
 
     renderActual() {
-        R.fillStyle = '#f00';
+        R.fillStyle = this.color;
         beginPath();
         arc(this.center.projectToActual().x, this.center.projectToActual().y, this.radius, 0, Math.PI * 2);
         fill();
