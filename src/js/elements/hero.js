@@ -35,8 +35,10 @@ class Hero extends Element {
 
         this.momentum = new Point();
 
-        this.renderables = [
+        this.safePool = [new Point(), new Point()];
+        this.nextSafeCheck = 0;
 
+        this.renderables = [
             // Wheels
             new Sphere(this.wheelStartTop, 8, '#fff'),
             new Sphere(this.wheelStartBottom, 8, '#fff'),
@@ -184,7 +186,12 @@ class Hero extends Element {
 
         setTimeout(() => {
             this.world.removeElement(copy);
-            this.world.addElement(this);
+
+            const newHero = new Hero();
+            newHero.x = this.safePool[0].x;
+            newHero.y = this.safePool[0].y;
+            newHero.z = this.safePool[0].z;
+            this.world.addElement(newHero);
         }, 2000);
     }
 
@@ -245,6 +252,14 @@ class Hero extends Element {
         if (this.shouldFall()) {
             this.bail();
         }
+
+        if ((this.nextSafeCheck -= elapsed) <= 0 && this.z === 0) {
+            this.nextSafeCheck = 0.5;
+
+            const point = this.safePool.shift();
+            point.set(this.x, this.y, this.z);
+            this.safePool.push(point);
+        }
     }
 
     kickerUnder(position) {
@@ -296,39 +311,56 @@ class Hero extends Element {
 
         for (const rail of this.world.elements) {
             if (rail instanceof Rail) {
-                const collides = rail.collides(this);
-                if (collides) {
-                    collidesWithRail = true;
+                const grindCollision = this.velocityZ < 0 || this.grinding ? rail.collides(this, RAIL_GRIND_PADDING) : null;
+                const hardCollision = this.grinding ? null : rail.collides(this, RAIL_BAIL_PADDING);
 
-                    if (!this.grinding) {
-                        if (this.z <= collides.positionOnRail.z) {
-                            if (this.previous.z >= collides.positionOnRail.z) { // TODO also check for momentum direction
-                                this.startGrinding();
-                            } else {
-                                return true;
-                            }
-                        }
+                collidesWithRail = collidesWithRail || grindCollision || hardCollision;
+
+                if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
+                    this.bail();
+                    break;
+                }
+
+                if (grindCollision) {
+                    if (!wasGrinding && sign(grindCollision.positionOnRail.z - this.z) == sign(grindCollision.positionOnRail.z - this.previous.z)) {
+                        continue;
                     }
 
+                    collidesWithRail = true;
+
+                    if (!wasGrinding) {
+                        this.startGrinding();
+                    }
+
+                    // if (!this.grinding && this.velocityZ < 0) {
+                    //     if (this.z <= collides.positionOnRail.z) {
+                    //         if (this.previous.z >= collides.positionOnRail.z) { // TODO also check for momentum direction
+                    //             this.startGrinding();
+                    //         } else {
+                    //             return true;
+                    //         }
+                    //     }
+                    // }
+
                     if (this.grinding && !wasGrinding) {
-                        const clicks = Math.round((this.angle - collides.grindingAngle) / (PI / 2));
+                        const clicks = Math.round((this.angle - grindCollision.grindingAngle) / (PI / 2));
                         this.grindingOffsetAngle = clicks * PI / 2;
                     }
 
                     if (this.grinding) {
-                        this.grindingAngle = collides.grindingAngle;
+                        this.grindingAngle = grindCollision.grindingAngle;
 
-                        this.momentum.x = cos(collides.grindingAngle);
-                        this.momentum.y = sin(collides.grindingAngle);
+                        this.momentum.x = cos(grindCollision.grindingAngle);
+                        this.momentum.y = sin(grindCollision.grindingAngle);
 
-                        if (abs(normalize(collides.grindingAngle - currentMomentumAngle)) > PI / 2) {
+                        if (abs(normalize(grindCollision.grindingAngle - currentMomentumAngle)) > PI / 2) {
                             this.momentum.x *= -1;
                             this.momentum.y *= -1;
                         }
 
-                        this.x = collides.positionOnRail.x;
-                        this.y = collides.positionOnRail.y;
-                        this.z = collides.positionOnRail.z;
+                        this.x = grindCollision.positionOnRail.x;
+                        this.y = grindCollision.positionOnRail.y;
+                        this.z = grindCollision.positionOnRail.z;
 
                         this.velocityZ = 0;
                     }
@@ -336,7 +368,7 @@ class Hero extends Element {
             }
         }
 
-        if (!collidesWithRail && this.grinding) {
+        if (!collidesWithRail && wasGrinding) {
             console.log('stop grinding');
             this.grinding = false;
         }

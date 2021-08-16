@@ -11,14 +11,14 @@ class Rail extends Element {
 
             // Link to next
             if (nextPoint) {
-                this.renderables.push(new Segment(current, nextPoint, '#000', 8));
+                this.renderables.push(new Segment(current, nextPoint, '#fff', 8));
             }
 
             // Link to ground
             this.renderables.push(new Segment(
                 current,
                 new Point(current.x, current.y, 0),
-                '#000', 8
+                '#fff', 8
             ));
         }
 
@@ -37,7 +37,7 @@ class Rail extends Element {
         }));
     }
 
-    collides(hero) {
+    collides(hero, padding) {
         let res = null;
 
         for (let i = 0 ; i < this.points.length - 1 ; i++) {
@@ -51,8 +51,8 @@ class Rail extends Element {
             const relativeProgress = relativePosition.x / distance;
 
             if (
-                between(-RAIL_PADDING, relativePosition.x, distance + RAIL_PADDING) &&
-                between(-RAIL_PADDING, relativePosition.y, RAIL_PADDING)
+                between(-padding, relativePosition.x, distance + padding) &&
+                between(-padding, relativePosition.y, padding)
                 // TODO add z check for collision
             ) {
                 res = {
