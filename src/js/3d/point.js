@@ -7,15 +7,15 @@ class Point {
         this.actualPoint = this.actualPoint || new Point();
         return this.actualPoint.set(
             this.x,
-            this.y - this.z * 0.25,
+            this.y - this.z * 0.4,
         );
     }
 
     projectToShadow() {
         this.shadowPoint = this.shadowPoint || new Point();
         return this.shadowPoint.set(
-            this.x + this.z * 0.25,
-            this.y - this.z * 0.25,
+            this.x + this.z * 0.2,
+            this.y - this.z * 0.2,
         );
     }
 

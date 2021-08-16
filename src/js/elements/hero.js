@@ -65,17 +65,17 @@ class Hero extends Element {
         this.resetPoints();
 
         const kneeForwardFactor = this.positionSign * (0.5 + this.squatFactor * 0.5);
-        const halfLegLength = 100 - kneeForwardFactor * 40;
+        const halfLegLength = 100 - kneeForwardFactor * 60;
 
         this.leftFoot.set( -20, 0, 0);
         this.rightFoot.set(20, 0, 0);
         this.leftKnee.set( -15, kneeForwardFactor * 20, halfLegLength);
         this.rightKnee.set(15, kneeForwardFactor * 20, halfLegLength);
         this.hips.set(0, -kneeForwardFactor * 15, halfLegLength * 2);
-        this.shoulders.set(0, kneeForwardFactor * 10, this.hips.z + 200 - kneeForwardFactor * 10);
-        this.leftHand.set(-40, kneeForwardFactor * 10, this.shoulders.z - 200);
-        this.rightHand.set(40, kneeForwardFactor * 10, this.shoulders.z - 200);
-        this.headCenter.set(0, this.shoulders.y + kneeForwardFactor * 20, this.shoulders.z + 50);
+        this.shoulders.set(0, kneeForwardFactor * 10, this.hips.z + 150 - kneeForwardFactor * 10);
+        this.leftHand.set(-40, kneeForwardFactor * 10, this.shoulders.z + (this.landed ? -100 : 40));
+        this.rightHand.set(40, kneeForwardFactor * 10, this.shoulders.z + (this.landed ? -100 : 40));
+        this.headCenter.set(0, this.shoulders.y + kneeForwardFactor * 20, this.shoulders.z + 50 - kneeForwardFactor * 10);
 
         this.adjustPoints();
 
