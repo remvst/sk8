@@ -5,9 +5,7 @@ class World {
 
         this.mousePosition = new Point();
 
-        const hero = new Hero();
-        this.hero = hero;
-        this.addElement(hero);
+        this.addElement(new Hero());
 
         const kicker = new Kicker();
         kicker.y = 200;
@@ -41,12 +39,21 @@ class World {
     }
 
     addElement(element) {
+        if (element instanceof Hero) {
+            this.hero = element;
+        }
+
         element.world = this;
         this.elements.push(element);
 
         element.renderables.forEach((renderable) => {
             this.renderables.push(renderable);
         });
+    }
+
+    removeElement(element) {
+        const index = this.elements.indexOf(element);
+        if (index >= 0) this.elements.splice(index, 1);
     }
 
     cycle(elapsed) {

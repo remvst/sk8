@@ -164,12 +164,28 @@ class Hero extends Element {
         }
 
         if (angleDiff > PI / 6) {
-            console.log('fall!');
+            this.bail();
         }
 
         interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
         interp(this, 'squatFactor', 0, 1, 0.2);
         interp(this, 'handsZ', this.handsZ, -100, 0.2);
+    }
+
+    bail() {
+        const copy = new Element();
+        copy.renderables = this.renderables.map(renderable => renderable.clone());
+        copy.renderables.forEach(renderable => {
+            renderable.animateToGround(this);
+        });
+        this.world.addElement(copy);
+
+        this.world.removeElement(this);
+
+        setTimeout(() => {
+            this.world.removeElement(copy);
+            this.world.addElement(this);
+        }, 2000);
     }
 
     cycle(elapsed) {
@@ -216,11 +232,6 @@ class Hero extends Element {
             this.y += elapsed * this.momentum.y * speed;
         }
 
-        if (this.shouldFall()) {
-            // TODO
-            // console.log('ya should fall');
-        }
-
         if (this.landed || this.grinding) {
             const squatting = MOUSE_IS_DOWN;
             if (this.squatting && !squatting) {
@@ -229,6 +240,10 @@ class Hero extends Element {
                 interp(this, 'squatFactor', 0, 1, 0.2);
             }
             this.squatting = squatting;
+        }
+
+        if (this.shouldFall()) {
+            this.bail();
         }
     }
 

@@ -1,5 +1,6 @@
-class Plane {
+class Plane extends Renderable {
     constructor(points, color = '#00f') {
+        super();
         this.points = points;
         this.color = color;
     }
@@ -32,5 +33,16 @@ class Plane {
         return this.points.reduce((acc, pt) => {
             return min(acc, pt.zIndex);
         }, Number.MAX_SAFE_INTEGER);
+    }
+
+    clone() {
+        return new Plane(
+            this.points.map(point => point.clone()),
+            this.color,
+        );
+    }
+
+    animateToGround(origin) {
+        this.makePointsFall(this.points, origin);
     }
 }
