@@ -234,7 +234,7 @@ class Hero extends Element {
         if (this.z === 0) this.velocityZ = 0;
 
         if (MOUSE_IS_DOWN || true) {
-            const speed = 200;
+            const speed = 400;
             this.x += elapsed * this.momentum.x * speed;
             this.y += elapsed * this.momentum.y * speed;
         }
