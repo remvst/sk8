@@ -61,6 +61,7 @@ class Rail extends Element {
                         relativeProgress * (nextPoint.y - current.y) + current.y,
                         relativeProgress * (nextPoint.z - current.z) + current.z,
                     ),
+                    'grindingAngle': angleBetween(current, nextPoint),
                 };
 
                 if (between(0, relativePosition.x, distance)) {
@@ -71,7 +72,7 @@ class Rail extends Element {
         return res;
     }
 
-    relativePosition(p1, p2, pos) {
+    relativePosition(p1, p2, pos) { // TODO dupe
         const angle = angleBetween(p1, p2);
 
         const pt = new Point(pos.x, pos.y, pos.z);

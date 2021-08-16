@@ -27,8 +27,10 @@ class Hero extends Element {
         this.squatting = false;
         this.squatFactor = 0;
         this.grinding = false;
+        this.grindingAngle = 0;
         this.landed = true;
         this.positionSign = 1;
+        this.handsZ = -100;
 
         this.momentum = new Point();
 
@@ -57,8 +59,7 @@ class Hero extends Element {
             new Segment(this.shoulders, this.rightHand, '#fff', 16),
             new Segment(this.shoulders, this.headCenter, '#fff', 16),
             new Sphere(this.headCenter, 20, '#fff'),
-        ]
-
+        ];
     }
 
     updateRenderables() {
@@ -73,12 +74,12 @@ class Hero extends Element {
         this.rightKnee.set(15, kneeForwardFactor * 20, halfLegLength);
         this.hips.set(0, -kneeForwardFactor * 15, halfLegLength * 2);
         this.shoulders.set(0, kneeForwardFactor * 10, this.hips.z + 150 - kneeForwardFactor * 10);
-        this.leftHand.set(-40, kneeForwardFactor * 10, this.shoulders.z + (this.landed ? -100 : 40));
-        this.rightHand.set(40, kneeForwardFactor * 10, this.shoulders.z + (this.landed ? -100 : 40));
-        this.headCenter.set(0, this.shoulders.y + kneeForwardFactor * 20, this.shoulders.z + 50 - kneeForwardFactor * 10);
+        this.leftHand.set(-40, kneeForwardFactor * 10, this.shoulders.z + this.handsZ);
+        this.rightHand.set(40, kneeForwardFactor * 10, this.shoulders.z + this.handsZ);
+        this.headCenter.set(0, this.shoulders.y + kneeForwardFactor * 20, this.shoulders.z + 20 - kneeForwardFactor * 10);
 
         this.points.forEach(point => {
-            point.x *= this.positionSign;
+            // point.x *= this.positionSign;
             point.y *= this.positionSign;
         });
 
@@ -91,14 +92,14 @@ class Hero extends Element {
         let slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
 
         if (!this.landed) {
-            slope = PI / 4;
+            // slope = PI / 4 * this.positionSign;
         }
 
         this.leftFoot.z = this.leftFoot.z - Math.sin(slope) * footDistance / 2;
         this.rightFoot.z = this.rightFoot.z + Math.sin(slope) * footDistance / 2;
 
         // const boardAngle = this.age * PI;
-        const boardAngle = this.landed ? 0 : this.age * 2 * PI;
+        const boardAngle = this.landed || this.grinding ? 0 : this.age * 2 * PI;
 
         this.makeRectangle(
             this.boardStartTop,
@@ -167,6 +168,7 @@ class Hero extends Element {
 
         interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
         interp(this, 'squatFactor', 0, 1, 0.2);
+        interp(this, 'handsZ', this.handsZ, -100, 0.2);
     }
 
     cycle(elapsed) {
@@ -176,12 +178,12 @@ class Hero extends Element {
             // this.squatFactor = sin(this.age * PI) * 0.5 + 0.5;
         }
 
-        const kicker = this.kickerUnder(this);
-        if (!kicker && this.z > 0) {
-            this.landed = false;
+        if (this.landed && this.z > 0) {
+            const kicker = this.kickerUnder(this);
+            if (!kicker) this.stopLanding();
         }
 
-        this.velocityZ -= elapsed * 10;
+        this.velocityZ -= elapsed * 20;
         this.z = max(0, this.z + this.velocityZ);
 
         if (this.z === 0) this.land();
@@ -191,6 +193,10 @@ class Hero extends Element {
         if (INPUT.right()) angleDirection = 1;
 
         this.angle += elapsed * PI * 1.5 * angleDirection;
+
+        if (this.grinding) {
+            this.angle = this.grindingAngle;
+        }
 
         // this.angle = atan2(this.world.mousePosition.y - this.y, this.world.mousePosition.x - this.x);
 
@@ -214,7 +220,7 @@ class Hero extends Element {
             // console.log('ya should fall');
         }
 
-        if (this.landed) {
+        if (this.landed || this.grinding) {
             const squatting = MOUSE_IS_DOWN;
             if (this.squatting && !squatting) {
                 this.jump();
@@ -238,13 +244,25 @@ class Hero extends Element {
         }
     }
 
-    jump() {
+    stopLanding() {
         this.landed = false;
-        this.velocityZ = 8;
-        this.grinding = false;
-
-        // interp(this, 'squatFactor', 1, -0.5, 0.2);
+        interp(this, 'handsZ', this.handsZ, 40, 0.2);
         this.squatFactor = 0;
+        // interp(this, 'squatFactor', 1, -0.5, 0.2);
+    }
+
+    startGrinding() {
+        this.grinding = true;
+
+        interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
+        interp(this, 'squatFactor', 0, 1, 0.2);
+        interp(this, 'handsZ', this.handsZ, -100, 0.2);
+    }
+
+    jump() {
+        this.stopLanding();
+        this.velocityZ = 10;
+        this.grinding = false;
     }
 
     shouldFall() {
@@ -265,8 +283,7 @@ class Hero extends Element {
                     if (!this.grinding) {
                         if (this.z <= collides.positionOnRail.z) {
                             if (this.previous.z >= collides.positionOnRail.z) {
-                                this.grinding = true;
-                                console.log('we grind now!');
+                                this.startGrinding();
                             } else {
                                 return true;
                             }
@@ -274,6 +291,21 @@ class Hero extends Element {
                     }
 
                     if (this.grinding) {
+                        this.grindingAngle = collides.grindingAngle;
+
+                        if (between(PI / 4, abs(normalize(collides.grindingAngle - this.angle)), PI * 3 / 4)) {
+                            this.grindingAngle = PI / 2;
+                        }
+
+                        const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
+                        this.momentum.x = cos(collides.grindingAngle);
+                        this.momentum.y = sin(collides.grindingAngle);
+
+                        if (abs(normalize(collides.grindingAngle - currentMomentumAngle)) > PI / 2) {
+                            this.momentum.x *= -1;
+                            this.momentum.y *= -1;
+                        }
+
                         this.x = collides.positionOnRail.x;
                         this.y = collides.positionOnRail.y;
                         this.z = collides.positionOnRail.z;

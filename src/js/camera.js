@@ -11,4 +11,9 @@ class Camera {
     get y() {
         return this.centerY - CANVAS_HEIGHT / 2;
     }
+
+    cycle(elapsed) {
+        this.centerX = G.world.hero.x;
+        this.centerY = G.world.hero.y;
+    }
 }

@@ -20,9 +20,8 @@ class Game {
         G.clock += elapsed;
 
         G.world.cycle(elapsed);
+        G.camera.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
-
-        // TODO
     }
 
     render() {

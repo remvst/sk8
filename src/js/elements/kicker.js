@@ -4,7 +4,7 @@ class Kicker extends Element {
         super();
 
         this.length = 200;
-        this.height = 400;
+        this.height = 200;
         this.radius = this.length / 2;
 
         this.leftTop = this.newPoint();
@@ -13,7 +13,6 @@ class Kicker extends Element {
         this.rightBottom = this.newPoint();
         this.highTop = this.newPoint();
         this.highBottom = this.newPoint();
-
 
         this.renderables = [
             new Segment(this.leftTop, this.leftBottom, '#000', 8),
@@ -41,7 +40,7 @@ class Kicker extends Element {
                 const progress = 1 - (this.radius - relative.x) / this.length;
                 const kickerZ = progress * this.height;
 
-                if (element.z < kickerZ) {
+                if (element.z < kickerZ && element.velocityZ <= 0) {
                     element.z = kickerZ;
                     element.velocityZ = Math.max(element.velocityZ, 0);
                     element.land();
