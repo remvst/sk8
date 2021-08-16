@@ -27,7 +27,7 @@ class Game {
 
     render() {
         wrap(() => {
-            fs('#fff');
+            fs('#170e65');
             fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
             translate(-this.camera.x, -this.camera.y);

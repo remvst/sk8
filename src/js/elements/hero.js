@@ -26,27 +26,27 @@ class Hero extends Element {
         this.grinding = false;
 
         this.renderables = [
-            // Board
-            // new Segment(this.boardEndBottom, this.boardEndTop, '#f00', 8),
-            // new Segment(this.boardStartBottom, this.boardStartTop, '#f00', 8),
-            // new Segment(this.boardStartBottom, this.boardEndBottom, '#f00', 8),
-            // new Segment(this.boardStartTop, this.boardEndTop, '#f00', 8),
-
-            new Plane([this.boardEndBottom, this.boardEndTop, this.boardStartTop, this.boardStartBottom], '#000'),
-
-            // Character
-            new Segment(this.leftFoot, this.hips, '#000', 16),
-            new Segment(this.rightFoot, this.hips, '#000', 16),
-            new Segment(this.hips, this.shoulders, '#000', 16),
-            new Segment(this.shoulders, this.leftHand, '#000', 16),
-            new Segment(this.shoulders, this.rightHand, '#000', 16),
-            new Sphere(this.headCenter, 20, '#000'),
 
             // Wheels
-            new Sphere(this.wheelStartTop, 8, '#000'),
-            new Sphere(this.wheelStartBottom, 8, '#000'),
-            new Sphere(this.wheelEndTop, 8, '#000'),
-            new Sphere(this.wheelEndBottom, 8, '#000'),
+            new Sphere(this.wheelStartTop, 8, '#fff'),
+            new Sphere(this.wheelStartBottom, 8, '#fff'),
+            new Sphere(this.wheelEndTop, 8, '#fff'),
+            new Sphere(this.wheelEndBottom, 8, '#fff'),
+
+            // Board
+            new Plane([this.boardEndBottom, this.boardEndTop, this.boardStartTop, this.boardStartBottom], '#ccc'),
+            new Segment(this.boardEndBottom, this.boardEndTop, '#fff', 4),
+            new Segment(this.boardStartBottom, this.boardStartTop, '#fff', 4),
+            new Segment(this.boardStartBottom, this.boardEndBottom, '#fff', 4),
+            new Segment(this.boardStartTop, this.boardEndTop, '#fff', 4),
+
+            // Character
+            new Segment(this.leftFoot, this.hips, '#fff', 16),
+            new Segment(this.rightFoot, this.hips, '#fff', 16),
+            new Segment(this.hips, this.shoulders, '#fff', 16),
+            new Segment(this.shoulders, this.leftHand, '#fff', 16),
+            new Segment(this.shoulders, this.rightHand, '#fff', 16),
+            new Sphere(this.headCenter, 20, '#fff'),
         ]
 
     }
@@ -92,13 +92,16 @@ class Hero extends Element {
         //     this.rightFoot.z + slope * 20,
         // );
 
+        // const boardAngle = this.age * PI;
+        const boardAngle = 0;
+
         this.makeRectangle(
             this.boardStartTop,
             this.boardStartBottom,
             this.boardEndBottom,
             this.boardEndTop,
             slope,
-            40, 20, 0,
+            50, 15, 0, boardAngle,
         );
 
         this.makeRectangle(
@@ -107,7 +110,7 @@ class Hero extends Element {
             this.wheelEndBottom,
             this.wheelEndTop,
             slope,
-            16, 16, -20,
+            30, 10, -20, 0, boardAngle,
         );
 
         // console.log(this.boardStartTop.zIndex, this.wheelStartTop.zIndex);
@@ -119,28 +122,29 @@ class Hero extends Element {
         // );
     }
 
-    makeRectangle(p1, p2, p3, p4, slope, length, width, offsetZ) {
-        const anglePlus90 = this.angle + PI / 2;
+    makeRectangle(p1, p2, p3, p4, slope, length, width, offsetZ, angleOffset) {
+        const angle = this.angle + angleOffset;
+        const anglePlus90 = angle + PI / 2;
 
         p1.set(
-            this.leftFoot.x - cos(this.angle) * length - cos(anglePlus90) * width,
-            this.leftFoot.y - sin(this.angle) * length - sin(anglePlus90) * width,
-            this.leftFoot.z - slope * length + offsetZ,
+            this.x - cos(angle) * length - cos(anglePlus90) * width,
+            this.y - sin(angle) * length - sin(anglePlus90) * width,
+            this.z - slope * length + offsetZ,
         );
         p2.set(
-            this.leftFoot.x - cos(this.angle) * length + cos(anglePlus90) * width,
-            this.leftFoot.y - sin(this.angle) * length + sin(anglePlus90) * width,
-            this.leftFoot.z - slope * length + offsetZ,
+            this.x - cos(angle) * length + cos(anglePlus90) * width,
+            this.y - sin(angle) * length + sin(anglePlus90) * width,
+            this.z - slope * length + offsetZ,
         );
         p3.set(
-            this.rightFoot.x + cos(this.angle) * length + cos(anglePlus90) * width,
-            this.rightFoot.y + sin(this.angle) * length + sin(anglePlus90) * width,
-            this.rightFoot.z + slope * length + offsetZ,
+            this.x + cos(angle) * length + cos(anglePlus90) * width,
+            this.y + sin(angle) * length + sin(anglePlus90) * width,
+            this.z + slope * length + offsetZ,
         );
         p4.set(
-            this.rightFoot.x + cos(this.angle) * length - cos(anglePlus90) * width,
-            this.rightFoot.y + sin(this.angle) * length - sin(anglePlus90) * width,
-            this.rightFoot.z + slope * length + offsetZ,
+            this.x + cos(angle) * length - cos(anglePlus90) * width,
+            this.y + sin(angle) * length - sin(anglePlus90) * width,
+            this.z + slope * length + offsetZ,
         );
     }
 
@@ -181,7 +185,7 @@ class Hero extends Element {
     }
 
     jump() {
-        this.velocityZ = 5;
+        this.velocityZ = 8;
         this.grinding = false;
     }
 

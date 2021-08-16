@@ -33,6 +33,8 @@ class Kicker extends Element {
     }
 
     cycle(elapsed) {
+        super.cycle(elapsed);
+
         this.world.elements.forEach(element => {
             if (element instanceof Hero && this.contains(element)) {
                 const relative = this.relativePosition(element);
@@ -51,6 +53,10 @@ class Kicker extends Element {
         const relative = this.relativePosition(pos);
         return between(-this.radius, relative.x, this.radius) &&
             between(-this.radius, relative.y, this.radius);
+    }
+
+    get minY() {
+        return this.y - this.radius;
     }
 
     distanceToEdge(pos) {

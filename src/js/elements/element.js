@@ -1,16 +1,20 @@
 class Element {
     constructor() {
-        this.x = this.y = this.z = this.angle = 0;
+        this.x = this.y = this.z = this.angle = this.age = 0;
         this.previous = new Point();
         this.renderables = [];
         this.points = [];
+
+        this.centerPoint = new Point();
     }
 
     cycle(elapsed) {
+        this.age += elapsed;
         this.previous.set(this.x, this.y, this.z);
     }
 
     prerender() {
+        this.centerPoint.set(this.x, this.y, this.z);
         this.updateRenderables();
     }
 
@@ -40,5 +44,22 @@ class Element {
             pt.y += this.y;
             pt.z += this.z;
         });
+    }
+
+    get minY() {
+        return this.y;
+    }
+
+    contains(position) {
+        return false;
+    }
+
+    renderBefore(other) {
+        // if (this.contains(other)) {
+        //     // console.log();
+        //     return true;
+        // }
+
+        return this.minY < other.minY;
     }
 }

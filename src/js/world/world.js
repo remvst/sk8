@@ -50,21 +50,40 @@ class World {
     sortRenderables() {
         // TODO can probably avoid sorting what's not visible
 
-        for (let i = 0 ; i < this.renderables.length - 1 ; i++) {
-            if (this.renderables[i].zIndex > this.renderables[i + 1].zIndex) {
-                const z = this.renderables[i];
-                this.renderables[i] = this.renderables[i + 1];
-                this.renderables[i + 1] = z;
+        this.elements.sort((a, b) => {
+            return a.renderBefore(b) ? -1 : 1;
+        });
+        return;
+
+        for (let i = 0 ; i < this.elements.length - 1 ; i++) {
+            if (this.elements[i + 1].renderBefore(this.elements[i + 1])) {
+                const z = this.elements[i];
+                this.elements[i] = this.elements[i + 1];
+                this.elements[i + 1] = z;
             }
         }
     }
 
     render() {
-        this.sortRenderables();
-
         this.elements.forEach(e => e.prerender());
 
-        this.renderables.forEach(renderable => wrap(() => renderable.renderShadow()));
-        this.renderables.forEach(renderable => wrap(() => renderable.renderActual()));
+        this.sortRenderables();
+
+        this.elements.forEach(element => {
+            element.renderables.forEach(renderable => {
+                wrap(() => {
+                    renderable.renderShadow();
+                });
+            });
+        });
+
+        this.elements.forEach(element => {
+            element.renderables.forEach(renderable => {
+                wrap(() => {
+                    renderable.renderActual();
+                });
+            });
+        });
+        // this.renderables.forEach(renderable => wrap(() => renderable.renderActual()));
     }
 }
