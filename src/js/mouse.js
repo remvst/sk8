@@ -24,6 +24,11 @@ onmousemove = e => {
         MOVEMENT_TARGET_DIRECTION.x = limit(-400, MOVEMENT_TARGET_DIRECTION.x + movementX, 400);
         MOVEMENT_TARGET_DIRECTION.y = limit(-400, MOVEMENT_TARGET_DIRECTION.y + movementY, 400);
 
+        const angle = atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x);
+        const dist = min(400, distP(0, 0, MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y));
+        MOVEMENT_TARGET_DIRECTION.x = cos(angle) * dist;
+        MOVEMENT_TARGET_DIRECTION.y = sin(angle) * dist;
+
         ROTATION_ACC = 0;
     } else {
         ROTATION_ACC = limit(-1, ROTATION_ACC + movementX / 200, 1);

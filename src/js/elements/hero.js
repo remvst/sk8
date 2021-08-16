@@ -98,7 +98,7 @@ class Hero extends Element {
         let slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
 
         if (!this.landed) {
-            // slope = PI / 4 * this.positionSign;
+            slope = PI / 4;
         }
 
         this.leftFoot.z = this.leftFoot.z - Math.sin(slope) * footDistance / 2;
@@ -168,7 +168,7 @@ class Hero extends Element {
             angleDiff = abs(normalize(this.angle - momentumAngle));
         }
 
-        if (angleDiff > PI / 6) {
+        if (angleDiff > PI / 4) {
             this.bail();
         }
 
@@ -212,9 +212,9 @@ class Hero extends Element {
 
         this.performingTrick = !this.landed && INPUT.trick();
 
-        const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.5);
+        const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.4);
         if (this.performingTrick) {
-            addedTrickProgress = elapsed / 0.5;
+            addedTrickProgress = elapsed / 0.4;
         }
 
         this.trickProgress += addedTrickProgress;
