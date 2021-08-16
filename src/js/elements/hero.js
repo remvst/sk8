@@ -5,7 +5,9 @@ class Hero extends Element {
         this.velocityZ = 0;
 
         this.leftFoot = this.newPoint();
+        this.leftKnee = this.newPoint();
         this.rightFoot = this.newPoint();
+        this.rightKnee = this.newPoint();
         this.hips = this.newPoint();
         this.shoulders = this.newPoint();
         this.leftHand = this.newPoint();
@@ -23,8 +25,10 @@ class Hero extends Element {
         this.wheelEndBottom = this.newPoint();
 
         this.squatting = false;
+        this.squatFactor = 0;
         this.grinding = false;
         this.landed = true;
+        this.positionSign = 1;
 
         this.momentum = new Point();
 
@@ -44,27 +48,34 @@ class Hero extends Element {
             new Segment(this.boardStartTop, this.boardEndTop, '#fff', 4),
 
             // Character
-            new Segment(this.leftFoot, this.hips, '#fff', 16),
-            new Segment(this.rightFoot, this.hips, '#fff', 16),
+            new Segment(this.leftFoot, this.leftKnee, '#fff', 16),
+            new Segment(this.rightFoot, this.rightKnee, '#fff', 16),
+            new Segment(this.hips, this.leftKnee, '#fff', 16),
+            new Segment(this.hips, this.rightKnee, '#fff', 16),
             new Segment(this.hips, this.shoulders, '#fff', 16),
             new Segment(this.shoulders, this.leftHand, '#fff', 16),
             new Segment(this.shoulders, this.rightHand, '#fff', 16),
+            new Segment(this.shoulders, this.headCenter, '#fff', 16),
             new Sphere(this.headCenter, 20, '#fff'),
         ]
 
     }
 
     updateRenderables() {
-
         this.resetPoints();
+
+        const kneeForwardFactor = this.positionSign * (0.5 + this.squatFactor * 0.5);
+        const halfLegLength = 100 - kneeForwardFactor * 40;
 
         this.leftFoot.set( -20, 0, 0);
         this.rightFoot.set(20, 0, 0);
-        this.hips.set(0, 0, 200);
-        this.shoulders.set(0, 0, 400);
-        this.leftHand.set(-40, 0, 200);
-        this.rightHand.set(40, 0, 200);
-        this.headCenter.set(0, 0, 480);
+        this.leftKnee.set( -15, kneeForwardFactor * 20, halfLegLength);
+        this.rightKnee.set(15, kneeForwardFactor * 20, halfLegLength);
+        this.hips.set(0, -kneeForwardFactor * 15, halfLegLength * 2);
+        this.shoulders.set(0, kneeForwardFactor * 10, this.hips.z + 200 - kneeForwardFactor * 10);
+        this.leftHand.set(-40, kneeForwardFactor * 10, this.shoulders.z - 200);
+        this.rightHand.set(40, kneeForwardFactor * 10, this.shoulders.z - 200);
+        this.headCenter.set(0, this.shoulders.y + kneeForwardFactor * 20, this.shoulders.z + 50);
 
         this.adjustPoints();
 
@@ -73,27 +84,6 @@ class Hero extends Element {
 
         const footDistance = dist(this.leftFoot, this.rightFoot);
         const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
-        //
-        // this.boardStartTop.set(
-        //     this.leftFoot.x - Math.cos(this.angle) * 20 - Math.cos(anglePlus90) * 10,
-        //     this.leftFoot.y - Math.sin(this.angle) * 20 - Math.sin(anglePlus90) * 10,
-        //     this.leftFoot.z - slope * 20,
-        // );
-        // this.boardStartBottom.set(
-        //     this.leftFoot.x - Math.cos(this.angle) * 20 + Math.cos(anglePlus90) * 10,
-        //     this.leftFoot.y - Math.sin(this.angle) * 20 + Math.sin(anglePlus90) * 10,
-        //     this.leftFoot.z - slope * 20,
-        // );
-        // this.boardEndBottom.set(
-        //     this.rightFoot.x + Math.cos(this.angle) * 20 + Math.cos(anglePlus90) * 10,
-        //     this.rightFoot.y + Math.sin(this.angle) * 20 + Math.sin(anglePlus90) * 10,
-        //     this.rightFoot.z + slope * 20,
-        // );
-        // this.boardEndTop.set(
-        //     this.rightFoot.x + Math.cos(this.angle) * 20 - Math.cos(anglePlus90) * 10,
-        //     this.rightFoot.y + Math.sin(this.angle) * 20 - Math.sin(anglePlus90) * 10,
-        //     this.rightFoot.z + slope * 20,
-        // );
 
         // const boardAngle = this.age * PI;
         const boardAngle = 0;
@@ -115,14 +105,6 @@ class Hero extends Element {
             slope,
             30, 10, -20, 0, boardAngle,
         );
-
-        // console.log(this.boardStartTop.zIndex, this.wheelStartTop.zIndex);
-
-        // this.wheelStartTop.set(
-        //     this.leftFoot.x - Math.cos(this.angle) * 15 - Math.cos(anglePlus90) * 8,
-        //     this.leftFoot.y - Math.sin(this.angle) * 15 - Math.sin(anglePlus90) * 8,
-        //     this.leftFoot.z - slope * 20,
-        // );
     }
 
     makeRectangle(p1, p2, p3, p4, slope, length, width, offsetZ, angleOffset) {
@@ -162,6 +144,7 @@ class Hero extends Element {
 
         let angleDiff = abs(normalize(this.angle - momentumAngle));
         if (angleDiff > PI / 2) {
+            this.positionSign *= -1;
             this.angle += PI;
             angleDiff = abs(normalize(this.angle - momentumAngle));
         }
@@ -169,10 +152,17 @@ class Hero extends Element {
         if (angleDiff > PI / 6) {
             console.log('fall!');
         }
+
+        interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
+        interp(this, 'squatFactor', 0, 1, 0.2);
     }
 
     cycle(elapsed) {
         super.cycle(elapsed);
+
+        if (this.landed && !this.squatting) {
+            // this.squatFactor = sin(this.age * PI) * 0.5 + 0.5;
+        }
 
         const kicker = this.kickerUnder(this);
         if (!kicker && this.z > 0) {
@@ -202,8 +192,9 @@ class Hero extends Element {
         if (this.z === 0) this.velocityZ = 0;
 
         if (MOUSE_IS_DOWN || true) {
-            this.x += elapsed * this.momentum.x * 400;
-            this.y += elapsed * this.momentum.y * 400;
+            const speed = 0;
+            this.x += elapsed * this.momentum.x * speed;
+            this.y += elapsed * this.momentum.y * speed;
         }
 
         if (this.shouldFall()) {
@@ -211,11 +202,15 @@ class Hero extends Element {
             // console.log('ya should fall');
         }
 
-        const squatting = MOUSE_IS_DOWN;
-        if (this.squatting && !squatting) {
-            this.jump();
+        if (this.landed) {
+            const squatting = MOUSE_IS_DOWN;
+            if (this.squatting && !squatting) {
+                this.jump();
+            } else if (squatting && !this.squatting) {
+                interp(this, 'squatFactor', 0, 1, 0.2);
+            }
+            this.squatting = squatting;
         }
-        this.squatting = squatting;
     }
 
     kickerUnder(position) {
@@ -235,6 +230,8 @@ class Hero extends Element {
         this.landed = false;
         this.velocityZ = 8;
         this.grinding = false;
+
+        interp(this, 'squatFactor', 1, -0.5, 0.2);
     }
 
     shouldFall() {
