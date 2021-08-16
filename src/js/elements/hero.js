@@ -28,6 +28,7 @@ class Hero extends Element {
         this.squatFactor = 0;
         this.grinding = false;
         this.grindingAngle = 0;
+        this.grindingOffsetAngle = 0;
         this.landed = true;
         this.positionSign = 1;
         this.handsZ = -100;
@@ -195,7 +196,7 @@ class Hero extends Element {
         this.angle += elapsed * PI * 1.5 * angleDirection;
 
         if (this.grinding) {
-            this.angle = this.grindingAngle;
+            this.angle = this.grindingAngle + this.grindingOffsetAngle;
         }
 
         // this.angle = atan2(this.world.mousePosition.y - this.y, this.world.mousePosition.x - this.x);
@@ -274,6 +275,10 @@ class Hero extends Element {
 
         let collidesWithRail = false;
 
+        const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
+
+        const wasGrinding = this.grinding;
+
         for (const rail of this.world.elements) {
             if (rail instanceof Rail) {
                 const collides = rail.collides(this);
@@ -282,7 +287,7 @@ class Hero extends Element {
 
                     if (!this.grinding) {
                         if (this.z <= collides.positionOnRail.z) {
-                            if (this.previous.z >= collides.positionOnRail.z) {
+                            if (this.previous.z >= collides.positionOnRail.z) { // TODO also check for momentum direction
                                 this.startGrinding();
                             } else {
                                 return true;
@@ -290,14 +295,14 @@ class Hero extends Element {
                         }
                     }
 
+                    if (this.grinding && !wasGrinding) {
+                        const clicks = Math.round((this.angle - collides.grindingAngle) / (PI / 2));
+                        this.grindingOffsetAngle = clicks * PI / 2;
+                    }
+
                     if (this.grinding) {
                         this.grindingAngle = collides.grindingAngle;
 
-                        if (between(PI / 4, abs(normalize(collides.grindingAngle - this.angle)), PI * 3 / 4)) {
-                            this.grindingAngle = PI / 2;
-                        }
-
-                        const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
                         this.momentum.x = cos(collides.grindingAngle);
                         this.momentum.y = sin(collides.grindingAngle);
 
