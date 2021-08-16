@@ -64,7 +64,7 @@ class Hero extends Element {
     updateRenderables() {
         this.resetPoints();
 
-        const kneeForwardFactor = this.positionSign * (0.5 + this.squatFactor * 0.5);
+        const kneeForwardFactor = 0.5 + this.squatFactor * 0.5;
         const halfLegLength = 100 - kneeForwardFactor * 60;
 
         this.leftFoot.set( -20, 0, 0);
@@ -77,16 +77,28 @@ class Hero extends Element {
         this.rightHand.set(40, kneeForwardFactor * 10, this.shoulders.z + (this.landed ? -100 : 40));
         this.headCenter.set(0, this.shoulders.y + kneeForwardFactor * 20, this.shoulders.z + 50 - kneeForwardFactor * 10);
 
+        this.points.forEach(point => {
+            point.x *= this.positionSign;
+            point.y *= this.positionSign;
+        });
+
         this.adjustPoints();
 
         this.adjustFootPosition(this.leftFoot);
         this.adjustFootPosition(this.rightFoot);
 
         const footDistance = dist(this.leftFoot, this.rightFoot);
-        const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
+        let slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
+
+        if (!this.landed) {
+            slope = PI / 4;
+        }
+
+        this.leftFoot.z = this.leftFoot.z - Math.sin(slope) * footDistance / 2;
+        this.rightFoot.z = this.rightFoot.z + Math.sin(slope) * footDistance / 2;
 
         // const boardAngle = this.age * PI;
-        const boardAngle = 0;
+        const boardAngle = this.landed ? 0 : this.age * 2 * PI;
 
         this.makeRectangle(
             this.boardStartTop,
@@ -103,7 +115,7 @@ class Hero extends Element {
             this.wheelEndBottom,
             this.wheelEndTop,
             slope,
-            30, 10, -20, 0, boardAngle,
+            30, 10, -20, boardAngle,
         );
     }
 
@@ -192,7 +204,7 @@ class Hero extends Element {
         if (this.z === 0) this.velocityZ = 0;
 
         if (MOUSE_IS_DOWN || true) {
-            const speed = 0;
+            const speed = 200;
             this.x += elapsed * this.momentum.x * speed;
             this.y += elapsed * this.momentum.y * speed;
         }
@@ -231,7 +243,8 @@ class Hero extends Element {
         this.velocityZ = 8;
         this.grinding = false;
 
-        interp(this, 'squatFactor', 1, -0.5, 0.2);
+        // interp(this, 'squatFactor', 1, -0.5, 0.2);
+        this.squatFactor = 0;
     }
 
     shouldFall() {
