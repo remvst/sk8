@@ -97,22 +97,22 @@ class Hero extends Element {
         const footDistance = dist(this.leftFoot, this.rightFoot);
         let slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
 
-        if (!this.landed) {
+        if (!this.landed && !this.grinding) {
             slope = PI / 4;
         }
 
         this.leftFoot.z = this.leftFoot.z - Math.sin(slope) * footDistance / 2;
         this.rightFoot.z = this.rightFoot.z + Math.sin(slope) * footDistance / 2;
 
-        // const boardAngle = this.age * PI;
-        const boardAngle = this.landed || this.grinding ? 0 : this.age * 2 * PI;
+        const slopeRatio = 0.5 - (this.trickProgress % 1);
+        const boardSlope = trick * ((this.trickProgress % 2) >= 1 ? -slope : slope);
 
         this.makeRectangle(
             this.boardStartTop,
             this.boardStartBottom,
             this.boardEndBottom,
             this.boardEndTop,
-            slope,
+            boardSlope,
             50, 15, 0, this.trickProgress * PI,
         );
 
@@ -121,7 +121,7 @@ class Hero extends Element {
             this.wheelStartBottom,
             this.wheelEndBottom,
             this.wheelEndTop,
-            slope,
+            boardSlope,
             30, 10, -20, this.trickProgress * PI,
         );
     }
