@@ -38,6 +38,9 @@ class Hero extends Element {
         this.safePool = [new Point(), new Point()];
         this.nextSafeCheck = 0;
 
+        this.performingTrick = false;
+        this.trickProgress = 0;
+
         this.renderables = [
             // Wheels
             new Sphere(this.wheelStartTop, 8, '#fff'),
@@ -110,7 +113,7 @@ class Hero extends Element {
             this.boardEndBottom,
             this.boardEndTop,
             slope,
-            50, 15, 0, boardAngle,
+            50, 15, 0, this.trickProgress * PI,
         );
 
         this.makeRectangle(
@@ -119,7 +122,7 @@ class Hero extends Element {
             this.wheelEndBottom,
             this.wheelEndTop,
             slope,
-            30, 10, -20, boardAngle,
+            30, 10, -20, this.trickProgress * PI,
         );
     }
 
@@ -207,16 +210,30 @@ class Hero extends Element {
             if (!kicker) this.stopLanding();
         }
 
+        this.performingTrick = !this.landed && INPUT.trick();
+
+        const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.5);
+        if (this.performingTrick) {
+            addedTrickProgress = elapsed / 0.5;
+        }
+
+        this.trickProgress += addedTrickProgress;
+
         this.velocityZ -= elapsed * 20;
         this.z = max(0, this.z + this.velocityZ);
 
         if (this.z === 0) this.land();
 
-        let angleDirection = 0;
-        if (INPUT.left()) angleDirection = -1;
-        if (INPUT.right()) angleDirection = 1;
+        if (this.landed) {
+            const angleDirection = INPUT.direction();
+            const diff = limit(-elapsed * PI * 1.5, normalize(angleDirection - this.angle), elapsed * PI * 1.5);
+            this.angle += diff;
+        } else {
+            const rotationDirection = INPUT.rotation();
+            this.angle += rotationDirection * PI * 4 * elapsed;
 
-        this.angle += elapsed * PI * 1.5 * angleDirection;
+            ROTATION_ACC += limit(-elapsed * 4, -ROTATION_ACC, elapsed * 4);
+        }
 
         if (this.grinding) {
             this.angle = this.grindingAngle + this.grindingOffsetAngle;

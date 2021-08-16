@@ -11,13 +11,14 @@ isGamepadButtonPressed = buttonIndex => {
     }
 };
 
-isGamepadAxisNearValue = (axisIndex, targetValue) => {
+gamepadAxisValue = (axisIndex) => {
     const pads = gamepads();
     for (var i = 0; i < pads.length; i++) {
         try {
-            if (abs(targetValue - pads[i].axes[axisIndex]) < 0.5) {
-                return true;
-            }
+            const value = pads[i].axes[axisIndex];
+            if (value < 0.1) return 0;
+            return pads[i].axes[axisIndex];
         } catch (e) {}
     }
+    return 0;
 };

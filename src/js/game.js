@@ -4,8 +4,6 @@ class Game {
         G = this;
         G.clock = 0;
 
-        G.camera = new Camera();
-
         G.world = new World();
 
         INTERPOLATIONS = [];
@@ -19,8 +17,15 @@ class Game {
     cycle(elapsed) {
         G.clock += elapsed;
 
+        const directionSign = sign(MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x);
+        if (directionSign) {
+            INPUT.directionAcc += elapsed * sign(MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x);
+        } else {
+            INPUT.directionAcc += limit(-elapsed, -INPUT.directionAcc, elapsed);
+        }
+        INPUT.directionAcc = limit(-1, INPUT.directionAcc, 1)
+
         G.world.cycle(elapsed);
-        G.camera.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
     }
 
@@ -28,8 +33,6 @@ class Game {
         wrap(() => {
             fs('#170e65');
             fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-            translate(-this.camera.x, -this.camera.y);
 
             G.world.render();
         });

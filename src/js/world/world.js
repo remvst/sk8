@@ -3,6 +3,8 @@ class World {
         this.elements = [];
         this.renderables = [];
 
+        this.camera = new Camera();
+
         this.mousePosition = new Point();
 
         this.addElement(new Hero());
@@ -57,8 +59,9 @@ class World {
     }
 
     cycle(elapsed) {
-        this.mousePosition.set(MOUSE_POSITION.x + G.camera.x, MOUSE_POSITION.y + G.camera.y);
+        // this.mousePosition.set(MOUSE_POSITION.x + G.camera.x, MOUSE_POSITION.y + G.camera.y);
         this.elements.forEach(e => e.cycle(elapsed));
+        this.camera.cycle(elapsed);
     }
 
     sortRenderables() {
@@ -83,21 +86,33 @@ class World {
 
         this.sortRenderables();
 
-        this.elements.forEach(element => {
-            element.renderables.forEach(renderable => {
-                wrap(() => {
-                    renderable.renderShadow();
+        wrap(() => {
+            translate(-this.camera.x, -this.camera.y);
+
+            this.elements.forEach(element => {
+                element.renderables.forEach(renderable => {
+                    wrap(() => {
+                        renderable.renderShadow();
+                    });
                 });
             });
-        });
 
-        this.elements.forEach(element => {
-            element.renderables.forEach(renderable => {
-                wrap(() => {
-                    renderable.renderActual();
+            this.elements.forEach(element => {
+                element.renderables.forEach(renderable => {
+                    wrap(() => {
+                        renderable.renderActual();
+                    });
                 });
             });
         });
         // this.renderables.forEach(renderable => wrap(() => renderable.renderActual()));
+
+        wrap(() => {
+            translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+            R.fillStyle = '#fff';
+            beginPath();
+            arc(MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y, 20, 0, PI * 2);
+            fill();
+        });
     }
 }
