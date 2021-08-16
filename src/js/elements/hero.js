@@ -24,6 +24,9 @@ class Hero extends Element {
 
         this.squatting = false;
         this.grinding = false;
+        this.landed = true;
+
+        this.momentum = new Point();
 
         this.renderables = [
 
@@ -148,19 +151,59 @@ class Hero extends Element {
         );
     }
 
+    land() {
+        if (this.landed) {
+            return;
+        }
+
+        this.landed = true;
+
+        const momentumAngle = atan2(this.momentum.y, this.momentum.x);
+
+        let angleDiff = abs(normalize(this.angle - momentumAngle));
+        if (angleDiff > PI / 2) {
+            this.angle += PI;
+            angleDiff = abs(normalize(this.angle - momentumAngle));
+        }
+
+        if (angleDiff > PI / 6) {
+            console.log('fall!');
+        }
+    }
+
     cycle(elapsed) {
         super.cycle(elapsed);
+
+        const kicker = this.kickerUnder(this);
+        if (!kicker && this.z > 0) {
+            this.landed = false;
+        }
 
         this.velocityZ -= elapsed * 10;
         this.z = max(0, this.z + this.velocityZ);
 
-        this.angle = atan2(this.world.mousePosition.y - this.y, this.world.mousePosition.x - this.x);
+        if (this.z === 0) this.land();
+
+        let angleDirection = 0;
+        if (INPUT.left()) angleDirection = -1;
+        if (INPUT.right()) angleDirection = 1;
+
+        this.angle += elapsed * PI * 1.5 * angleDirection;
+
+        // this.angle = atan2(this.world.mousePosition.y - this.y, this.world.mousePosition.x - this.x);
+
+        if (this.landed) {
+            this.momentum.set(
+                cos(this.angle),
+                sin(this.angle),
+            );
+        }
 
         if (this.z === 0) this.velocityZ = 0;
 
         if (MOUSE_IS_DOWN || true) {
-            this.x += elapsed * cos(this.angle) * 400;
-            this.y += elapsed * sin(this.angle) * 400;
+            this.x += elapsed * this.momentum.x * 400;
+            this.y += elapsed * this.momentum.y * 400;
         }
 
         if (this.shouldFall()) {
@@ -175,8 +218,12 @@ class Hero extends Element {
         this.squatting = squatting;
     }
 
+    kickerUnder(position) {
+        return this.world.elements.filter(element => element instanceof Kicker && element.contains(position))[0];
+    }
+
     adjustFootPosition(foot) {
-        const kicker = this.world.elements.filter(element => element instanceof Kicker && element.contains(foot))[0];
+        const kicker = this.kickerUnder(foot);
         if (kicker) {
             const relative = kicker.relativePosition(foot);
             const progress = 1 - (kicker.radius - relative.x) / kicker.length;
@@ -185,6 +232,7 @@ class Hero extends Element {
     }
 
     jump() {
+        this.landed = false;
         this.velocityZ = 8;
         this.grinding = false;
     }
