@@ -36,7 +36,6 @@
     "src/js/gamepad.js",
     "src/js/mouse.js",
     "src/js/input.js",
-    "src/js/difficulty.js",
     "src/js/camera.js",
     "src/js/game.js",
     "src/js/social.js",
