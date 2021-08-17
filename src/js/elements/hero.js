@@ -33,10 +33,12 @@ class Hero extends DraggedElement {
         this.landed = true;
         this.positionSign = 1;
         this.handsZ = -100;
+
         this.pushing = false;
         this.pushingAnimationRatio = 0;
-
         this.lastPush = 0;
+        this.pushAge = 0;
+        this.pushingUntil = 0;
 
         this.safePool = [new Point(), new Point()];
         this.nextSafeCheck = 0;
@@ -100,12 +102,10 @@ class Hero extends DraggedElement {
             point.y *= this.positionSign;
         });
 
-        // if (this.pushing) {
-            const pushRatio = sin(this.pushAge * PI * 2 / PUSH_PERIOD);
-            this.leftFoot.y += (pushRatio * 30) * this.pushingAnimationRatio;
-            this.leftKnee.y += (pushRatio * 20 + 10) * this.pushingAnimationRatio;
-            this.rotateAroundAxis(this.rightFoot.x, 0, -PI / 2 * this.positionSign * this.pushingAnimationRatio);
-        // }
+        const pushRatio = sin(this.pushAge * PI * 2 / PUSH_PERIOD);
+        this.leftFoot.y += (pushRatio * 30) * this.pushingAnimationRatio;
+        this.leftKnee.y += (pushRatio * 20 + 10) * this.pushingAnimationRatio;
+        this.rotateAroundAxis(this.rightFoot.x, 0, -PI / 2 * this.positionSign * this.pushingAnimationRatio);
 
         this.adjustPoints();
 
@@ -230,25 +230,29 @@ class Hero extends DraggedElement {
         super.cycle(elapsed);
 
         const wasPushing = this.pushing;
-        this.pushing = this.landed && INPUT.pushing();
-        if (this.pushing != wasPushing) {
-            console.log('change to', this.pushing ? 1 : 0);
-            interp(this, 'pushingAnimationRatio', this.pushingAnimationRatio, this.pushing ? 1 : 0, 0.2);
+
+        if (this.age > this.pushingUntil) {
+            if (this.landed && INPUT.pushing()) {
+                this.pushing = true;
+                this.speed = min(600, this.speed + 200);
+                this.pushingUntil = this.age + PUSH_PERIOD;
+                this.pushAge = 0;
+                if (!wasPushing) {
+                    interp(this, 'pushingAnimationRatio', this.pushingAnimationRatio, 1, 0.2);
+                }
+            } else {
+                this.pushing = false;
+                if (wasPushing) {
+                    interp(this, 'pushingAnimationRatio', this.pushingAnimationRatio, 0, 0.2);
+                }
+            }
         }
 
-        if (this.pushing) this.pushAge += elapsed;
-        else this.pushAge = 0;
+        this.pushAge += elapsed;
 
-        this.speed = max(0, this.speed - elapsed * 20);
-
-        if (this.pushAge > PUSH_PERIOD / 3 && this.age - this.lastPush > PUSH_PERIOD) {
-            this.lastPush = this.age;
-            this.speed = min(600, this.speed + 300);
-            console.log('push!', this.speed);
+        if (!this.grinding && !this.pushing && this.landed) {
+            this.speed = max(0, this.speed - elapsed * 20);
         }
-
-        // if (this.pushing) {this.speed = min(400, this.speed + elapsed * 200);
-        // else this.speed = max(0, this.speed - elapsed * 200);
 
         if (this.grinding) {
             const angle = this.angle * rnd(-PI / 2, PI / 2);
