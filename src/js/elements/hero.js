@@ -255,7 +255,7 @@ class Hero extends DraggedElement {
         }
 
         if (this.grinding) {
-            const angle = this.angle * rnd(-PI / 2, PI / 2);
+            const angle = random() * TWO_PI;
             const distance = rnd(10, 20);
             this.world.particle({
                 'size': [10, -10],
