@@ -3,7 +3,7 @@ class DraggedElement extends Element {
     constructor() {
         super();
         this.velocityZ = 0;
-        this.speed = 400;
+        this.speed = 0;
         this.momentum = new Point();
     }
 

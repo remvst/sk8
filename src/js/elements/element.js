@@ -30,16 +30,22 @@ class Element {
     }
 
     adjustPoints() {
+        this.rotateAroundAxis(0, 0, this.angle);
+
         this.points.forEach(pt => {
-            const currentAngle = atan2(pt.y, pt.x);
-            const currentDist = sqrt(pow(pt.x, 2) + pow(pt.y, 2));
-
-            pt.x = currentDist * cos(this.angle + currentAngle);
-            pt.y = currentDist * sin(this.angle + currentAngle);
-
             pt.x += this.x;
             pt.y += this.y;
             pt.z += this.z;
+        });
+    }
+
+    rotateAroundAxis(x, y, rotation) {
+        this.points.forEach(pt => {
+            const currentAngle = atan2(pt.y - y, pt.x - x);
+            const currentDist = sqrt(pow(pt.x - x, 2) + pow(pt.y - y, 2));
+
+            pt.x = x + currentDist * cos(rotation + currentAngle);
+            pt.y = y + currentDist * sin(rotation + currentAngle);
         });
     }
 
