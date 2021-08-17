@@ -23,20 +23,6 @@ class Rail extends Element {
 
             this.topZ = max(this.topZ, current.z);
         }
-
-        this.renderables.push(new DebugRenderable(() => {
-            const hero = this.world.hero;
-            const collides = this.collides(hero);
-
-            if (collides) {
-                wrap(() => {
-                    fs('#f00');
-
-                    const projected = collides.positionOnRail.projectToActual();
-                    fr(projected.x - 10, projected.y - 10, 20, 20);
-                });
-            }
-        }));
     }
 
     updateRenderables() {
