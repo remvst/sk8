@@ -7,18 +7,19 @@ class Sphere extends Renderable {
         this.color = color;
     }
 
-    renderActual() {
-        R.fillStyle = this.color;
+    renderSphere(color, funcName) {
+        fs(color);
         beginPath();
-        arc(this.center.projectToActual().x, this.center.projectToActual().y, this.radius, 0, Math.PI * 2);
+        arc(this.center[funcName]().x, this.center[funcName]().y, this.radius, 0, Math.PI * 2);
         fill();
     }
 
+    renderActual() {
+        this.renderSphere(this.color, 'projectToActual');
+    }
+
     renderShadow() {
-        R.fillStyle = 'rgba(0, 0, 0, 0.5)';
-        beginPath();
-        arc(this.center.projectToShadow().x, this.center.projectToShadow().y, this.radius, 0, Math.PI * 2);
-        fill();
+        this.renderSphere(SHADOW_COLOR, 'projectToShadow');
     }
 
     get zIndex() {

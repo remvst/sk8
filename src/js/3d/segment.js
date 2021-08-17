@@ -8,25 +8,21 @@ class Segment extends Renderable {
         this.thickness = thickness;
     }
 
-    renderActual() {
+    renderSegment(color, funcName) {
         R.lineWidth = this.thickness;
-        R.strokeStyle = this.color;
-        // globalAlpha = 1;
+        ss(color);
         beginPath();
-        moveTo(this.p1.projectToActual().x, this.p1.projectToActual().y);
-        lineTo(this.p2.projectToActual().x, this.p2.projectToActual().y);
+        moveTo(this.p1[funcName]().x, this.p1[funcName]().y);
+        lineTo(this.p2[funcName]().x, this.p2[funcName]().y);
         stroke();
     }
 
+    renderActual() {
+        this.renderSegment(this.color, 'projectToActual');
+    }
+
     renderShadow() {
-        R.lineWidth = this.thickness;
-        R.strokeStyle = 'rgba(0, 0, 0, 0.5)';
-        // globalAlpha = 0.5;
-        // R.globalCompositeOperation = 'darken';
-        beginPath();
-        moveTo(this.p1.projectToShadow().x, this.p1.projectToShadow().y);
-        lineTo(this.p2.projectToShadow().x, this.p2.projectToShadow().y);
-        stroke();
+        this.renderSegment(SHADOW_COLOR, 'projectToShadow');
     }
 
     get zIndex() {

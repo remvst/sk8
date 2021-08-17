@@ -5,28 +5,19 @@ class Plane extends Renderable {
         this.color = color;
     }
 
-    renderActual() {
-        R.fillStyle = this.color;
-        // globalAlpha = 1;
+    renderPlane(color, funcName) {
+        fs(color);
         beginPath();
-
-        this.points.forEach(pt => {
-            lineTo(pt.projectToActual().x, pt.projectToActual().y);
-        });
-
+        this.points.forEach(pt => lineTo(pt[funcName]().x, pt[funcName]().y));
         fill();
     }
 
+    renderActual() {
+        this.renderPlane(this.color, 'projectToActual');
+    }
+
     renderShadow() {
-        R.fillStyle = 'rgba(0, 0, 0, 0.5)';
-        // globalAlpha = 0.5;
-        beginPath();
-
-        this.points.forEach(pt => {
-            lineTo(pt.projectToShadow().x, pt.projectToShadow().y);
-        });
-
-        fill();
+        this.renderPlane(SHADOW_COLOR, 'projectToShadow');
     }
 
     get zIndex() {
