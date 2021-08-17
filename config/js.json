@@ -12,6 +12,8 @@
 
     "src/js/world/world.js",
 
+    "src/js/hud/hud.js",
+
     "src/js/elements/element.js",
     "src/js/elements/dragged-element.js",
     "src/js/elements/hero.js",

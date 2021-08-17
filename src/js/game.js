@@ -4,6 +4,7 @@ class Game {
         G = this;
         G.clock = 0;
 
+        G.hud = new HUD();
         G.world = new World();
 
         INTERPOLATIONS = [];
@@ -28,6 +29,7 @@ class Game {
         INPUT.directionAcc = limit(-1, INPUT.directionAcc, 1)
 
         G.world.cycle(elapsed);
+        G.hud.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
     }
 
@@ -37,6 +39,7 @@ class Game {
             fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
             G.world.render();
+            G.hud.render();
         });
     }
 

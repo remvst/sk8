@@ -93,7 +93,6 @@ class Hero extends DraggedElement {
         this.headCenter.set(0, this.shoulders.y + kneeForwardFactor * 20, this.shoulders.z + 20 - kneeForwardFactor * 10);
 
         this.points.forEach(point => {
-            // point.x *= this.positionSign;
             point.y *= this.positionSign;
         });
 
@@ -168,7 +167,7 @@ class Hero extends DraggedElement {
         }
 
         if (this.trickProgress % 1 > 0) {
-            this.bail();
+            this.bail('BAD LANDING');
         }
 
         this.trickProgress = 0;
@@ -185,7 +184,7 @@ class Hero extends DraggedElement {
         }
 
         if (angleDiff > PI / 4) {
-            this.bail();
+            this.bail('BAD LANDING');
         }
 
         interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
@@ -193,7 +192,9 @@ class Hero extends DraggedElement {
         interp(this, 'handsZ', this.handsZ, -100, 0.2);
     }
 
-    bail() {
+    bail(bailReason) {
+        G.hud.showMessage(bailReason);
+
         const copy = new Element();
         copy.renderables = this.renderables.map(renderable => renderable.clone());
         copy.renderables.forEach(renderable => {
@@ -228,8 +229,6 @@ class Hero extends DraggedElement {
                 'y': [this.y + rnd(-10, 10), sin(angle) * distance],
                 'z': [this.z, rnd(-20, 20)],
             });
-
-            // this.balance = 0.5;
 
             const rotationDirection = INPUT.rotation();
             this.balance = limit(-1, this.balance + sign(this.balance || 1) * elapsed * 0.5 + rotationDirection * elapsed, 1);
@@ -274,8 +273,9 @@ class Hero extends DraggedElement {
         }
 
         // Collisions
-        if (this.shouldBail()) {
-            this.bail();
+        const bailReason = this.shouldBail();
+        if (bailReason) {
+            this.bail(bailReason);
         }
 
         // Update squat
@@ -316,13 +316,11 @@ class Hero extends DraggedElement {
         this.landed = false;
         interp(this, 'handsZ', this.handsZ, 40, 0.2);
         this.squatFactor = 0;
-        // interp(this, 'squatFactor', 1, -0.5, 0.2);
     }
 
     startGrinding() {
         this.grinding = true;
 
-        // interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
         interp(this, 'squatFactor', 0, 1, 0.2);
         interp(this, 'handsZ', this.handsZ, -100, 0.2);
     }
@@ -393,10 +391,14 @@ class Hero extends DraggedElement {
     }
 
     shouldBail() {
+        if (this.grinding && abs(this.balance) >= 1) {
+            return nomangle('YOU LOST YOUR BALANCE');
+        }
+
         const footDistance = dist(this.leftFoot, this.rightFoot);
         const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
         if (abs(slope > 2)) {
-            return true;
+            return nomangle('WATCH YOUR STEP');
         }
 
         const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
@@ -404,18 +406,21 @@ class Hero extends DraggedElement {
         const wasGrinding = this.grinding;
 
         if (this.grinding) {
-            return false;
+            return;
         }
 
         for (const rail of this.world.elements) {
             if (rail instanceof Rail) {
                 const hardCollision = rail.collides(this, RAIL_BAIL_PADDING);
                 if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
-                    return true;
+                    if (INPUT.grind()) {
+                        return nomangle('TOO LOW TO GRIND');
+                    }
+                    return nomangle('WATCH YOUR STEP');
                 }
             }
         }
 
-        return false;
+        // return false;
     }
 }
