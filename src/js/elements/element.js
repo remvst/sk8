@@ -29,10 +29,6 @@ class Element {
         return point;
     }
 
-    resetPoints() {
-        this.points.forEach(point => point.reset());
-    }
-
     adjustPoints() {
         this.points.forEach(pt => {
             const currentAngle = atan2(pt.y, pt.x);

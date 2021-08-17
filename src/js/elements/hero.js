@@ -74,8 +74,6 @@ class Hero extends DraggedElement {
     }
 
     updateRenderables() {
-        this.resetPoints();
-
         this.balanceRenderable.visible = this.grinding;
         this.balanceRenderable.balance = this.balance;
 
