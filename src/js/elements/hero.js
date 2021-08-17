@@ -4,6 +4,7 @@ class Hero extends DraggedElement {
         super();
         this.velocityZ = 0;
 
+        this.center = this.newPoint();
         this.leftFoot = this.newPoint();
         this.leftKnee = this.newPoint();
         this.rightFoot = this.newPoint();
@@ -39,6 +40,8 @@ class Hero extends DraggedElement {
         this.performingTrick = false;
         this.trickProgress = 0;
 
+        this.balance = 0;
+
         this.renderables = [new CompositeRenderable([
             // Wheels
             new Sphere(this.wheelStartTop, 8, '#fff'),
@@ -63,7 +66,7 @@ class Hero extends DraggedElement {
             new Segment(this.shoulders, this.rightHand, '#fff', 16),
             new Segment(this.shoulders, this.headCenter, '#fff', 16),
             new Sphere(this.headCenter, 20, '#fff'),
-        ])];
+        ]), this.balanceRenderable = new BalanceRenderable(this.center)];
     }
 
     get draggable() {
@@ -72,6 +75,8 @@ class Hero extends DraggedElement {
 
     updateRenderables() {
         this.resetPoints();
+
+        this.balanceRenderable.visible = this.grinding;
 
         this.topZ = this.z;
 
@@ -94,6 +99,8 @@ class Hero extends DraggedElement {
         });
 
         this.adjustPoints();
+
+        this.center.set(this.x, this.y, this.z);
 
         this.adjustFootPosition(this.leftFoot);
         this.adjustFootPosition(this.rightFoot);

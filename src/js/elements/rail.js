@@ -47,7 +47,7 @@ class Rail extends Element {
         let collides = false;
         if (hero) {
             const collision = this.collides(hero, RAIL_GRIND_PADDING);
-            collides = collision && collision.positionOnRail.z < hero.z;
+            collides = collision && collision.positionOnRail.z <= hero.z;
         }
 
         this.renderables.forEach(renderable => {
