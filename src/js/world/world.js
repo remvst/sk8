@@ -51,9 +51,9 @@ class World {
         element.world = this;
         this.elements.push(element);
 
-        element.renderables.forEach((renderable) => {
-            this.renderables.push(renderable);
-        });
+        // element.renderables.forEach((renderable) => {
+        //     this.renderables.push(renderable);
+        // });
     }
 
     removeElement(element) {
@@ -103,6 +103,7 @@ class World {
                     }
                 });
             });
+            this.renderables.forEach(renderable => wrap(() => renderable.render()));
 
             this.elements.forEach(element => {
                 element.renderables.forEach(renderable => {
@@ -112,7 +113,6 @@ class World {
                 });
             });
         });
-        // this.renderables.forEach(renderable => wrap(() => renderable.renderActual()));
 
         wrap(() => {
 
@@ -166,5 +166,11 @@ class World {
             arc(MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y, 20, 0, PI * 2);
             fill();
         });
+    }
+
+    particle(properties) {
+        let particle;
+        properties.onFinish = () => remove(this.renderables, particle);
+        this.renderables.push(particle = new Particle(properties));
     }
 }

@@ -73,6 +73,8 @@ class Hero extends DraggedElement {
     updateRenderables() {
         this.resetPoints();
 
+        this.topZ = this.z;
+
         const kneeForwardFactor = 0.5 + this.squatFactor * 0.5;
         const halfLegLength = 100 - kneeForwardFactor * 60;
 
@@ -202,6 +204,19 @@ class Hero extends DraggedElement {
 
     cycle(elapsed) {
         super.cycle(elapsed);
+
+        // if (this.grinding) {
+            const angle = this.angle * rnd(-PI / 2, PI / 2);
+            const distance = rnd(10, 20);
+            this.world.particle({
+                'size': [10, -10],
+                'color': '#fff',
+                'duration': rnd(0.4, 0.8),
+                'x': [this.x + rnd(-10, 10), cos(angle) * distance],
+                'y': [this.y + rnd(-10, 10), sin(angle) * distance],
+                'z': [this.z, rnd(-20, 20)],
+            });
+        // }
 
         // Trick progress
         this.performingTrick = !this.landed && INPUT.trick();

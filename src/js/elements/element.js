@@ -4,6 +4,7 @@ class Element {
         this.previous = new Point();
         this.renderables = [];
         this.points = [];
+        this.topZ = 0;
 
         this.centerPoint = new Point();
     }

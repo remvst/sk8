@@ -15,6 +15,8 @@ class Game {
     }
 
     cycle(elapsed) {
+        if (DEBUG && down[KEYBOARD_G]) elapsed *= 0.1;
+
         G.clock += elapsed;
 
         const directionSign = sign(MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x);

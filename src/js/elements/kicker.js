@@ -14,6 +14,8 @@ class Kicker extends Element {
         this.highTop = this.newPoint();
         this.highBottom = this.newPoint();
 
+        this.topZ = this.height;
+
         this.renderables = [
             new Segment(this.leftTop, this.leftBottom, '#fff', 8),
             new Segment(this.rightTop, this.rightBottom, '#fff', 8),
