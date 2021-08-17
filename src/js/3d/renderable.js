@@ -5,7 +5,7 @@ class Renderable {
     }
 
     clone() {
-        throw new Error();
+
     }
 
     animateToGround() {
