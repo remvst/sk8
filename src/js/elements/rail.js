@@ -28,8 +28,6 @@ class Rail extends Element {
             const hero = this.world.hero;
             const collides = this.collides(hero);
 
-            console.log('ha');
-
             if (collides) {
                 wrap(() => {
                     fs('#f00');

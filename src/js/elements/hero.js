@@ -77,6 +77,7 @@ class Hero extends DraggedElement {
         this.resetPoints();
 
         this.balanceRenderable.visible = this.grinding;
+        this.balanceRenderable.balance = this.balance;
 
         this.topZ = this.z;
 
@@ -174,6 +175,7 @@ class Hero extends DraggedElement {
 
         this.trickProgress = 0;
         this.landed = true;
+        this.balance = 0;
 
         const momentumAngle = atan2(this.momentum.y, this.momentum.x);
 
@@ -228,6 +230,11 @@ class Hero extends DraggedElement {
                 'y': [this.y + rnd(-10, 10), sin(angle) * distance],
                 'z': [this.z, rnd(-20, 20)],
             });
+
+            // this.balance = 0.5;
+
+            const rotationDirection = INPUT.rotation();
+            this.balance = limit(-1, this.balance + sign(this.balance || 1) * elapsed * 0.5 + rotationDirection * elapsed, 1);
         }
 
         // Trick progress
@@ -329,7 +336,7 @@ class Hero extends DraggedElement {
     }
 
     checkGrinds() {
-        if (!INPUT.grind()) {
+        if (!INPUT.grind() || this.trickProgress % 1 > 0) {
             return;
         }
 

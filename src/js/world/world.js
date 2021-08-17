@@ -36,7 +36,7 @@ class World {
         ]));
 
         this.addElement(new Rail([
-            new Point(-400, -400, 200),
+            new Point(-200, -400, 200),
             new Point(-800, -400, 200),
             new Point(-1200, -600, 200),
         ]));

@@ -15,7 +15,8 @@ class BalanceRenderable extends Renderable {
         arc(0, 0, 200, -PI / 4, PI / 4);
         stroke();
 
-        translate(cos(this.balance * PI / 4) * 200, sin(this.balance * PI / 4) * 200);
+        rotate(this.balance * PI / 4);
+        translate(200, 0);
         beginPath();
         fs('#f00');
         moveTo(0, 0);
