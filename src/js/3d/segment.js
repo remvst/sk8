@@ -6,6 +6,17 @@ class Segment extends Renderable {
         this.p2 = p2;
         this.color = color;
         this.thickness = thickness;
+
+        // this.min = new Point(
+        //     min(p1.x, p2.x),
+        //     min(p1.y, p2.y),
+        //     min(p1.z, p2.z),
+        // );
+        // this.max = new Point(
+        //     min(p1.x, p2.x),
+        //     min(p1.y, p2.y),
+        //     min(p1.z, p2.z),
+        // );
     }
 
     renderSegment(color, funcName) {
@@ -25,15 +36,25 @@ class Segment extends Renderable {
         this.renderSegment(SHADOW_COLOR, 'projectToShadow');
     }
 
-    get zIndex() {
-        return min(this.p1.zIndex, this.p2.zIndex);
-    }
-
     clone() {
         return new Segment(this.p1.clone(), this.p2.clone(), this.color, this.thickness);
     }
 
     animateToGround(origin) {
         this.makePointsFall([this.p1, this.p2], origin);
+    }
+
+    renderOnTopOfHero(hero) {
+        if (this.p1.x == this.p2.x) return hero.y < min(this.p1.y, this.p2.y);
+
+
+        const positionOnSegment = new Point();
+        const ratio = (hero.x - this.p1.x) / (this.p2.x - this.p1.x);
+        positionOnSegment.x = hero.x;
+        positionOnSegment.y = this.p1.y + ratio * (this.p2.y - this.p1.y);
+
+        if (positionOnSegment.y > hero.y) {
+            return true;
+        }
     }
 }

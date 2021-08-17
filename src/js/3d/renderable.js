@@ -23,4 +23,10 @@ class Renderable {
             interp(point, 'z', point.z, 0, duration, 0, easeOutBounce);
         });
     }
+
+    renderOnTopOfHero(hero) {
+        if (hero === this) {
+            return false;
+        }
+    }
 }

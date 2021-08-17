@@ -1,5 +1,6 @@
 class Camera {
     constructor() {
+        this.followedTarget = null;
         this.centerX = 0;
         this.centerY = 0;
     }
@@ -13,7 +14,9 @@ class Camera {
     }
 
     cycle(elapsed) {
-        this.centerX = G.world.hero.x;
-        this.centerY = G.world.hero.y;
+        if (this.followedTarget) {
+            this.centerX = this.followedTarget.x;
+            this.centerY = this.followedTarget.y;
+        }
     }
 }

@@ -1,3 +1,5 @@
+WAIT_FOR_RELEASE = false;
+
 INPUT = {
     'squat': () => MOUSE_IS_DOWN,
     'trick': () => down[KEYBOARD_SPACE],
@@ -16,6 +18,8 @@ INPUT = {
      'rotation': () => {
          return ROTATION_ACC;
      },
+
+     'grind': () => MOUSE_IS_DOWN,
 
      'directionAcc': 0,
 

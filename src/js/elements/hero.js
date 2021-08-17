@@ -39,7 +39,7 @@ class Hero extends DraggedElement {
         this.performingTrick = false;
         this.trickProgress = 0;
 
-        this.renderables = [
+        this.renderables = [new CompositeRenderable([
             // Wheels
             new Sphere(this.wheelStartTop, 8, '#fff'),
             new Sphere(this.wheelStartBottom, 8, '#fff'),
@@ -63,7 +63,7 @@ class Hero extends DraggedElement {
             new Segment(this.shoulders, this.rightHand, '#fff', 16),
             new Segment(this.shoulders, this.headCenter, '#fff', 16),
             new Sphere(this.headCenter, 20, '#fff'),
-        ];
+        ])];
     }
 
     get draggable() {
@@ -161,6 +161,11 @@ class Hero extends DraggedElement {
             return;
         }
 
+        if (this.trickProgress % 1 > 0) {
+            this.bail();
+        }
+
+        this.trickProgress = 0;
         this.landed = true;
 
         const momentumAngle = atan2(this.momentum.y, this.momentum.x);
@@ -235,7 +240,8 @@ class Hero extends DraggedElement {
         }
 
         // Fall down
-        this.velocityZ -= elapsed * 20;
+        const gravity = (INPUT.grind() ? 3 : 1) * 20;
+        this.velocityZ -= elapsed * gravity;
         this.z = max(0, this.z + this.velocityZ);
         if (this.z === 0) this.land();
         if (this.landed || this.grinding) this.velocityZ = 0;
@@ -273,7 +279,7 @@ class Hero extends DraggedElement {
 
         // Update safe positions
         if ((this.nextSafeCheck -= elapsed) <= 0 && this.z === 0) {
-            this.nextSafeCheck = 0.5;
+            this.nextSafeCheck = 1;
 
             const point = this.safePool.shift();
             point.set(this.x, this.y, this.z);
@@ -304,7 +310,7 @@ class Hero extends DraggedElement {
     startGrinding() {
         this.grinding = true;
 
-        interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
+        // interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
         interp(this, 'squatFactor', 0, 1, 0.2);
         interp(this, 'handsZ', this.handsZ, -100, 0.2);
     }
@@ -316,6 +322,10 @@ class Hero extends DraggedElement {
     }
 
     checkGrinds() {
+        if (!INPUT.grind()) {
+            return;
+        }
+
         const wasGrinding = this.grinding;
         const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
 
@@ -327,6 +337,8 @@ class Hero extends DraggedElement {
             }
 
             const grindCollision = this.velocityZ < 0 || this.grinding ? rail.collides(this, RAIL_GRIND_PADDING) : null;
+
+            rail.heroMayGrind = !!grindCollision;
 
             if (grindCollision) {
                 if (!wasGrinding && sign(grindCollision.positionOnRail.z - this.z) == sign(grindCollision.positionOnRail.z - this.previous.z)) {

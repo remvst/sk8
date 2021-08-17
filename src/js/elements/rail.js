@@ -28,6 +28,8 @@ class Rail extends Element {
             const hero = this.world.hero;
             const collides = this.collides(hero);
 
+            console.log('ha');
+
             if (collides) {
                 wrap(() => {
                     fs('#f00');
@@ -37,6 +39,20 @@ class Rail extends Element {
                 });
             }
         }));
+    }
+
+    updateRenderables() {
+        const hero = this.world.hero;
+
+        let collides = false;
+        if (hero) {
+            const collision = this.collides(hero, RAIL_GRIND_PADDING);
+            collides = collision && collision.positionOnRail.z < hero.z;
+        }
+
+        this.renderables.forEach(renderable => {
+            renderable.color = collides ? '#0f0' : '#fff';
+        });
     }
 
     collides(hero, padding) {

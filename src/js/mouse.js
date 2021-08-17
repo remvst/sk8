@@ -18,9 +18,8 @@ onmousemove = e => {
     const movementY = e.movementY || MOUSE_POSITION.y - PREVIOUS_MOUSE_POSITION.y;
 
     const hero = G && G.world.hero;
-    if (!hero) return;
 
-    if (hero.landed) {
+    if (hero && hero.draggable) {
         MOVEMENT_TARGET_DIRECTION.x = limit(-400, MOVEMENT_TARGET_DIRECTION.x + movementX, 400);
         MOVEMENT_TARGET_DIRECTION.y = limit(-400, MOVEMENT_TARGET_DIRECTION.y + movementY, 400);
 
@@ -41,4 +40,7 @@ onmousedown = () => {
     MOUSE_IS_DOWN = true;
     document.body.requestPointerLock();
 };
-onmouseup = () => MOUSE_IS_DOWN = false;
+onmouseup = () => {
+    MOUSE_IS_DOWN = false;
+    WAIT_FOR_RELEASE = false;
+};

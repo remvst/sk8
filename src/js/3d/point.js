@@ -30,8 +30,6 @@ class Point {
         return this;
     }
 
-    get zIndex() { return this.y; }
-
     clone() {
         return new Point(this.x, this.y, this.z);
     }

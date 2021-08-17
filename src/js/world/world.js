@@ -1,7 +1,7 @@
 class World {
     constructor() {
         this.elements = [];
-        this.renderables = [];
+        this.particles = [];
 
         this.camera = new Camera();
 
@@ -46,23 +46,20 @@ class World {
         if (element instanceof Hero) {
             this.hero = element;
             this.simulatedHero.hero = element;
+            this.camera.followedTarget = element;
         }
 
         element.world = this;
         this.elements.push(element);
-
-        // element.renderables.forEach((renderable) => {
-        //     this.renderables.push(renderable);
-        // });
     }
 
     removeElement(element) {
         if (element instanceof Hero) {
             this.simulatedHero.hero = null;
+            this.hero = null;
         }
 
-        const index = this.elements.indexOf(element);
-        if (index >= 0) this.elements.splice(index, 1);
+        remove(this.elements, element);
     }
 
     cycle(elapsed) {
@@ -71,97 +68,49 @@ class World {
         this.camera.cycle(elapsed);
     }
 
-    sortRenderables() {
-        // TODO can probably avoid sorting what's not visible
-
-        this.elements.sort((a, b) => {
-            return a.renderBefore(b) ? -1 : 1;
-        });
-        return;
-
-        for (let i = 0 ; i < this.elements.length - 1 ; i++) {
-            if (this.elements[i + 1].renderBefore(this.elements[i + 1])) {
-                const z = this.elements[i];
-                this.elements[i] = this.elements[i + 1];
-                this.elements[i + 1] = z;
-            }
-        }
+    renderRenderables(list, condition) {
+        list.forEach(renderable => wrap(() => {
+            if (condition(renderable)) renderable.renderActual();
+        }));
     }
 
     render() {
         this.elements.forEach(e => e.prerender());
 
-        this.sortRenderables();
-
         wrap(() => {
             translate(-this.camera.x, -this.camera.y);
 
-            this.elements.forEach(element => {
-                element.renderables.forEach(renderable => {
-                    if (renderable.visible) {
-                        wrap(() => renderable.renderShadow());
-                    }
-                });
-            });
-            this.renderables.forEach(renderable => wrap(() => renderable.render()));
+            const before = [];
+            const after = [];
+            for (const element of this.elements) {
+                for (const renderable of element.renderables) {
+                    wrap(() => renderable.renderShadow());
 
-            this.elements.forEach(element => {
-                element.renderables.forEach(renderable => {
-                    if (renderable.visible) {
-                        wrap(() => renderable.renderActual());
+                    if (this.hero && renderable === this.hero.renderables[0] || !renderable.visible) {
+                        continue;
                     }
-                });
-            });
+
+                    if (!this.hero || !renderable.renderOnTopOfHero(this.hero)) {
+                        before.push(renderable);
+                    } else {
+                        after.push(renderable);
+                    }
+                }
+            }
+
+            before.forEach(renderable => wrap(() => renderable.renderActual()));
+            this.particles.forEach(particle => wrap(() => particle.render()));
+            if (this.hero) wrap(() => this.hero.renderables[0].renderActual());
+            after.forEach(renderable => wrap(() => renderable.renderActual()));
         });
 
         wrap(() => {
-
-            wrap(() => {
-                return;
-
-                const hero = this.hero;
-                if (!hero) return;
-
-                translate(-this.camera.x, -this.camera.y);
-                R.globalAlpha = 0.5;
-                R.lineWidth = 30;
-                R.lineCap = 'butt';
-                fs('#fff');
-                ss('#fff');
-
-                this.simulatedHero.copy(hero);
-
-                const simulationStep = 0.1;
-                let previousX;
-                let previousY;
-
-                beginPath();
-                moveTo(hero.x, hero.y);
-                for (let i = 0 ; i < 0.5 ; i += simulationStep) {
-                    previousX = this.simulatedHero.x;
-                    previousY = this.simulatedHero.y;
-
-                    this.simulatedHero.cycle(simulationStep);
-
-                    // fillRect(this.simulatedHero.x, this.simulatedHero.y, 10, 10);
-                    lineTo(this.simulatedHero.x, this.simulatedHero.y);
-                }
-                stroke();
-
-                // const lastAngle = atan2(this.simulatedHero.y - previousY, this.simulatedHero.x - previousX);
-                translate(this.simulatedHero.x, this.simulatedHero.y);
-                rotate(atan2(this.simulatedHero.y - previousY, this.simulatedHero.x - previousX));
-
-                beginPath();
-                moveTo(50, 0);
-                lineTo(0, 50);
-                lineTo(0, -50);
-                fill();
-            });
+            if (!this.hero.landed) return;
 
             translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
 
             R.fillStyle = '#fff';
+            R.globalAlpha = 0.5;
             beginPath();
             arc(MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y, 20, 0, PI * 2);
             fill();
@@ -170,7 +119,7 @@ class World {
 
     particle(properties) {
         let particle;
-        properties.onFinish = () => remove(this.renderables, particle);
-        this.renderables.push(particle = new Particle(properties));
+        properties.onFinish = () => remove(this.particles, particle);
+        this.particles.push(particle = new Particle(properties));
     }
 }

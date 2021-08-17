@@ -22,10 +22,6 @@ class Sphere extends Renderable {
         this.renderSphere(SHADOW_COLOR, 'projectToShadow');
     }
 
-    get zIndex() {
-        return this.center.zIndex;
-    }
-
     clone() {
         return new Sphere(this.center, this.radius, this.color);
     }

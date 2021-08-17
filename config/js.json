@@ -28,6 +28,7 @@
     "src/js/3d/segment.js",
     "src/js/3d/sphere.js",
     "src/js/3d/arrow-renderable.js",
+    "src/js/3d/composite-renderable.js",
     "src/js/3d/debug-renderable.js",
 
     "src/js/sound/jsfxr.js",

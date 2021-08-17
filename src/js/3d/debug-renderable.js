@@ -10,10 +10,6 @@ class DebugRenderable extends Renderable {
     }
 
     renderShadow() {
-        
-    }
 
-    get zIndex() {
-        return Number.MAX_SAFE_INTEGER;
     }
 }
