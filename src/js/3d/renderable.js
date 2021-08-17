@@ -1,4 +1,9 @@
 class Renderable {
+
+    constructor() {
+        this.visible = true;
+    }
+
     clone() {
         throw new Error();
     }

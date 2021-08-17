@@ -1,4 +1,4 @@
-class Hero extends Element {
+class Hero extends DraggedElement {
 
     constructor() {
         super();
@@ -33,8 +33,6 @@ class Hero extends Element {
         this.positionSign = 1;
         this.handsZ = -100;
 
-        this.momentum = new Point();
-
         this.safePool = [new Point(), new Point()];
         this.nextSafeCheck = 0;
 
@@ -66,6 +64,10 @@ class Hero extends Element {
             new Segment(this.shoulders, this.headCenter, '#fff', 16),
             new Sphere(this.headCenter, 20, '#fff'),
         ];
+    }
+
+    get draggable() {
+        return this.landed && !this.grinding;
     }
 
     updateRenderables() {
@@ -105,7 +107,7 @@ class Hero extends Element {
         this.rightFoot.z = this.rightFoot.z + Math.sin(slope) * footDistance / 2;
 
         const slopeRatio = 0.5 - (this.trickProgress % 1);
-        const boardSlope = trick * ((this.trickProgress % 2) >= 1 ? -slope : slope);
+        const boardSlope = slopeRatio * ((this.trickProgress % 2) >= 1 ? -slope : slope);
 
         this.makeRectangle(
             this.boardStartTop,
@@ -201,15 +203,7 @@ class Hero extends Element {
     cycle(elapsed) {
         super.cycle(elapsed);
 
-        if (this.landed && !this.squatting) {
-            // this.squatFactor = sin(this.age * PI) * 0.5 + 0.5;
-        }
-
-        if (this.landed && this.z > 0) {
-            const kicker = this.kickerUnder(this);
-            if (!kicker) this.stopLanding();
-        }
-
+        // Trick progress
         this.performingTrick = !this.landed && INPUT.trick();
 
         const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.4);
@@ -219,43 +213,39 @@ class Hero extends Element {
 
         this.trickProgress += addedTrickProgress;
 
+        // Come off a kicker
+        if (this.landed && this.z > 0) {
+            const kicker = this.world && this.kickerUnder(this);
+            if (!kicker) this.stopLanding();
+        }
+
+        // Fall down
         this.velocityZ -= elapsed * 20;
         this.z = max(0, this.z + this.velocityZ);
-
         if (this.z === 0) this.land();
+        if (this.landed || this.grinding) this.velocityZ = 0;
 
-        if (this.landed) {
-            const angleDirection = INPUT.direction();
-            const diff = limit(-elapsed * PI * 1.5, normalize(angleDirection - this.angle), elapsed * PI * 1.5);
-            this.angle += diff;
-        } else {
+        // Air rotation
+        if (!this.landed && !this.grinding) {
             const rotationDirection = INPUT.rotation();
             this.angle += rotationDirection * PI * 4 * elapsed;
 
             ROTATION_ACC += limit(-elapsed * 4, -ROTATION_ACC, elapsed * 4);
         }
 
+        // Grinding update
+        this.checkGrinds();
         if (this.grinding) {
             this.angle = this.grindingAngle + this.grindingOffsetAngle;
+            this.momentum.set(cos(this.grindingAngle), sin(this.grindingAngle));
         }
 
-        // this.angle = atan2(this.world.mousePosition.y - this.y, this.world.mousePosition.x - this.x);
-
-        if (this.landed) {
-            this.momentum.set(
-                cos(this.angle),
-                sin(this.angle),
-            );
+        // Collisions
+        if (this.shouldBail()) {
+            this.bail();
         }
 
-        if (this.z === 0) this.velocityZ = 0;
-
-        if (MOUSE_IS_DOWN || true) {
-            const speed = 400;
-            this.x += elapsed * this.momentum.x * speed;
-            this.y += elapsed * this.momentum.y * speed;
-        }
-
+        // Update squat
         if (this.landed || this.grinding) {
             const squatting = MOUSE_IS_DOWN;
             if (this.squatting && !squatting) {
@@ -266,10 +256,7 @@ class Hero extends Element {
             this.squatting = squatting;
         }
 
-        if (this.shouldFall()) {
-            this.bail();
-        }
-
+        // Update safe positions
         if ((this.nextSafeCheck -= elapsed) <= 0 && this.z === 0) {
             this.nextSafeCheck = 0.5;
 
@@ -313,81 +300,83 @@ class Hero extends Element {
         this.grinding = false;
     }
 
-    shouldFall() {
+    checkGrinds() {
+        const wasGrinding = this.grinding;
+        const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
+
+        let collidesWithRail = false;
+
+        for (const rail of this.world.elements) {
+            if (!(rail instanceof Rail)) {
+                continue;
+            }
+
+            const grindCollision = this.velocityZ < 0 || this.grinding ? rail.collides(this, RAIL_GRIND_PADDING) : null;
+
+            if (grindCollision) {
+                if (!wasGrinding && sign(grindCollision.positionOnRail.z - this.z) == sign(grindCollision.positionOnRail.z - this.previous.z)) {
+                    continue;
+                }
+
+                collidesWithRail = true;
+
+                if (!wasGrinding) {
+                    this.startGrinding();
+                }
+
+                if (this.grinding && !wasGrinding) {
+                    const clicks = Math.round((this.angle - grindCollision.grindingAngle) / (PI / 2));
+                    this.grindingOffsetAngle = clicks * PI / 2;
+                }
+
+                if (this.grinding) {
+                    this.grindingAngle = grindCollision.grindingAngle;
+
+                    this.momentum.x = cos(grindCollision.grindingAngle);
+                    this.momentum.y = sin(grindCollision.grindingAngle);
+
+                    if (abs(normalize(grindCollision.grindingAngle - currentMomentumAngle)) > PI / 2) {
+                        this.momentum.x *= -1;
+                        this.momentum.y *= -1;
+                        this.grindingAngle += PI;
+                    }
+
+                    this.x = grindCollision.positionOnRail.x;
+                    this.y = grindCollision.positionOnRail.y;
+                    this.z = grindCollision.positionOnRail.z;
+                }
+            }
+        }
+
+        if (!collidesWithRail && wasGrinding) {
+            this.grinding = false;
+        }
+    }
+
+    shouldBail() {
         const footDistance = dist(this.leftFoot, this.rightFoot);
         const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
         if (abs(slope > 2)) {
             return true;
         }
 
-        let collidesWithRail = false;
-
         const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
 
         const wasGrinding = this.grinding;
 
+        if (this.grinding) {
+            return false;
+        }
+
         for (const rail of this.world.elements) {
             if (rail instanceof Rail) {
-                const grindCollision = this.velocityZ < 0 || this.grinding ? rail.collides(this, RAIL_GRIND_PADDING) : null;
-                const hardCollision = this.grinding ? null : rail.collides(this, RAIL_BAIL_PADDING);
-
-                collidesWithRail = collidesWithRail || grindCollision || hardCollision;
-
+                const hardCollision = rail.collides(this, RAIL_BAIL_PADDING);
                 if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
-                    this.bail();
-                    break;
-                }
-
-                if (grindCollision) {
-                    if (!wasGrinding && sign(grindCollision.positionOnRail.z - this.z) == sign(grindCollision.positionOnRail.z - this.previous.z)) {
-                        continue;
-                    }
-
-                    collidesWithRail = true;
-
-                    if (!wasGrinding) {
-                        this.startGrinding();
-                    }
-
-                    // if (!this.grinding && this.velocityZ < 0) {
-                    //     if (this.z <= collides.positionOnRail.z) {
-                    //         if (this.previous.z >= collides.positionOnRail.z) { // TODO also check for momentum direction
-                    //             this.startGrinding();
-                    //         } else {
-                    //             return true;
-                    //         }
-                    //     }
-                    // }
-
-                    if (this.grinding && !wasGrinding) {
-                        const clicks = Math.round((this.angle - grindCollision.grindingAngle) / (PI / 2));
-                        this.grindingOffsetAngle = clicks * PI / 2;
-                    }
-
-                    if (this.grinding) {
-                        this.grindingAngle = grindCollision.grindingAngle;
-
-                        this.momentum.x = cos(grindCollision.grindingAngle);
-                        this.momentum.y = sin(grindCollision.grindingAngle);
-
-                        if (abs(normalize(grindCollision.grindingAngle - currentMomentumAngle)) > PI / 2) {
-                            this.momentum.x *= -1;
-                            this.momentum.y *= -1;
-                        }
-
-                        this.x = grindCollision.positionOnRail.x;
-                        this.y = grindCollision.positionOnRail.y;
-                        this.z = grindCollision.positionOnRail.z;
-
-                        this.velocityZ = 0;
-                    }
+                    return true;
                 }
             }
         }
 
-        if (!collidesWithRail && wasGrinding) {
-            console.log('stop grinding');
-            this.grinding = false;
-        }
+        return false;
     }
 }

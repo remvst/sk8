@@ -7,6 +7,8 @@ class World {
 
         this.mousePosition = new Point();
 
+        this.addElement(this.simulatedHero = new SimulatedDraggable());
+
         this.addElement(new Hero());
 
         const kicker = new Kicker();
@@ -43,6 +45,7 @@ class World {
     addElement(element) {
         if (element instanceof Hero) {
             this.hero = element;
+            this.simulatedHero.hero = element;
         }
 
         element.world = this;
@@ -54,6 +57,10 @@ class World {
     }
 
     removeElement(element) {
+        if (element instanceof Hero) {
+            this.simulatedHero.hero = null;
+        }
+
         const index = this.elements.indexOf(element);
         if (index >= 0) this.elements.splice(index, 1);
     }
@@ -91,24 +98,69 @@ class World {
 
             this.elements.forEach(element => {
                 element.renderables.forEach(renderable => {
-                    wrap(() => {
-                        renderable.renderShadow();
-                    });
+                    if (renderable.visible) {
+                        wrap(() => renderable.renderShadow());
+                    }
                 });
             });
 
             this.elements.forEach(element => {
                 element.renderables.forEach(renderable => {
-                    wrap(() => {
-                        renderable.renderActual();
-                    });
+                    if (renderable.visible) {
+                        wrap(() => renderable.renderActual());
+                    }
                 });
             });
         });
         // this.renderables.forEach(renderable => wrap(() => renderable.renderActual()));
 
         wrap(() => {
+
+            wrap(() => {
+                return;
+
+                const hero = this.hero;
+                if (!hero) return;
+
+                translate(-this.camera.x, -this.camera.y);
+                R.globalAlpha = 0.5;
+                R.lineWidth = 30;
+                R.lineCap = 'butt';
+                fs('#fff');
+                ss('#fff');
+
+                this.simulatedHero.copy(hero);
+
+                const simulationStep = 0.1;
+                let previousX;
+                let previousY;
+
+                beginPath();
+                moveTo(hero.x, hero.y);
+                for (let i = 0 ; i < 0.5 ; i += simulationStep) {
+                    previousX = this.simulatedHero.x;
+                    previousY = this.simulatedHero.y;
+
+                    this.simulatedHero.cycle(simulationStep);
+
+                    // fillRect(this.simulatedHero.x, this.simulatedHero.y, 10, 10);
+                    lineTo(this.simulatedHero.x, this.simulatedHero.y);
+                }
+                stroke();
+
+                // const lastAngle = atan2(this.simulatedHero.y - previousY, this.simulatedHero.x - previousX);
+                translate(this.simulatedHero.x, this.simulatedHero.y);
+                rotate(atan2(this.simulatedHero.y - previousY, this.simulatedHero.x - previousX));
+
+                beginPath();
+                moveTo(50, 0);
+                lineTo(0, 50);
+                lineTo(0, -50);
+                fill();
+            });
+
             translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+
             R.fillStyle = '#fff';
             beginPath();
             arc(MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y, 20, 0, PI * 2);
