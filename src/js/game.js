@@ -20,14 +20,6 @@ class Game {
 
         G.clock += elapsed;
 
-        const directionSign = sign(MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x);
-        if (directionSign) {
-            INPUT.directionAcc += elapsed * sign(MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x);
-        } else {
-            INPUT.directionAcc += limit(-elapsed, -INPUT.directionAcc, elapsed);
-        }
-        INPUT.directionAcc = limit(-1, INPUT.directionAcc, 1)
-
         G.world.cycle(elapsed);
         G.hud.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));

@@ -8,7 +8,7 @@ class SimulatedDraggable extends Element {
             this.simulatedPoints.push(this.newPoint());
         }
 
-        this.simulated = new DraggedElement();
+        this.simulated = new DraggedElement(new Input());
 
         this.renderables = [new ArrowRenderable(this.simulatedPoints)];
     }

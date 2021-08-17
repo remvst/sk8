@@ -32,8 +32,6 @@ onmousemove = e => {
     } else {
         ROTATION_ACC = limit(-1, ROTATION_ACC + movementX / 200, 1);
     }
-
-    // INPUT.directionAcc += MOUSE_POSITION.x -
 };
 
 onmousedown = () => {

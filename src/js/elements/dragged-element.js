@@ -1,10 +1,11 @@
 class DraggedElement extends Element {
 
-    constructor() {
+    constructor(input) {
         super();
         this.velocityZ = 0;
         this.speed = 0;
         this.momentum = new Point();
+        this.input = input;
     }
 
     copy(otherHero) {
@@ -23,7 +24,7 @@ class DraggedElement extends Element {
         super.cycle(elapsed);
 
         if (this.draggable) {
-            const angleDirection = INPUT.direction();
+            const angleDirection = this.input.direction();
             const diff = limit(-elapsed * PI * 1.5, normalize(angleDirection - this.angle), elapsed * PI * 1.5);
             this.angle += diff;
 

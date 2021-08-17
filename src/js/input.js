@@ -1,21 +1,33 @@
 WAIT_FOR_RELEASE = false;
 
-INPUT = {
-    'squat': () => MOUSE_IS_DOWN,
-    'trick': () => down[KEYBOARD_SPACE],
-    'pushing': () => down[KEYBOARD_SPACE],
-    'direction': () => {
+class Input {
+    squat() {
+        return MOUSE_IS_DOWN;
+    }
+
+    grind() {
+        return MOUSE_IS_DOWN;
+    }
+
+    trick() {
+        return down[KEYBOARD_SPACE];
+    }
+
+    pushing() {
+        return down[KEYBOARD_SPACE];
+    }
+
+    direction() {
         const axisValue = gamepadAxisValue(0);
         if (abs(axisValue) > 0) return axisValue;
 
         return atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x);
-     },
-     'rotation': () => {
-         const axisValue = gamepadAxisValue(0);
-         if (abs(axisValue) > 0) return axisValue;
+    }
 
-         return ROTATION_ACC;
-     },
-     'grind': () => MOUSE_IS_DOWN,
-     'directionAcc': 0,
-};
+    rotation() {
+        const axisValue = gamepadAxisValue(0);
+        if (abs(axisValue) > 0) return axisValue;
+
+        return ROTATION_ACC;
+    }
+}

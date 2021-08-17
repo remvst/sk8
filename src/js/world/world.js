@@ -9,7 +9,7 @@ class World {
 
         this.addElement(this.simulatedHero = new SimulatedDraggable());
 
-        this.addElement(new Hero());
+        this.addElement(new Hero(new Input()));
 
         const kicker = new Kicker();
         kicker.y = 200;

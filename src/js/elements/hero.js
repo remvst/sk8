@@ -1,7 +1,7 @@
 class Hero extends DraggedElement {
 
-    constructor() {
-        super();
+    constructor(input) {
+        super(input);
         this.velocityZ = 0;
 
         this.center = this.newPoint();
@@ -218,7 +218,7 @@ class Hero extends DraggedElement {
         setTimeout(() => {
             this.world.removeElement(copy);
 
-            const newHero = new Hero();
+            const newHero = new Hero(this.input);
             newHero.x = this.safePool[0].x;
             newHero.y = this.safePool[0].y;
             newHero.z = this.safePool[0].z;
@@ -232,7 +232,7 @@ class Hero extends DraggedElement {
         const wasPushing = this.pushing;
 
         if (this.age > this.pushingUntil) {
-            if (this.landed && INPUT.pushing()) {
+            if (this.landed && this.input.pushing()) {
                 this.pushing = true;
                 this.speed = min(600, this.speed + 200);
                 this.pushingUntil = this.age + PUSH_PERIOD;
@@ -266,12 +266,12 @@ class Hero extends DraggedElement {
                 'z': [this.z, rnd(-20, 20)],
             });
 
-            const rotationDirection = INPUT.rotation();
+            const rotationDirection = this.input.rotation();
             this.balance = limit(-1, this.balance + sign(this.balance || 1) * elapsed * 0.5 + rotationDirection * elapsed, 1);
         }
 
         // Trick progress
-        this.performingTrick = !this.landed && INPUT.trick();
+        this.performingTrick = !this.landed && this.input.trick();
 
         const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.4);
         if (this.performingTrick) {
@@ -287,7 +287,7 @@ class Hero extends DraggedElement {
         }
 
         // Fall down
-        const gravity = (INPUT.grind() ? 3 : 1) * 20;
+        const gravity = (this.input.grind() ? 3 : 1) * 20;
         this.velocityZ -= elapsed * gravity;
         this.z = max(0, this.z + this.velocityZ);
         if (this.z === 0) this.land();
@@ -295,7 +295,7 @@ class Hero extends DraggedElement {
 
         // Air rotation
         if (!this.landed && !this.grinding) {
-            const rotationDirection = INPUT.rotation();
+            const rotationDirection = this.input.rotation();
             this.angle += rotationDirection * PI * 4 * elapsed;
 
             ROTATION_ACC += limit(-elapsed * 4, -ROTATION_ACC, elapsed * 4);
@@ -371,7 +371,7 @@ class Hero extends DraggedElement {
     }
 
     checkGrinds() {
-        if (!INPUT.grind() || this.trickProgress % 1 > 0) {
+        if (!this.input.grind() || this.trickProgress % 1 > 0) {
             return;
         }
 
@@ -452,7 +452,7 @@ class Hero extends DraggedElement {
             if (rail instanceof Rail) {
                 const hardCollision = rail.collides(this, RAIL_BAIL_PADDING);
                 if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
-                    if (INPUT.grind()) {
+                    if (this.input.grind()) {
                         return nomangle('TOO LOW TO GRIND');
                     }
                     return nomangle('WATCH YOUR STEP');
