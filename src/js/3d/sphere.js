@@ -29,4 +29,8 @@ class Sphere extends Renderable {
     animateToGround(origin) {
         this.makePointsFall([this.center], origin);
     }
+
+    renderOnTopOfHero(hero) {
+        return this.center.y > hero.y;
+    }
 }

@@ -24,6 +24,7 @@
     "src/js/elements/simulated-draggable.js",
     "src/js/elements/kicker.js",
     "src/js/elements/rail.js",
+    "src/js/elements/pole.js",
 
     "src/js/3d/renderable.js",
     "src/js/3d/point.js",
@@ -33,6 +34,7 @@
     "src/js/3d/arrow-renderable.js",
     "src/js/3d/composite-renderable.js",
     "src/js/3d/balance-renderable.js",
+    "src/js/3d/arc.js",
 
     "src/js/scenes/scene.js",
     "src/js/scenes/welcome-scene.js",

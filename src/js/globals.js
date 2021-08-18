@@ -2,4 +2,4 @@ let R, // canvas context
     G, // Game instance
     w = window,
     CANVAS = nomangle(g),
-    SHADOW_COLOR = 'rgba(0, 0, 0, 0.5)';
+    SHADOW_COLOR = 'rgba(20, 20, 20, 1)';

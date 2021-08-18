@@ -3,24 +3,16 @@ class DemoScene extends Scene {
     setupWorld(world) {
         super.setupWorld(world);
 
-        // const kickerLand = new Kicker();
-        // // kickerLand.y = 200;
-        // kickerLand.x = 350;
-        // kickerLand.angle = PI;
-        // world.addElement(kickerLand);
-
-        const kicker2 = new Kicker();
-        // kicker2.y = -175;
-        kicker2.x = -350;
-        kicker2.angle = 0;
-        // world.addElement(kicker2);
-
         this.rail = new Rail([
             new Point(-200, -200 * 0.4, 200),
             new Point(200, 200 * 0.4, 200),
-        ])
-
+        ]);
         world.addElement(this.rail);
+
+        const pole = new Pole();
+        pole.x = 100;
+        pole.y = -300;
+        world.addElement(pole);
     }
 
     setupActualWorld() {

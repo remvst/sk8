@@ -452,15 +452,20 @@ class Hero extends DraggedElement {
             return;
         }
 
-        for (const rail of this.world.elements) {
-            if (rail instanceof Rail) {
-                const hardCollision = rail.collides(this, RAIL_BAIL_PADDING);
+        for (const element of this.world.elements) {
+            if (element instanceof Rail) {
+                const hardCollision = element.collides(this, RAIL_BAIL_PADDING);
                 if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
                     if (this.input.grind()) {
                         return nomangle('TOO LOW TO GRIND');
                     }
                     return nomangle('WATCH YOUR STEP');
                 }
+            }
+
+            if (element instanceof Pole && element.collides(this)) {
+                console.log('boooo');
+                return nomangle('hit pole');
             }
         }
 
