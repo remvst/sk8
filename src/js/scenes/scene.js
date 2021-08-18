@@ -5,6 +5,7 @@ class Scene {
 
     restart() {
         this.age = 0;
+        this.demoDuration = 5;
         this.setupActualWorld();
         this.setupDemoWorld();
     }
@@ -29,7 +30,12 @@ class Scene {
     cycle(elapsed) {
         this.age += elapsed;
         this.world.cycle(elapsed);
-        if (this.demoWorld) this.demoWorld.cycle(elapsed);
+        if (this.demoWorld) {
+            this.demoWorld.cycle(elapsed);
+            if (this.demoWorld.age > this.demoDuration) {
+                this.setupDemoWorld();
+            }
+        }
         this.hud.cycle(elapsed);
     }
 
@@ -48,12 +54,25 @@ class Scene {
             fr(-2, -2, CANVAS_WIDTH * worldScale + 4, CANVAS_HEIGHT * worldScale + 4);
 
             scale(worldScale, worldScale);
-            fs('#170e65');
+            fs('#000');
             beginPath();
             rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             fill();
             clip();
             this.demoWorld.render();
+
+            fs('#000');
+            fr(0, CANVAS_HEIGHT - 50, CANVAS_WIDTH, 50);
+
+            fs('#fff');
+            fr(0, CANVAS_HEIGHT - 50, CANVAS_WIDTH * this.demoWorld.age / this.demoDuration, 50);
+
+            if (this.age % 1 > 0.5) {
+                R.font = nomangle('72pt Impact');
+                R.textAlign = 'center';
+                R.textBaseline = 'middle';
+                fillText(nomangle('DEMO'), CANVAS_WIDTH / 2, 80);
+            }
         });
 
         const { hero } = this.world;

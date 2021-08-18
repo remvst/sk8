@@ -48,7 +48,7 @@ class World {
             translate(-this.camera.x, -this.camera.y);
 
             fs(groundTexture);
-            fr(this.camera.x, this.camera.y, CANVAS_WIDTH, CANVAS_HEIGHT);
+            fr(this.camera.x, this.camera.y, CANVAS_WIDTH * 2, CANVAS_WIDTH * 2);
 
             const before = [];
             const after = [];

@@ -4,7 +4,16 @@ class Game {
         G = this;
         G.clock = 0;
 
-        G.startScene(new FreeScene());
+        G.scenes = [
+            new PushScene(),
+            new JumpScene(),
+            new TrickScene(),
+            new RotationScene(),
+            new GrindScene(),
+            new FreeScene(),
+        ];
+
+        G.startScene(G.scenes[5]);
 
         INTERPOLATIONS = [];
     }
