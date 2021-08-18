@@ -1,6 +1,8 @@
-WAIT_FOR_RELEASE = false;
-
 class Input {
+    get userControlled() {
+        return true;
+    }
+
     squat() {
         return MOUSE_IS_DOWN;
     }
@@ -33,6 +35,10 @@ class Input {
 }
 
 class EmptyInput {
+    get userControlled() {
+        return false;
+    }
+
     squat() {
         return false;
     }

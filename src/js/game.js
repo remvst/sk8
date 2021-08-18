@@ -4,15 +4,14 @@ class Game {
         G = this;
         G.clock = 0;
 
-        G.hud = new HUD();
-        G.world = new World();
+        G.startScene(new FreeScene());
 
         INTERPOLATIONS = [];
     }
 
-    startPanel(panel) {
-        this.currentPanel = panel;
-        panel.restart();
+    startScene(scene) {
+        this.scene = scene;
+        scene.setupWorld();
     }
 
     cycle(elapsed) {
@@ -20,8 +19,7 @@ class Game {
 
         G.clock += elapsed;
 
-        G.world.cycle(elapsed);
-        G.hud.cycle(elapsed);
+        G.scene.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
     }
 
@@ -30,8 +28,7 @@ class Game {
             fs('#170e65');
             fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-            G.world.render();
-            G.hud.render();
+            this.scene.render();
         });
     }
 

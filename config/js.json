@@ -30,6 +30,9 @@
     "src/js/3d/composite-renderable.js",
     "src/js/3d/balance-renderable.js",
 
+    "src/js/scenes/scene.js",
+    "src/js/scenes/free-scene.js",
+
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",
 

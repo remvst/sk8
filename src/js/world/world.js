@@ -1,57 +1,14 @@
 class World {
     constructor() {
-        this.age = 0;
         this.elements = [];
         this.particles = [];
 
         this.camera = new Camera();
-
-        this.mousePosition = new Point();
-
-        const myInput = new EmptyInput();
-        myInput.pushing = () => this.age > 1 && this.age < 3;
-
-        this.addElement(this.simulatedHero = new SimulatedDraggable());
-
-        // const otherHero =
-
-        this.addHero(new Hero(new Input()));
-        // this.addHero(new Hero(myInput));
-
-        const kicker = new Kicker();
-        kicker.y = 200;
-        this.addElement(kicker);
-
-        const kickerLand = new Kicker();
-        kickerLand.y = 200;
-        kickerLand.x = 400;
-        kickerLand.angle = PI;
-        this.addElement(kickerLand);
-
-        const kicker2 = new Kicker();
-        kicker2.y = -175;
-        kicker2.x = -350;
-        kicker2.angle = PI / 4;
-        this.addElement(kicker2);
-
-        this.addElement(new Rail([
-            new Point(400, 400, 200),
-            new Point(800, 400, 200),
-            new Point(1200, 400, 400),
-            new Point(1600, 400, 400),
-            new Point(1800, 500, 400),
-        ]));
-
-        this.addElement(new Rail([
-            new Point(-200, -400, 200),
-            new Point(-800, -400, 200),
-            new Point(-1200, -600, 200),
-        ]));
     }
 
     addHero(hero) {
         this.hero = hero;
-        this.simulatedHero.hero = hero;
+        // this.simulatedHero.hero = hero;
         this.camera.followedTarget = hero;
 
         this.addElement(hero);
@@ -64,7 +21,7 @@ class World {
 
     removeElement(element) {
         if (this.hero == element) {
-            this.simulatedHero.hero = null;
+            // this.simulatedHero.hero = null;
             this.hero = null;
         }
 
@@ -72,7 +29,6 @@ class World {
     }
 
     cycle(elapsed) {
-        this.age += elapsed;
         this.elements.forEach(e => e.cycle(elapsed));
         this.camera.cycle(elapsed);
     }
@@ -111,18 +67,6 @@ class World {
             this.particles.forEach(particle => wrap(() => particle.render()));
             if (this.hero) wrap(() => this.hero.renderables[0].renderActual());
             after.forEach(renderable => wrap(() => renderable.renderActual()));
-        });
-
-        wrap(() => {
-            if (!this.hero.landed) return;
-
-            translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-
-            R.fillStyle = '#fff';
-            R.globalAlpha = 0.5;
-            beginPath();
-            arc(MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y, 20, 0, PI * 2);
-            fill();
         });
     }
 
