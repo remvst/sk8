@@ -428,12 +428,7 @@ class Hero extends DraggedElement {
             }
         }
 
-        if (wasGrinding) {
-            console.log(collidesWithRail);
-        }
-
         if (!collidesWithRail && wasGrinding) {
-            console.log('stop grinding!');
             this.grinding = false;
         }
     }

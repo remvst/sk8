@@ -15,6 +15,7 @@ class Camera {
 
     cycle(elapsed) {
         if (this.followedTarget) {
+            console.log('yup');
             this.centerX = this.followedTarget.x;
             this.centerY = this.followedTarget.y;
         }

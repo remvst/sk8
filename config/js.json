@@ -43,6 +43,7 @@
     "src/js/scenes/rotation-scene.js",
     "src/js/scenes/grind-scene.js",
     "src/js/scenes/free-scene.js",
+    "src/js/scenes/demo-scene.js",
 
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",

@@ -63,7 +63,16 @@ class Scene {
         }
     }
 
+    get backgroundColor() {
+        return '#170e3a';
+    }
+
     render() {
+        wrap(() => {
+            fs(this.backgroundColor);
+            fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        });
+
         this.world.render();
 
         wrap(() => {

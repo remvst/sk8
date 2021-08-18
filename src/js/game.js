@@ -17,7 +17,9 @@ class Game {
         ];
 
         // if (DEBUG) G.scene = G.scenes[4];
-        G.nextScene();
+        // G.nextScene();
+
+        this.startScene(new DemoScene());
     }
 
     startScene(scene) {
@@ -35,12 +37,7 @@ class Game {
     }
 
     render() {
-        wrap(() => {
-            fs('#170e65');
-            fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-            this.scene.render();
-        });
+        wrap(() => this.scene.render());
 
         if (this.transitionProgress < 1) {
             wrap(() => {
