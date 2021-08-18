@@ -11,7 +11,7 @@ class Game {
 
     startScene(scene) {
         this.scene = scene;
-        scene.setupWorld();
+        scene.restart();
     }
 
     cycle(elapsed) {

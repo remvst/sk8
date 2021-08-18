@@ -204,7 +204,7 @@ class Hero extends DraggedElement {
     }
 
     bail(bailReason) {
-        G.hud.showMessage(bailReason);
+        this.world.scene.showMessage(bailReason);
 
         const copy = new Element();
         copy.renderables = this.renderables.map(renderable => renderable.clone());

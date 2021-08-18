@@ -1,5 +1,6 @@
 class World {
     constructor() {
+        this.age = 0;
         this.elements = [];
         this.particles = [];
 
@@ -29,6 +30,7 @@ class World {
     }
 
     cycle(elapsed) {
+        this.age += elapsed;
         this.elements.forEach(e => e.cycle(elapsed));
         this.camera.cycle(elapsed);
     }
@@ -44,6 +46,9 @@ class World {
 
         wrap(() => {
             translate(-this.camera.x, -this.camera.y);
+
+            fs(groundTexture);
+            fr(this.camera.x, this.camera.y, CANVAS_WIDTH, CANVAS_HEIGHT);
 
             const before = [];
             const after = [];
