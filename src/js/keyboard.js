@@ -10,7 +10,7 @@ onblur = oncontextmenu = () => down = {};
 if (DEBUG) {
     addEventListener('keyup', e => {
         if (e.keyCode === KEYBOARD_N) {
-            G.currentPanel.nextPanel();
+            G.nextScene();
         }
     }, false);
 }

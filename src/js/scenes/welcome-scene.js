@@ -1,13 +1,5 @@
 class WelcomeScene extends Scene {
 
-    constructor() {
-        super();
-        this.hud.setPermanentMessage( [
-            nomangle('Welcome to SPACE SK8R.'),
-            nomangle('Let\'s go through the basics.'),
-        ]);
-    }
-
     setupActualWorld() {
         super.setupActualWorld();
 
@@ -16,5 +8,9 @@ class WelcomeScene extends Scene {
 
     setupDemoWorld() {
         this.demoWorld = null;
+        this.hud.setPermanentMessage( [
+            nomangle('Welcome to SPACE SK8R.'),
+            nomangle('Let\'s go through the basics.'),
+        ]);
     }
 }

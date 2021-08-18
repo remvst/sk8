@@ -10,12 +10,12 @@ class Game {
             new DirectionScene(),
             new JumpScene(),
             new TrickScene(),
-            new RotationScene(),
             new GrindScene(),
+            new RotationScene(),
             new FreeScene(),
         ];
 
-        if (DEBUG) G.scene = G.scenes[1];
+        if (DEBUG) G.scene = G.scenes[4];
         G.nextScene();
     }
 

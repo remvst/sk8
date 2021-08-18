@@ -1,13 +1,5 @@
 class DirectionScene extends Scene {
 
-    constructor() {
-        super();
-        this.hud.setPermanentMessage( [
-            nomangle('Once you\'ve gained some speed,'),
-            nomangle('move around using your mouse.'),
-        ]);
-    }
-
     setupDemoWorld() {
         super.setupDemoWorld();
 
@@ -17,7 +9,11 @@ class DirectionScene extends Scene {
             if (between(5, this.demoWorld.age, 6)) return -PI / 4;
             return 0;
         };
-        this.demoDuration = 10;
-        // TODO
+        this.demoDuration = 8;
+
+        this.hud.setPermanentMessage( [
+            nomangle('Once you\'ve gained some speed,'),
+            nomangle('move around using your mouse.'),
+        ]);
     }
 }

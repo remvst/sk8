@@ -372,6 +372,7 @@ class Hero extends DraggedElement {
 
     checkGrinds() {
         if (!this.input.grind() || this.trickProgress % 1 > 0) {
+            this.grinding = false;
             return;
         }
 
@@ -424,7 +425,12 @@ class Hero extends DraggedElement {
             }
         }
 
+        if (wasGrinding) {
+            console.log(collidesWithRail);
+        }
+
         if (!collidesWithRail && wasGrinding) {
+            console.log('stop grinding!');
             this.grinding = false;
         }
     }

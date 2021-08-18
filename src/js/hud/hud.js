@@ -51,7 +51,7 @@ class HUD {
     }
 
     showMessage(messageLines, messageDuration = 2) {
-        this.messageLines = messageLines.slice ? messageLines : [messageLines];
+        this.messageLines = messageLines.splice ? messageLines : [messageLines];
         this.messageTimeLeft = messageDuration;
     }
 
