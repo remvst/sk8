@@ -3,6 +3,7 @@ class Game {
     constructor() {
         G = this;
         G.clock = 0;
+        G.transitionProgress = 1;
 
         G.scenes = [
             new WelcomeScene(),
@@ -40,6 +41,14 @@ class Game {
 
             this.scene.render();
         });
+
+        if (this.transitionProgress < 1) {
+            wrap(() => {
+                R.globalAlpha = 1 - this.transitionProgress;
+                translate(-CANVAS_WIDTH * this.transitionProgress, 0);
+                drawImage(this.transitionSnapshot, 0, 0);
+            });
+        }
     }
 
     nextScene() {
@@ -47,5 +56,15 @@ class Game {
 
         const index = G.scenes.indexOf(G.scene);
         this.startScene(this.scenes[index + 1]);
+
+        this.transition();
+    }
+
+    transition() {
+        this.transitionSnapshot = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT, (r) => {
+            r.drawImage(CANVAS, 0, 0);
+        });
+
+        interp(this, 'transitionProgress', 0, 1, 0.3);
     }
 }
