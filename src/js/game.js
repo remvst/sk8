@@ -5,7 +5,9 @@ class Game {
         G.clock = 0;
 
         G.scenes = [
+            new WelcomeScene(),
             new PushScene(),
+            new DirectionScene(),
             new JumpScene(),
             new TrickScene(),
             new RotationScene(),
@@ -13,9 +15,8 @@ class Game {
             new FreeScene(),
         ];
 
-        G.startScene(G.scenes[5]);
-
-        INTERPOLATIONS = [];
+        if (DEBUG) G.scene = G.scenes[1];
+        G.nextScene();
     }
 
     startScene(scene) {
@@ -41,4 +42,10 @@ class Game {
         });
     }
 
+    nextScene() {
+        INTERPOLATIONS = [];
+
+        const index = G.scenes.indexOf(G.scene);
+        this.startScene(this.scenes[index + 1]);
+    }
 }

@@ -34,7 +34,9 @@
     "src/js/3d/balance-renderable.js",
 
     "src/js/scenes/scene.js",
+    "src/js/scenes/welcome-scene.js",
     "src/js/scenes/push-scene.js",
+    "src/js/scenes/direction-scene.js",
     "src/js/scenes/jump-scene.js",
     "src/js/scenes/trick-scene.js",
     "src/js/scenes/rotation-scene.js",

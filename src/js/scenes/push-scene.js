@@ -1,5 +1,13 @@
 class PushScene extends Scene {
 
+    constructor() {
+        super();
+        this.hud.setPermanentMessage( [
+            nomangle('Let\'s start by gaining some speed.'),
+            nomangle('Hold [SPACE] to push.'),
+        ]);
+    }
+
     setupDemoWorld() {
         super.setupDemoWorld();
 
