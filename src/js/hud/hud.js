@@ -56,6 +56,6 @@ class HUD {
     }
 
     setPermanentMessage(messageLines) {
-        this.permanentMessage = messageLines;
+        this.permanentMessage = messageLines.splice ? messageLines : [messageLines];
     }
 }

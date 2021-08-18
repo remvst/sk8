@@ -3,6 +3,10 @@ class Scene {
         this.hud = new HUD();
     }
 
+    isPerformingCompletingAction(hero) {
+        return false;
+    }
+
     restart() {
         this.age = 0;
         this.demoDuration = 5;
@@ -16,15 +20,23 @@ class Scene {
 
     setupActualWorld() {
         this.world = new World();
-        this.world.addHero(new Hero(new Input()));
+        this.world.addElement(new Hero(new Input()));
         this.setupWorld(this.world);
     }
 
     setupDemoWorld() {
         this.demoWorld = new World();
         this.demoWorld.scene = this;
-        this.demoWorld.addHero(new Hero(new EmptyInput()));
+        this.demoWorld.addElement(new Hero(new EmptyInput()));
         this.setupWorld(this.demoWorld);
+    }
+
+    completionMessage() {
+        return nomangle('Nice!');
+    }
+
+    completionDelay() {
+        return 2;
     }
 
     cycle(elapsed) {
@@ -37,6 +49,18 @@ class Scene {
             }
         }
         this.hud.cycle(elapsed);
+
+        if (!this.world.hero) {
+            this.didTryCompletingAction = false;
+        } else {
+            this.didTryCompletingAction = this.didTryCompletingAction || this.isPerformingCompletingAction(this.world.hero);
+
+            if (this.world.hero.landed && this.didTryCompletingAction && !this.completed) {
+                this.completed = true;
+                this.hud.setPermanentMessage(this.completionMessage());
+                setTimeout(() => G.nextScene(), this.completionDelay() * 1000);
+            }
+        }
     }
 
     render() {
@@ -80,13 +104,12 @@ class Scene {
             wrap(() => {
                 if (!hero.landed) return;
 
-                translate(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
-
-                R.fillStyle = '#fff';
-                R.globalAlpha = 0.5;
-                beginPath();
-                arc(MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y, 20, 0, PI * 2);
-                fill();
+                translate(
+                    CANVAS_WIDTH / 2 + MOVEMENT_TARGET_DIRECTION.x,
+                    CANVAS_HEIGHT / 2 + MOVEMENT_TARGET_DIRECTION.y,
+                );
+                rotate(atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x));
+                renderArrow();
             });
         }
 

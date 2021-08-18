@@ -14,8 +14,7 @@ class JumpScene extends Scene {
         ]);
     }
 
-    cycle(elapsed) {
-        super.cycle(elapsed);
-        if (this.demoWorld.age > 6) this.setupDemoWorld();
+    isPerformingCompletingAction(hero) {
+        return hero.z > 0;
     }
 }

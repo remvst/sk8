@@ -34,4 +34,8 @@ class GrindScene extends Scene {
         const { hero } = this.demoWorld;
         hero.balance = sin(this.age * PI) * 0.5;
     }
+
+    isPerformingCompletingAction(hero) {
+        return hero.grinding;
+    }
 }

@@ -11,4 +11,8 @@ class PushScene extends Scene {
             nomangle('Hold [SPACE] to push.'),
         ]);
     }
+
+    isPerformingCompletingAction(hero) {
+        return hero.speed > 200;
+    }
 }

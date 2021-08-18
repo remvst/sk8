@@ -16,4 +16,8 @@ class DirectionScene extends Scene {
             nomangle('move around using your mouse.'),
         ]);
     }
+
+    isPerformingCompletingAction(hero) {
+        return hero.speed > 200 && abs(hero.angle) > PI / 2;
+    }
 }

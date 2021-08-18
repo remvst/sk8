@@ -7,15 +7,12 @@ class World {
         this.camera = new Camera();
     }
 
-    addHero(hero) {
-        this.hero = hero;
-        // this.simulatedHero.hero = hero;
-        this.camera.followedTarget = hero;
-
-        this.addElement(hero);
-    }
-
     addElement(element) {
+        if (element instanceof Hero) {
+            this.hero = element;
+            this.camera.followedTarget = element;
+        }
+
         element.world = this;
         this.elements.push(element);
     }

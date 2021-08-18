@@ -194,7 +194,7 @@ class Hero extends DraggedElement {
             angleDiff = abs(normalize(this.angle - momentumAngle));
         }
 
-        if (angleDiff > PI / 4) {
+        if (angleDiff > PI / 3) {
             this.bail('BAD LANDING');
         }
 
@@ -204,6 +204,8 @@ class Hero extends DraggedElement {
     }
 
     bail(bailReason) {
+        this.bailed = true;
+
         this.world.scene.hud.showMessage(bailReason);
 
         const copy = new Element();
@@ -302,20 +304,15 @@ class Hero extends DraggedElement {
         }
 
         // Grinding update
+        const wasGrinding = this.grinding;
         this.checkGrinds();
         if (this.grinding) {
             this.angle = this.grindingAngle + this.grindingOffsetAngle;
             this.momentum.set(cos(this.grindingAngle), sin(this.grindingAngle));
         }
 
-        // Collisions
-        const bailReason = this.shouldBail();
-        if (bailReason) {
-            this.bail(bailReason);
-        }
-
         // Update squat
-        if (this.landed || this.grinding) {
+        if (this.landed || this.grinding || wasGrinding) {
             const squatting = this.input.squat();
             if (this.squatting && !squatting) {
                 this.jump();
@@ -323,6 +320,12 @@ class Hero extends DraggedElement {
                 interp(this, 'squatFactor', 0, 1, 0.2);
             }
             this.squatting = squatting;
+        }
+
+        // Collisions
+        const bailReason = this.shouldBail();
+        if (bailReason) {
+            this.bail(bailReason);
         }
 
         // Update safe positions

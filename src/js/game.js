@@ -16,7 +16,7 @@ class Game {
             new FreeScene(),
         ];
 
-        if (DEBUG) G.scene = G.scenes[4];
+        // if (DEBUG) G.scene = G.scenes[4];
         G.nextScene();
     }
 

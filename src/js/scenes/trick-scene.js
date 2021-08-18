@@ -10,5 +10,13 @@ class TrickScene extends Scene {
         hero.input.trick = () => !hero.trickProgress;
 
         this.demoDuration = 6;
+
+        this.hud.setPermanentMessage( [
+            nomangle('While jumping, hold SPACE to perform a trick'),
+        ]);
+    }
+
+    isPerformingCompletingAction(hero) {
+        return hero.performingTrick;
     }
 }
