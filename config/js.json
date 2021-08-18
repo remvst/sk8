@@ -45,6 +45,9 @@
     "src/js/scenes/free-scene.js",
     "src/js/scenes/demo-scene.js",
 
+    "src/js/menu/button.js",
+    "src/js/menu/menu.js",
+
     "src/js/sound/jsfxr.js",
     "src/js/sound/sounds.js",
 

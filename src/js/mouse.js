@@ -11,8 +11,13 @@ onmousemove = e => {
     PREVIOUS_MOUSE_POSITION.x = MOUSE_POSITION.x;
     PREVIOUS_MOUSE_POSITION.y = MOUSE_POSITION.y;
 
-    MOUSE_POSITION.x = CANVAS_WIDTH * (e.pageX - canvasCoords.left) / canvasCoords.width;
-    MOUSE_POSITION.y = CANVAS_HEIGHT * (e.pageY - canvasCoords.top) / canvasCoords.height;
+    if (document.pointerLockElement) {
+        MOUSE_POSITION.x += e.movementX;
+        MOUSE_POSITION.y += e.movementY;
+    } else {
+        MOUSE_POSITION.x = CANVAS_WIDTH * (e.pageX - canvasCoords.left) / canvasCoords.width;
+        MOUSE_POSITION.y = CANVAS_HEIGHT * (e.pageY - canvasCoords.top) / canvasCoords.height;
+    }
 
     const movementX = e.movementX || MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x;
     const movementY = e.movementY || MOUSE_POSITION.y - PREVIOUS_MOUSE_POSITION.y;
