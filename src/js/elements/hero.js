@@ -316,7 +316,7 @@ class Hero extends DraggedElement {
 
         // Update squat
         if (this.landed || this.grinding) {
-            const squatting = MOUSE_IS_DOWN;
+            const squatting = this.input.squat();
             if (this.squatting && !squatting) {
                 this.jump();
             } else if (squatting && !this.squatting) {

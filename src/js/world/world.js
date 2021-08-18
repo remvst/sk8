@@ -1,5 +1,6 @@
 class World {
     constructor() {
+        this.age = 0;
         this.elements = [];
         this.particles = [];
 
@@ -7,9 +8,15 @@ class World {
 
         this.mousePosition = new Point();
 
+        const myInput = new EmptyInput();
+        myInput.pushing = () => this.age > 1 && this.age < 3;
+
         this.addElement(this.simulatedHero = new SimulatedDraggable());
 
-        this.addElement(new Hero(new Input()));
+        // const otherHero =
+
+        this.addHero(new Hero(new Input()));
+        // this.addHero(new Hero(myInput));
 
         const kicker = new Kicker();
         kicker.y = 200;
@@ -42,19 +49,21 @@ class World {
         ]));
     }
 
-    addElement(element) {
-        if (element instanceof Hero) {
-            this.hero = element;
-            this.simulatedHero.hero = element;
-            this.camera.followedTarget = element;
-        }
+    addHero(hero) {
+        this.hero = hero;
+        this.simulatedHero.hero = hero;
+        this.camera.followedTarget = hero;
 
+        this.addElement(hero);
+    }
+
+    addElement(element) {
         element.world = this;
         this.elements.push(element);
     }
 
     removeElement(element) {
-        if (element instanceof Hero) {
+        if (this.hero == element) {
             this.simulatedHero.hero = null;
             this.hero = null;
         }
@@ -63,7 +72,7 @@ class World {
     }
 
     cycle(elapsed) {
-        // this.mousePosition.set(MOUSE_POSITION.x + G.camera.x, MOUSE_POSITION.y + G.camera.y);
+        this.age += elapsed;
         this.elements.forEach(e => e.cycle(elapsed));
         this.camera.cycle(elapsed);
     }

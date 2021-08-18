@@ -31,3 +31,29 @@ class Input {
         return ROTATION_ACC;
     }
 }
+
+class EmptyInput {
+    squat() {
+        return false;
+    }
+
+    grind() {
+        return false;
+    }
+
+    trick() {
+        return false;
+    }
+
+    pushing() {
+        return false;
+    }
+
+    direction() {
+        return 0;
+    }
+
+    rotation() {
+        return 0;
+    }
+}
