@@ -386,6 +386,7 @@ class Hero extends DraggedElement {
 
     startGrinding() {
         this.grinding = true;
+        this.trickProgress = 0;
 
         interp(this, 'squatFactor', 0, 1, 0.2);
         interp(this, 'handsZ', this.handsZ, -100, 0.2);
@@ -488,9 +489,6 @@ class Hero extends DraggedElement {
             if (element instanceof Rail) {
                 const hardCollision = element.collides(this, RAIL_BAIL_PADDING);
                 if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
-                    if (this.input.grind()) {
-                        return true;
-                    }
                     return true;
                 }
             }
