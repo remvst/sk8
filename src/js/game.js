@@ -5,7 +5,7 @@ class Game {
         G.clock = 0;
         G.transitionProgress = 1;
 
-        G.menu = new Menu();
+        // G.menu = new Menu();
         // G.menu.age = -5.5;
 
         G.scenes = [
@@ -23,6 +23,7 @@ class Game {
         // G.nextScene();
 
         this.startScene(new DemoScene());
+        this.startScene(new FreeScene());
     }
 
     startScene(scene) {
@@ -68,7 +69,7 @@ class Game {
         });
 
         wrap(() => {
-            if (!document.pointerLockElement) return;
+            if (!document.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled) return;
 
             fs('#fff');
             ss('#000');

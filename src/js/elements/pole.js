@@ -10,7 +10,7 @@ class Pole extends Element {
         this.renderables = [new Segment(
             this.base,
             this.top,
-            '#fff',
+            '#eee',
             40
         ), new Arc(
             this.top,

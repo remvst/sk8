@@ -1,14 +1,47 @@
 class HUD {
 
-    constructor() {
+    constructor(scene) {
+        this.scene = scene;
         this.messageTimeLeft = 0;
+        this.displayedScore = 0;
+        this.targetScore = 0;
     }
 
     cycle(elapsed) {
         this.messageTimeLeft -= elapsed;
+
+        if (this.targetScore != this.scene.score) {
+            this.targetScore = this.scene.score;
+            interp(this, 'displayedScore', this.displayedScore, this.targetScore, 0.5);
+        }
     }
 
     render() {
+        R.font = 'italic 72pt Impact';
+        R.textAlign = 'center';
+        R.textBaseline = 'top';
+
+        if (this.scene.timeLeft !== null) {
+            whiteText(formatTime(this.scene.timeLeft), CANVAS_WIDTH / 2, 50, 1);
+        }
+
+        const { hero } = this.scene.world;
+        if (hero && hero.comboTracker.combo.tricks.length) {
+            const { combo } = hero.comboTracker;
+            const tricks = combo.tricks.slice(-5).map(trickToString).join(' + ');
+
+            R.textBaseline = 'bottom';
+            whiteText(numberWithCommas(combo.base) + nomangle('  x  ') + combo.tricks.length, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.5);
+
+            R.textBaseline = 'top';
+            whiteText(tricks, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.4);
+        }
+
+        R.textBaseline = 'top';
+        R.textAlign = 'left';
+        whiteText(nomangle('SCORE'), 50, 50, 0.5);
+        whiteText(numberWithCommas(~~this.displayedScore), 50, 100, 1);
+
         const lines = this.messageTimeLeft > 0 ? this.messageLines : this.permanentMessage;
         if (lines && lines.length) {
             wrap(() => {

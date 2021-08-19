@@ -46,6 +46,8 @@ class Kicker extends Element {
                     element.z = kickerZ;
                     element.velocityZ = Math.max(element.velocityZ, 0);
                     element.land();
+                } else if (element.landed) {
+                    element.z = kickerZ;
                 }
             }
         });

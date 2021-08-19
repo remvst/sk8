@@ -1,6 +1,8 @@
 class Scene {
     constructor() {
-        this.hud = new HUD();
+        this.hud = new HUD(this);
+        this.score = 0;
+        this.timeLeft = null;
     }
 
     isPerformingCompletingAction(hero) {

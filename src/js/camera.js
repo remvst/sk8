@@ -3,6 +3,7 @@ class Camera {
         this.followedTarget = null;
         this.centerX = 0;
         this.centerY = 0;
+        this.center = new Point();
     }
 
     get x() {
@@ -15,9 +16,12 @@ class Camera {
 
     cycle(elapsed) {
         if (this.followedTarget) {
-            console.log('yup');
-            this.centerX = this.followedTarget.x;
-            this.centerY = this.followedTarget.y;
+            this.center.set(this.followedTarget.x, this.followedTarget.y, this.followedTarget.z);
+
+            // this.centerX = this.followedTarget.x;
+            // this.centerY = this.followedTarget.y;
         }
+        this.centerX = this.center.projectToActual().x;
+        this.centerY = this.center.projectToActual().y;
     }
 }

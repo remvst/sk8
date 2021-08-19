@@ -7,6 +7,7 @@ class Particle {
         color = '#f00',
         size = [5, 5],
         alpha = [1, -1],
+        easing,
         onFinish
     }) {
         this.color = color;
@@ -14,11 +15,11 @@ class Particle {
 
         this.point = new Point();
 
-        interp(this.point, 'x', x[0], x[0] + x[1], duration);
-        interp(this.point, 'y', y[0], y[0] + y[1], duration);
-        interp(this.point, 'z', z[0], z[0] + z[1], duration);
-        interp(this, 'alpha', alpha[0], alpha[0] + alpha[1], duration);
-        interp(this, 'size', size[0], size[0] + (size[1] || 0), duration, 0, null, onFinish);
+        interp(this.point, 'x', x[0], x[0] + x[1], duration, 0, easing);
+        interp(this.point, 'y', y[0], y[0] + y[1], duration, 0, easing);
+        interp(this.point, 'z', z[0], z[0] + z[1], duration, 0, easing);
+        interp(this, 'alpha', alpha[0], alpha[0] + alpha[1], duration, 0, easing);
+        interp(this, 'size', size[0], size[0] + (size[1] || 0), duration, 0, easing, onFinish);
     }
 
     render() {

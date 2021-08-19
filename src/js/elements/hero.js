@@ -1,3 +1,132 @@
+rotationCount = rotation => {
+    return abs(round(rotation / PI));
+};
+
+trickToString = ([name, value, count, rotation]) => {
+    const qualifier = [
+        nomangle('DOUBLE '),
+        nomangle('TRIPLE '),
+        nomangle('QUADRUPLE '),
+    ][floor(count - 0.1) - 1] || '';
+
+    return (rotationCount(rotation) * 180 || '') + ' ' + qualifier + name;
+};
+
+trickValue = ([name, value, count, rotation]) => {
+    return count * ~~value * (1 + rotationCount(rotation));
+};
+
+class Combo {
+    constructor() {
+        this.tricks = [];
+    }
+
+    pushTrick(name, value = 0) {
+        this.tricks.push([name, value, 1, 0]);
+    }
+
+    accumulate(value) {
+        this.tricks[this.tricks.length - 1][1] += value;
+    }
+
+    setCount(newCount) {
+        this.tricks[this.tricks.length - 1][2] = newCount;
+    }
+
+    setRotation(rotation) {
+        if (this.tricks.length) {
+            this.tricks[this.tricks.length - 1][3] = rotation;
+        }
+    }
+
+    get total() {
+        return this.base * this.tricks.length;
+    }
+
+    get base() {
+        return this.tricks.reduce((acc, trick) => acc + trickValue(trick), 0);
+    }
+}
+
+class ComboTracker {
+    constructor(hero) {
+        this.hero = hero;
+        this.previous = {};
+        this.updatePrevious();
+
+        this.rotationAcc = 0;
+
+        this.combo = new Combo();
+    }
+
+    updatePrevious() {
+        this.previous.angle = this.hero.angle;
+        this.previous.velocityZ = this.hero.velocityZ;
+        this.previous.landed = this.hero.landed;
+        this.previous.trickProgress = this.hero.trickProgress;
+        this.previous.grinding = this.hero.grinding;
+        this.previous.rotationAcc = this.rotationAcc;
+    }
+
+    cycle(elapsed) {
+        const { combo } = this;
+
+        if (this.hero.velocityZ > 0 && (this.previous.landed || this.previous.grinding)) {
+            combo.pushTrick(nomangle('OLLIE'), 100);
+        }
+
+        if (this.hero.grinding) {
+            if (!this.previous.grinding) {
+                const slide = round(this.hero.grindingOffsetAngle / (PI / 2)) % 2;
+                combo.pushTrick(slide ? nomangle('SLIDE') : nomangle('GRIND'), 500);
+            }
+
+            combo.accumulate(elapsed * 100);
+        }
+
+        if (this.hero.landed || this.hero.grinding) {
+            this.rotationAcc = 0;
+        } else {
+            this.rotationAcc += this.previous.angle - this.hero.angle;
+            combo.setRotation(this.rotationAcc);
+        }
+
+        if (this.hero.trickProgress > 0) {
+            if (this.previous.trickProgress == 0) {
+                combo.pushTrick(nomangle('FLIPPITY'), 500);
+            }
+
+            combo.setCount(ceil(this.hero.trickProgress));
+        }
+
+        if (this.hero.landed && !this.previous.landed) {
+            if (this.previous.rotationAcc > PI / 2) {
+                let angleRatio = abs(normalize(this.previous.rotationAcc) / PI);
+                if (angleRatio > 0.5) {
+                    angleRatio = 1 - angleRatio;
+                }
+
+                console.log(angleRatio);
+
+                if (angleRatio < 0.1) {
+                    console.log('good landing!')
+                } else if (angleRatio > 0.4) {
+                    console.log('bad landing!')
+                }
+
+                // TODO record good/bad landing
+            }
+
+            if (!this.hero.bailed) {
+                this.hero.world.scene.score += this.combo.total;
+            }
+            this.combo = new Combo();
+        }
+
+        this.updatePrevious();
+    }
+}
+
 class Hero extends DraggedElement {
 
     constructor(input) {
@@ -47,6 +176,8 @@ class Hero extends DraggedElement {
         this.trickProgress = 0;
 
         this.balance = 0;
+
+        this.comboTracker = new ComboTracker(this);
 
         this.renderables = [new CompositeRenderable([
             // Wheels
@@ -144,6 +275,8 @@ class Hero extends DraggedElement {
             boardSlope,
             30, 10, -20, this.trickProgress * PI,
         );
+
+        this.center.projectToActual();
     }
 
     makeRectangle(p1, p2, p3, p4, slope, length, width, offsetZ, angleOffset) {
@@ -201,12 +334,26 @@ class Hero extends DraggedElement {
         interp(this, 'squatFactor', 1, 0, 0.2, 0.2);
         interp(this, 'squatFactor', 0, 1, 0.2);
         interp(this, 'handsZ', this.handsZ, -100, 0.2);
+
+        if (this.velocityZ < -1) {
+            for (let i = 0 ; i < 50 ; i++) {
+                const angle = random() * TWO_PI;
+                const distance = rnd(50, 100);
+                this.world.particle({
+                    'size': [20, -10],
+                    'color': '#fff',
+                    'duration': rnd(0.2, 0.4),
+                    'x': [this.x + rnd(-20, 20), cos(angle) * distance],
+                    'y': [this.y + rnd(-20, 20), sin(angle) * distance],
+                    'z': [this.z, 0],
+                    'easing': easeOutCirc,
+                });
+            }
+        }
     }
 
-    bail(bailReason) {
+    bail() {
         this.bailed = true;
-
-        this.world.scene.hud.showMessage(bailReason);
 
         const copy = new Element();
         copy.renderables = this.renderables.map(renderable => renderable.clone());
@@ -323,9 +470,8 @@ class Hero extends DraggedElement {
         }
 
         // Collisions
-        const bailReason = this.shouldBail();
-        if (bailReason) {
-            this.bail(bailReason);
+        if (this.shouldBail()) {
+            this.bail();
         }
 
         // Update safe positions
@@ -336,6 +482,8 @@ class Hero extends DraggedElement {
             point.set(this.x, this.y, this.z);
             this.safePool.push(point);
         }
+
+        this.comboTracker.cycle(elapsed);
     }
 
     kickerUnder(position) {
@@ -435,13 +583,13 @@ class Hero extends DraggedElement {
 
     shouldBail() {
         if (this.grinding && abs(this.balance) >= 1) {
-            return nomangle('YOU LOST YOUR BALANCE');
+            return true;
         }
 
         const footDistance = dist(this.leftFoot, this.rightFoot);
         const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
         if (abs(slope > 2)) {
-            return nomangle('WATCH YOUR STEP');
+            return true;
         }
 
         const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
@@ -457,15 +605,14 @@ class Hero extends DraggedElement {
                 const hardCollision = element.collides(this, RAIL_BAIL_PADDING);
                 if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
                     if (this.input.grind()) {
-                        return nomangle('TOO LOW TO GRIND');
+                        return true;
                     }
-                    return nomangle('WATCH YOUR STEP');
+                    return true;
                 }
             }
 
             if (element instanceof Pole && element.collides(this)) {
-                console.log('boooo');
-                return nomangle('hit pole');
+                return true;
             }
         }
 
