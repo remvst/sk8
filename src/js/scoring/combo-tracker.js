@@ -14,6 +14,7 @@ class ComboTracker {
         this.previous.angle = this.hero.angle;
         this.previous.velocityZ = this.hero.velocityZ;
         this.previous.landed = this.hero.landed;
+        this.previous.bailed = this.hero.bailed;
         this.previous.trickProgress = this.hero.trickProgress;
         this.previous.grinding = this.hero.grinding;
         this.previous.rotationAcc = this.rotationAcc;
@@ -32,7 +33,7 @@ class ComboTracker {
                 combo.pushTrick(slide ? nomangle('SLIDE') : nomangle('GRIND'), 500);
             }
 
-            combo.accumulate(elapsed * 100);
+            combo.accumulate(elapsed * 1000);
         }
 
         if (this.hero.landed || this.hero.grinding) {
@@ -50,30 +51,30 @@ class ComboTracker {
             combo.setCount(ceil(this.hero.trickProgress));
         }
 
-        if (this.hero.landed && !this.previous.landed) {
-            if (this.previous.rotationAcc > PI / 2) {
-                let angleRatio = abs(normalize(this.previous.rotationAcc) / PI);
-                if (angleRatio > 0.5) {
-                    angleRatio = 1 - angleRatio;
-                }
-
-                console.log(angleRatio);
-
-                if (angleRatio < 0.1) {
-                    console.log('good landing!')
-                } else if (angleRatio > 0.4) {
-                    console.log('bad landing!')
-                }
-
-                // TODO record good/bad landing
-            }
-
-            if (this.hero.bailed) {
-                this.combo.bailed = true;
-            } else {
-                this.combo.landed = true;
+        if ((this.hero.landed || this.hero.bailed) && this.combo.tricks.length) {
+            if (this.hero.landed) {
                 this.hero.world.scene.score += this.combo.total;
+
+                if (this.previous.rotationAcc > PI / 2) {
+                    let angleRatio = abs(normalize(this.previous.rotationAcc) / PI);
+                    if (angleRatio > 0.5) {
+                        angleRatio = 1 - angleRatio;
+                    }
+
+                    console.log(angleRatio);
+
+                    if (angleRatio < 0.1) {
+                        console.log('good landing!')
+                    } else if (angleRatio > 0.4) {
+                        console.log('bad landing!')
+                    }
+
+                    // TODO record good/bad landing
+                }
             }
+
+            this.combo.bailed = this.hero.bailed;
+            this.combo.landed = this.hero.landed;
 
             this.lastCombo = this.combo;
             this.lastComboAge = this.hero.world.age;

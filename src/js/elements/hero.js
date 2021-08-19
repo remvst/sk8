@@ -277,6 +277,8 @@ class Hero extends DraggedElement {
         }
 
         if (this.grinding) {
+            this.grindDuration += elapsed;
+
             const angle = random() * TWO_PI;
             const distance = rnd(10, 20);
             this.world.particle({
@@ -289,7 +291,11 @@ class Hero extends DraggedElement {
             });
 
             const rotationDirection = this.input.rotation();
-            this.balance = limit(-1, this.balance + sign(this.balance || 1) * elapsed * 0.5 + rotationDirection * elapsed, 1);
+            this.balance = limit(-1, this.balance + elapsed * this.grindDuration * (sign(this.balance || 1) * 0.5 + rotationDirection), 1);
+        }
+
+        if (this.landed) {
+            this.grindDuration = 0;
         }
 
         // Trick progress
