@@ -395,7 +395,11 @@ class Hero extends DraggedElement {
     jump() {
         this.stopLanding();
 
-        const squatRatio = min(1, this.age - this.squatStart);
+        let squatRatio = min(1, this.age - this.squatStart);
+        if (this.kickerUnder(this)) {
+            squatRatio += this.speed / 600;
+        }
+
         this.velocityZ = 8 + squatRatio * 5;
         this.grinding = false;
         this.pushing = false;
