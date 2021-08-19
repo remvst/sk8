@@ -15,8 +15,8 @@ onmousemove = e => {
         MOUSE_POSITION.x += e.movementX;
         MOUSE_POSITION.y += e.movementY;
     } else {
-        MOUSE_POSITION.x = CANVAS_WIDTH * (e.pageX - canvasCoords.left) / canvasCoords.width;
-        MOUSE_POSITION.y = CANVAS_HEIGHT * (e.pageY - canvasCoords.top) / canvasCoords.height;
+        MOUSE_POSITION.x = CANVAS_WIDTH * limit(0, (e.pageX - canvasCoords.left) / canvasCoords.width, 1);
+        MOUSE_POSITION.y = CANVAS_HEIGHT * limit(0, (e.pageY - canvasCoords.top) / canvasCoords.height, 1);
     }
 
     const movementX = e.movementX || MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x;
@@ -25,8 +25,8 @@ onmousemove = e => {
     const hero = G && G.scene.world.hero;
 
     if (hero && hero.draggable) {
-        MOVEMENT_TARGET_DIRECTION.x = limit(-400, MOVEMENT_TARGET_DIRECTION.x + movementX, 400);
-        MOVEMENT_TARGET_DIRECTION.y = limit(-400, MOVEMENT_TARGET_DIRECTION.y + movementY, 400);
+        MOVEMENT_TARGET_DIRECTION.x += movementX;
+        MOVEMENT_TARGET_DIRECTION.y += movementY;
 
         const angle = atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x);
         const dist = min(400, distP(0, 0, MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y));
