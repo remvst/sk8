@@ -17,9 +17,6 @@ class Camera {
     cycle(elapsed) {
         if (this.followedTarget) {
             this.center.set(this.followedTarget.x, this.followedTarget.y, this.followedTarget.z);
-
-            // this.centerX = this.followedTarget.x;
-            // this.centerY = this.followedTarget.y;
         }
         this.centerX = this.center.projectToActual().x;
         this.centerY = this.center.projectToActual().y;
