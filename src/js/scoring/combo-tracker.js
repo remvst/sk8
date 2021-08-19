@@ -24,6 +24,9 @@ class ComboTracker {
         const { combo } = this;
 
         if (this.hero.velocityZ > 0 && (this.previous.landed || this.previous.grinding)) {
+            if (this.hero.kickerUnder(this.hero)) {
+                combo.pushTrick(nomangle('OFF THE KICKER'), 100);
+            }
             combo.pushTrick(nomangle('OLLIE'), 100);
         }
 
