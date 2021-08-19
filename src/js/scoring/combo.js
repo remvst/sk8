@@ -26,11 +26,15 @@ class Combo {
     }
 
     accumulate(value) {
-        this.tricks[this.tricks.length - 1][1] += value;
+        if (this.tricks.length) {
+            this.tricks[this.tricks.length - 1][1] += value;
+        }
     }
 
     setCount(newCount) {
-        this.tricks[this.tricks.length - 1][2] = newCount;
+        if (this.tricks.length) {
+            this.tricks[this.tricks.length - 1][2] = newCount;
+        }
     }
 
     setRotation(rotation) {

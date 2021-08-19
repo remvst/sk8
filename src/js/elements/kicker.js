@@ -14,8 +14,6 @@ class Kicker extends Element {
         this.highTop = this.newPoint();
         this.highBottom = this.newPoint();
 
-        this.topZ = this.height;
-
         this.renderables = [
             new Segment(this.leftTop, this.leftBottom, '#fff', 8),
             new Segment(this.rightTop, this.rightBottom, '#fff', 8),
@@ -92,7 +90,6 @@ class Kicker extends Element {
 
     updateRenderables() {
         const animationRatio = (Date.now() % 5000) / 5000;
-        const angle = this.angle;
 
         const radius = this.length / 2;
 

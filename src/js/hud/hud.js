@@ -40,7 +40,13 @@ class HUD {
         R.textBaseline = 'top';
 
         if (this.scene.timeLeft !== null) {
-            whiteText(formatTime(this.scene.timeLeft), CANVAS_WIDTH / 2, 50, 1);
+            fatText(
+                this.scene.timeLeft > 15 ? '#fff' : '#f00',
+                formatTime(this.scene.timeLeft),
+                CANVAS_WIDTH / 2,
+                50,
+                1,
+            );
         }
 
         const { hero } = this.scene.world;

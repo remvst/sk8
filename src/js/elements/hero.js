@@ -86,8 +86,6 @@ class Hero extends DraggedElement {
         this.balanceRenderable.visible = this.grinding;
         this.balanceRenderable.balance = this.balance;
 
-        this.topZ = this.z;
-
         const kneeForwardFactor = 0.5 + this.squatFactor * 0.5;
         const halfLegLength = 100 - kneeForwardFactor * 60;
 

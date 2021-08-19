@@ -20,8 +20,6 @@ class Rail extends Element {
                 new Point(current.x, current.y, 0),
                 '#fff', 8
             ));
-
-            this.topZ = max(this.topZ, current.z);
         }
     }
 
