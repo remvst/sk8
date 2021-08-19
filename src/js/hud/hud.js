@@ -16,6 +16,24 @@ class HUD {
         }
     }
 
+    renderCombo(combo, color, fadeOutRatio) {
+        if (!combo || !combo.tricks.length || fadeOutRatio > 1) return;
+
+        const adjusted = limit(0, (fadeOutRatio - 0.5) / 0.5, 1);
+
+        R.globalAlpha = 1 - adjusted;
+
+        translate(0, -adjusted * 50);
+
+        const tricks = combo.tricks.slice(-5).map(trickToString);
+
+        R.textBaseline = nomangle('bottom');
+        fatText(color, numberWithCommas(combo.base) + nomangle('  x  ') + tricks.length, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.5);
+
+        R.textBaseline = nomangle('top');
+        fatText(color, tricks.join(' + '), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.4);
+    }
+
     render() {
         R.font = 'italic 72pt Impact';
         R.textAlign = 'center';
@@ -26,15 +44,17 @@ class HUD {
         }
 
         const { hero } = this.scene.world;
-        if (hero && hero.comboTracker.combo.tricks.length) {
-            const { combo } = hero.comboTracker;
-            const tricks = combo.tricks.slice(-5).map(trickToString).join(' + ');
-
-            R.textBaseline = 'bottom';
-            whiteText(numberWithCommas(combo.base) + nomangle('  x  ') + combo.tricks.length, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.5);
-
-            R.textBaseline = 'top';
-            whiteText(tricks, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.4);
+        if (hero) {
+            wrap(() => this.renderCombo(
+                hero.comboTracker.lastCombo,
+                hero.comboTracker.lastCombo.landed ? '#0f0' : '#f00',
+                (this.scene.world.age - hero.comboTracker.lastComboAge) / 1,
+            ));
+            wrap(() => this.renderCombo(
+                hero.comboTracker.combo,
+                '#fff',
+                0,
+            ));
         }
 
         R.textBaseline = 'top';

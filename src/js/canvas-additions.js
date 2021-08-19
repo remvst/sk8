@@ -15,6 +15,10 @@ canvasProto.ss = function(x) {
 };
 
 canvasProto.whiteText = function(t, x, y, scale) {
+    this.fatText('#fff', t, x, y, scale)
+}
+
+canvasProto.fatText = function(color, t, x, y, scale) {
     this.wrap(() => {
         this.translate(x, y);
         this.scale(scale, scale);
@@ -24,7 +28,7 @@ canvasProto.whiteText = function(t, x, y, scale) {
         this.fillText(t, 0, 10);
 
         this.lineWidth = 4;
-        this.fs('#fff');
+        this.fs(color);
         this.ss('#000');
         this.fillText(t, 0, 0);
         this.strokeText(t, 0, 0);

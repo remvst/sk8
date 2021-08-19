@@ -20,7 +20,7 @@ class World {
     removeElement(element) {
         if (this.hero == element) {
             // this.simulatedHero.hero = null;
-            this.hero = null;
+            // this.hero = null;
         }
 
         remove(this.elements, element);
@@ -67,7 +67,7 @@ class World {
 
             before.forEach(renderable => wrap(() => renderable.renderActual()));
             this.particles.forEach(particle => wrap(() => particle.render()));
-            if (this.hero) wrap(() => this.hero.renderables[0].renderActual());
+            if (this.hero && !this.hero.bailed) wrap(() => this.hero.renderables[0].renderActual());
             after.forEach(renderable => wrap(() => renderable.renderActual()));
         });
     }

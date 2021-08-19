@@ -7,6 +7,7 @@ class ComboTracker {
         this.rotationAcc = 0;
 
         this.combo = new Combo();
+        this.lastCombo = null;
     }
 
     updatePrevious() {
@@ -67,9 +68,16 @@ class ComboTracker {
                 // TODO record good/bad landing
             }
 
-            if (!this.hero.bailed) {
+            if (this.hero.bailed) {
+                this.combo.bailed = true;
+            } else {
+                this.combo.landed = true;
                 this.hero.world.scene.score += this.combo.total;
             }
+
+            this.lastCombo = this.combo;
+            this.lastComboAge = this.hero.world.age;
+
             this.combo = new Combo();
         }
 
