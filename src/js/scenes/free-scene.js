@@ -3,7 +3,7 @@ class FreeScene extends Scene {
     setupWorld(world) {
         super.setupWorld(world);
 
-        this.timeLeft = 5;
+        this.timeLeft = 120;
 
         // const kicker = new Kicker();
         // kicker.y = 200;
@@ -33,8 +33,8 @@ class FreeScene extends Scene {
         world.addElement(kicker);
 
         world.addElement(new Rail([
-            new Point(400, 400, 200),
-            new Point(800, 400, 200),
+            new Point(400, 400, 100),
+            new Point(800, 400, 100),
             new Point(1200, 400, 400),
             new Point(1600, 400, 400),
             new Point(1800, 500, 400),
