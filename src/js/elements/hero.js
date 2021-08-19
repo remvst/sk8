@@ -448,6 +448,9 @@ class Hero extends DraggedElement {
                         this.grindingAngle += PI;
                     }
 
+                    MOVEMENT_TARGET_DIRECTION.x = 400 * cos(this.grindingAngle);
+                    MOVEMENT_TARGET_DIRECTION.y = 400 * sin(this.grindingAngle);
+
                     this.x = grindCollision.positionOnRail.x;
                     this.y = grindCollision.positionOnRail.y;
                     this.z = grindCollision.positionOnRail.z;
