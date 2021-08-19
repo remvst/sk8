@@ -27,6 +27,9 @@
     "src/js/elements/rail.js",
     "src/js/elements/pole.js",
 
+    "src/js/scoring/combo.js",
+    "src/js/scoring/combo-tracker.js",
+
     "src/js/3d/renderable.js",
     "src/js/3d/point.js",
     "src/js/3d/plane.js",
