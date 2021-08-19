@@ -3,7 +3,7 @@ class FreeScene extends Scene {
     setupWorld(world) {
         super.setupWorld(world);
 
-        this.timeLeft = 120;
+        this.timeLeft = 5;
 
         // const kicker = new Kicker();
         // kicker.y = 200;

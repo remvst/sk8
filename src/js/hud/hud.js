@@ -39,7 +39,7 @@ class HUD {
         R.textAlign = 'center';
         R.textBaseline = 'top';
 
-        if (this.scene.timeLeft !== null) {
+        if (this.scene.timeLeft >= 0) {
             fatText(
                 this.scene.timeLeft > 15 ? '#fff' : '#f00',
                 formatTime(this.scene.timeLeft),
