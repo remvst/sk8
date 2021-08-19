@@ -52,7 +52,7 @@ class ComboTracker {
         }
 
         if ((this.hero.landed || this.hero.bailed) && this.combo.tricks.length) {
-            if (this.hero.landed) {
+            if (!this.hero.bailed) {
                 this.hero.world.scene.score += this.combo.total;
 
                 if (this.previous.rotationAcc > PI / 2) {
@@ -74,7 +74,7 @@ class ComboTracker {
             }
 
             this.combo.bailed = this.hero.bailed;
-            this.combo.landed = this.hero.landed;
+            this.combo.landed = !this.hero.bailed;
 
             this.lastCombo = this.combo;
             this.lastComboAge = this.hero.world.age;
