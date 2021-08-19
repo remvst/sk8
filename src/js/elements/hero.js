@@ -27,6 +27,7 @@ class Hero extends DraggedElement {
 
         this.squatting = false;
         this.squatFactor = 0;
+        this.squatStart = 0;
         this.grinding = false;
         this.grindingAngle = 0;
         this.grindingOffsetAngle = 0;
@@ -344,6 +345,7 @@ class Hero extends DraggedElement {
                 this.jump();
             } else if (squatting && !this.squatting) {
                 interp(this, 'squatFactor', 0, 1, 0.2);
+                this.squatStart = this.age;
             }
             this.squatting = squatting;
         }
@@ -393,7 +395,9 @@ class Hero extends DraggedElement {
 
     jump() {
         this.stopLanding();
-        this.velocityZ = 10;
+
+        const squatRatio = min(1, this.age - this.squatStart);
+        this.velocityZ = 8 + squatRatio * 5;
         this.grinding = false;
         this.pushing = false;
 
