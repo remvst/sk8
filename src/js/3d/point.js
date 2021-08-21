@@ -4,7 +4,7 @@ class Point {
     }
 
     projectToActual() {
-        this.actualPoint = this.actualPoint || new Point();
+        this.actualPoint = this.actualPoint || point();
         return this.actualPoint.set(
             this.x,
             this.y - this.z * 0.4,
@@ -12,7 +12,7 @@ class Point {
     }
 
     projectToShadow() {
-        this.shadowPoint = this.shadowPoint || new Point();
+        this.shadowPoint = this.shadowPoint || point();
         return this.shadowPoint.set(
             this.x + this.z * 0.2,
             this.y - this.z * 0.2,
@@ -31,6 +31,10 @@ class Point {
     }
 
     clone() {
-        return new Point(this.x, this.y, this.z);
+        return point(this.x, this.y, this.z);
     }
+}
+
+function point(x, y, z) {
+    return new Point(x, y, z);
 }

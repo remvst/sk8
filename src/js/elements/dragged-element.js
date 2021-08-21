@@ -4,7 +4,7 @@ class DraggedElement extends Element {
         super();
         this.velocityZ = 0;
         this.speed = 0;
-        this.momentum = new Point();
+        this.momentum = point();
         this.input = input;
     }
 

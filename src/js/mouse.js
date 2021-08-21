@@ -1,8 +1,8 @@
-MOUSE_POSITION = new Point();
-PREVIOUS_MOUSE_POSITION = new Point();
+MOUSE_POSITION = point();
+PREVIOUS_MOUSE_POSITION = point();
 MOUSE_IS_DOWN = false;
 
-MOVEMENT_TARGET_DIRECTION = new Point();
+MOVEMENT_TARGET_DIRECTION = point();
 ROTATION_ACC = 0;
 
 onmousemove = e => {

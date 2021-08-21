@@ -77,4 +77,36 @@ class World {
         properties.onFinish = () => remove(this.particles, particle);
         this.particles.push(particle = new Particle(properties));
     }
+
+    rail(pts) {
+        this.addElement(new Rail(pts));
+    }
+
+    pole(pt) {
+        const p = new Pole();
+        p.x = pt.x;
+        p.y = pt.y;
+        this.addElement(p);
+    }
+
+    kicker(pt, angle) {
+        const k = new Kicker();
+        k.x = pt.x;
+        k.y = pt.y;
+        k.angle = angle;
+        this.addElement(k);
+    }
+
+    arcRail(center, radius, count, fromAngle, toAngle) {
+        const pts = [];
+        for (let i = 0 ; i <= count ; i++) {
+            const angle = (i / count) * (toAngle - fromAngle) + fromAngle;
+            pts.push(point(
+                center.x + cos(angle) * radius,
+                center.y + sin(angle) * radius,
+                100,
+            ));
+        }
+        this.addElement(new Rail(pts));
+    }
 }

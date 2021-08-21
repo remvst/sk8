@@ -42,7 +42,7 @@ class Kicker extends Element {
 
                 if (element.z < kickerZ && element.velocityZ <= 0) {
                     element.z = kickerZ;
-                    element.velocityZ = Math.max(element.velocityZ, 0);
+                    element.velocityZ = max(element.velocityZ, 0);
                     element.land();
                 } else if (element.landed) {
                     element.z = kickerZ;
@@ -64,28 +64,28 @@ class Kicker extends Element {
     distanceToEdge(pos) {
         // const distance = dist(pos, this.edgeCenter());
         const distance = 9999;
-        const angleToPos = Math.atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x)
+        const angleToPos = atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x)
 
-        const angle = Math.atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x) - this.angle;
+        const angle = atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x) - this.angle;
         const distanceToEdge = Math.cos(angle) * distance;
         return distanceToEdge;
     }
 
     relativePosition(pos) {
-        const pt = new Point(pos.x, pos.y, pos.z);
+        const pt = point(pos.x, pos.y, pos.z);
         pt.x -= this.x;
         pt.y -= this.y;
         pt.z -= this.z;
 
-        const rotated = new Point();
-        rotated.x = pt.x * Math.cos(this.angle) + pt.y * Math.sin(this.angle);
-        rotated.y = -pt.x * Math.sin(this.angle) + pt.y * Math.cos(this.angle);
+        const rotated = point();
+        rotated.x = pt.x * cos(this.angle) + pt.y * sin(this.angle);
+        rotated.y = -pt.x * sin(this.angle) + pt.y * cos(this.angle);
 
         return rotated;
     }
 
     edgeCenter() {
-        return new Point(this.x + Math.cos(this.angle) * 25, this.y + Math.sin(this.angle) * 25);
+        return point(this.x + cos(this.angle) * 25, this.y + sin(this.angle) * 25);
     }
 
     updateRenderables() {

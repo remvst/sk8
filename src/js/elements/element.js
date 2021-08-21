@@ -1,11 +1,11 @@
 class Element {
     constructor() {
         this.x = this.y = this.z = this.angle = this.age = 0;
-        this.previous = new Point();
+        this.previous = point();
         this.renderables = [];
         this.points = [];
 
-        this.centerPoint = new Point();
+        this.centerPoint = point();
     }
 
     cycle(elapsed) {
@@ -23,9 +23,9 @@ class Element {
     }
 
     newPoint() {
-        const point = new Point();
-        this.points.push(point);
-        return point;
+        const x = point();
+        this.points.push(x);
+        return x;
     }
 
     adjustPoints() {

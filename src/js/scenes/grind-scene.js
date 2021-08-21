@@ -20,8 +20,8 @@ class GrindScene extends Scene {
         super.setupWorld(world);
 
         world.addElement(new Rail([
-            new Point(railStartX, 0, 100),
-            new Point(railFinalX, 0, 100),
+            point(railStartX, 0, 100),
+            point(railFinalX, 0, 100),
         ]));
     }
 

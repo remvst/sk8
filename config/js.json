@@ -1,4 +1,5 @@
 [
+    "src/js/3d/point.js",
     "src/js/globals.js",
     "src/js/math.js",
     "src/js/canvas-additions.js",
@@ -30,7 +31,6 @@
     "src/js/scoring/combo-tracker.js",
 
     "src/js/3d/renderable.js",
-    "src/js/3d/point.js",
     "src/js/3d/plane.js",
     "src/js/3d/segment.js",
     "src/js/3d/sphere.js",

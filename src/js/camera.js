@@ -1,7 +1,7 @@
 class Camera {
     constructor() {
         this.followedTarget = null;
-        this.center = new Point();
+        this.center = point();
     }
 
     get x() {

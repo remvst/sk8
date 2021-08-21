@@ -47,7 +47,7 @@ class Hero extends DraggedElement {
         this.pushAge = 0;
         this.pushingUntil = 0;
 
-        this.safePool = [new Point(), new Point()];
+        this.safePool = [point(), point()];
         this.nextSafeCheck = 0;
 
         this.performingTrick = false;

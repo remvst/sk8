@@ -6,17 +6,6 @@ class Segment extends Renderable {
         this.p2 = p2;
         this.color = color;
         this.thickness = thickness;
-
-        // this.min = new Point(
-        //     min(p1.x, p2.x),
-        //     min(p1.y, p2.y),
-        //     min(p1.z, p2.z),
-        // );
-        // this.max = new Point(
-        //     min(p1.x, p2.x),
-        //     min(p1.y, p2.y),
-        //     min(p1.z, p2.z),
-        // );
     }
 
     renderSegment(color, funcName) {
@@ -48,7 +37,7 @@ class Segment extends Renderable {
         if (this.p1.x == this.p2.x) return hero.y < min(this.p1.y, this.p2.y);
 
 
-        const positionOnSegment = new Point();
+        const positionOnSegment = point();
         const ratio = (hero.x - this.p1.x) / (this.p2.x - this.p1.x);
         positionOnSegment.x = hero.x;
         positionOnSegment.y = this.p1.y + ratio * (this.p2.y - this.p1.y);

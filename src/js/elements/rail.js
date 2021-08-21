@@ -17,7 +17,7 @@ class Rail extends Element {
             // Link to ground
             this.renderables.push(new Segment(
                 current,
-                new Point(current.x, current.y, 0),
+                point(current.x, current.y, 0),
                 '#fff', 8
             ));
         }
@@ -56,7 +56,7 @@ class Rail extends Element {
                 // TODO add z check for collision
             ) {
                 res = {
-                    'positionOnRail': new Point().set(
+                    'positionOnRail': point().set(
                         relativeProgress * (nextPoint.x - current.x) + current.x,
                         relativeProgress * (nextPoint.y - current.y) + current.y,
                         relativeProgress * (nextPoint.z - current.z) + current.z,
@@ -75,12 +75,12 @@ class Rail extends Element {
     relativePosition(p1, p2, pos) { // TODO dupe
         const angle = angleBetween(p1, p2);
 
-        const pt = new Point(pos.x, pos.y, pos.z);
+        const pt = point(pos.x, pos.y, pos.z);
         pt.x -= p1.x;
         pt.y -= p1.y;
         pt.z -= p1.z;
 
-        const rotated = new Point();
+        const rotated = point();
         rotated.x = pt.x * Math.cos(angle) + pt.y * Math.sin(angle);
         rotated.y = -pt.x * Math.sin(angle) + pt.y * Math.cos(angle);
 

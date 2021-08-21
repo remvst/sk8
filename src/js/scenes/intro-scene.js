@@ -4,8 +4,8 @@ class IntroScene extends Scene {
         super.setupWorld(world);
 
         this.rail = new Rail([
-            new Point(-200, -200 * 0.4, 200),
-            new Point(200, 200 * 0.4, 200),
+            point(-200, -200 * 0.4, 200),
+            point(200, 200 * 0.4, 200),
         ]);
         world.addElement(this.rail);
 
