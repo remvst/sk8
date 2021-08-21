@@ -5,6 +5,8 @@ class FreeScene extends Scene {
 
         this.timeLeft = 120;
 
+        this.score = 0;
+
         // const kicker = new Kicker();
         // kicker.y = 200;
         // world.addElement(kicker);

@@ -250,6 +250,8 @@ class Hero extends DraggedElement {
             newHero.z = this.safePool[0].z;
             this.world.addElement(newHero);
         }, 2000);
+
+        G.transition('#f00', 0.3);
     }
 
     cycle(elapsed) {
@@ -295,7 +297,8 @@ class Hero extends DraggedElement {
             });
 
             const rotationDirection = this.input.rotation();
-            this.balance = limit(-1, this.balance + elapsed * this.grindDuration * (sign(this.balance || 1) * 0.5 + rotationDirection), 1);
+            this.balance += this.balance * elapsed * 2 + rotationDirection * elapsed;
+            this.balance = limit(-1, this.balance, 1);
         }
 
         if (this.landed) {
@@ -319,13 +322,13 @@ class Hero extends DraggedElement {
         }
 
         if (this.input.grind()) {
-            this.jumpEndAge -= elapsed * 3;
-            // this.jumpEndZ -= elapsed * 3;
+            this.jumpEndAge = this.age;
+            this.velocityZ = min(this.velocityZ, 0);
         }
 
         if (this.age < this.jumpEndAge) {
-            const ratio = easeOutQuad(this.age - this.jumpStartAge) / (this.jumpEndAge - this.jumpStartAge);
-            const ratioBefore = easeOutQuad(this.age - elapsed - this.jumpStartAge) / (this.jumpEndAge - this.jumpStartAge);
+            const ratio = easeOutQuad((this.age - this.jumpStartAge) / (this.jumpEndAge - this.jumpStartAge));
+            const ratioBefore = easeOutQuad((this.age - elapsed - this.jumpStartAge) / (this.jumpEndAge - this.jumpStartAge));
             const newZ = this.jumpStartZ + ratio * (this.jumpEndZ - this.jumpStartZ);
             this.velocityZ = (ratio - max(0, ratioBefore)) * (this.jumpEndZ - this.jumpStartZ);
         } else {
@@ -406,6 +409,7 @@ class Hero extends DraggedElement {
     startGrinding() {
         this.grinding = true;
         this.trickProgress = 0;
+        this.balance = this.balance || rnd(-0.1, 0.1);
 
         interp(this, 'squatFactor', 0, 1, 0.2);
         interp(this, 'handsZ', this.handsZ, -100, 0.2);
@@ -424,9 +428,9 @@ class Hero extends DraggedElement {
         this.pushing = false;
 
         this.jumpStartAge = this.age;
-        this.jumpEndAge = this.age + 0.5;
+        this.jumpEndAge = this.age + 0.2 + squatRatio * 0.3;
         this.jumpStartZ = this.z;
-        this.jumpEndZ = this.z + 150 + squatRatio * 150;
+        this.jumpEndZ = this.z + 150 + squatRatio * 200;
 
         interp(this, 'pushingAnimationRatio', this.pushingAnimationRatio, 0, 0.2);
     }

@@ -27,7 +27,7 @@ class IntroScene extends Scene {
         hero.speed = 500;
         hero.renderables = [hero.renderables[0]];
         hero.input.direction = () => angle;
-        hero.input.squat = () => between(-500, hero.x, -350) || hero.grinding;
+        hero.input.squat = () => between(-600, hero.x, -350) || hero.grinding;
         hero.input.grind = () => between(-200, hero.x, 100);
         hero.input.trick = () => between(-350, hero.x, -300);
         hero.input.rotation = () => hero.x > 100 && hero.angle < angle + PI ? 0.5 : 0;

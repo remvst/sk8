@@ -5,6 +5,7 @@ class Game {
         G.clock = 0;
 
         this.startScene(new IntroScene());
+        this.transition('#000', 1);
     }
 
     mainMenu() {
@@ -27,7 +28,7 @@ class Game {
         G.clock += elapsed;
 
         if (G.menu) G.menu.cycle(elapsed);
-        if (G.clock > 1) G.scene.cycle(elapsed);
+        G.scene.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
     }
 
@@ -37,7 +38,8 @@ class Game {
         if (this.transitionProgress < 1) {
             wrap(() => {
                 R.globalAlpha = 1 - this.transitionProgress;
-                drawImage(this.transitionSnapshot, 0, 0);
+                fs(this.transitionPattern);
+                fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
             });
         }
 
@@ -45,12 +47,12 @@ class Game {
             wrap(() => this.menu.render());
         }
 
-        const fadeAlpha = limit(0, 1 - this.clock / 1, 1);
-        wrap(() => {
-            R.globalAlpha = fadeAlpha;
-            fs('#000');
-            fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        });
+        // const fadeAlpha = limit(0, 1 - this.clock / 1, 1);
+        // wrap(() => {
+        //     R.globalAlpha = fadeAlpha;
+        //     fs('#000');
+        //     fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        // });
 
         wrap(() => {
             if (!document.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled) return;
@@ -70,10 +72,13 @@ class Game {
             fill();
             stroke();
         });
+
+        fs('#000');
+        fr(CANVAS_WIDTH / 2, 0, ROTATION_ACC * CANVAS_WIDTH / 2, 50);
     }
 
-    transition() {
-        this.transitionSnapshot = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT, (r) => {
+    transition(pattern, duration = 0.3) {
+        this.transitionPattern = pattern || createCanvasPattern(CANVAS_WIDTH, CANVAS_HEIGHT, (r) => {
             r.drawImage(CANVAS, 0, 0);
         });
 
