@@ -17,6 +17,7 @@ class ComboTracker {
         this.previous.bailed = this.hero.bailed;
         this.previous.trickProgress = this.hero.trickProgress;
         this.previous.grinding = this.hero.grinding;
+        this.previous.lastRail = this.hero.lastRail;
         this.previous.rotationAcc = this.rotationAcc;
     }
 
@@ -30,7 +31,12 @@ class ComboTracker {
             combo.pushTrick(nomangle('OLLIE'), 100);
         }
 
+        if (this.previous.lastRail && this.hero.lastRail != this.previous.lastRail) {
+            combo.pushTrick(nomangle('RAIL TO RAIL'), 400);
+        }
+
         if (this.hero.grinding) {
+
             if (!this.previous.grinding) {
                 const slide = round(this.hero.grindingOffsetAngle / (PI / 2)) % 2;
                 combo.pushTrick(slide ? nomangle('SLIDE') : nomangle('GRIND'), 500);

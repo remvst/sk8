@@ -72,9 +72,6 @@ class Game {
             fill();
             stroke();
         });
-
-        fs('#000');
-        fr(CANVAS_WIDTH / 2, 0, ROTATION_ACC * CANVAS_WIDTH / 2, 50);
     }
 
     transition(pattern, duration = 0.3) {

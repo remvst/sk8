@@ -27,7 +27,7 @@ class Rail extends Element {
         const hero = this.world.hero;
 
         let collides = false;
-        if (hero && hero.input.userControlled) {
+        if (hero && hero.input.userControlled && !hero.grinding) {
             const collision = this.collides(hero, RAIL_GRIND_PADDING);
             collides = collision && collision.positionOnRail.z <= hero.z;
         }

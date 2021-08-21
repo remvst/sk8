@@ -34,6 +34,7 @@ class Hero extends DraggedElement {
         this.squatFactor = 0;
         this.squatStart = 0;
         this.grinding = false;
+        this.lastRail = null;
         this.grindingAngle = 0;
         this.grindingOffsetAngle = 0;
         this.landed = true;
@@ -191,6 +192,8 @@ class Hero extends DraggedElement {
             this.bail();
         }
 
+        this.lastRail = null;
+
         this.trickProgress = 0;
         this.landed = true;
         this.balance = 0;
@@ -230,6 +233,10 @@ class Hero extends DraggedElement {
     }
 
     bail() {
+        if (this.bailed) {
+            return;
+        }
+
         this.bailed = true;
 
         const copy = new Element();
@@ -297,7 +304,7 @@ class Hero extends DraggedElement {
             });
 
             const rotationDirection = this.input.rotation();
-            this.balance += this.balance * elapsed * 2 + rotationDirection * elapsed;
+            this.balance += this.balance * elapsed + rotationDirection * elapsed;
             this.balance = limit(-1, this.balance, 1);
         }
 
@@ -459,6 +466,8 @@ class Hero extends DraggedElement {
                 if (!wasGrinding && sign(grindCollision.positionOnRail.z - this.z) == sign(grindCollision.positionOnRail.z - this.previous.z)) {
                     continue;
                 }
+
+                this.lastRail = rail;
 
                 collidesWithRail = true;
 
