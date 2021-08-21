@@ -21,6 +21,14 @@ class Combo {
         this.tricks = [];
     }
 
+    get stringRecap() {
+        return this.tricks.slice(-5).map(trickToString).join('  +  ');
+    }
+
+    get asString() {
+        return this.stringRecap + ' ' + this.value + ' x' + this.tricks.length;
+    }
+
     pushTrick(name, value = 0) {
         this.tricks.push([name, value, 1, 0]);
     }

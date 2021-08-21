@@ -15,6 +15,10 @@ class Game {
         G.menu = new MainMenu();
     }
 
+    challenges() {
+        G.menu = new ChallengesMenu();
+    }
+
     startScene(scene) {
         this.menu = null;
         this.scene = scene;

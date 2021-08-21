@@ -30,6 +30,8 @@
     "src/js/scoring/combo.js",
     "src/js/scoring/combo-tracker.js",
 
+    "src/js/challenges/challenge.js",
+
     "src/js/3d/renderable.js",
     "src/js/3d/plane.js",
     "src/js/3d/segment.js",
@@ -51,8 +53,10 @@
     "src/js/scenes/menu-scene.js",
 
     "src/js/menu/button.js",
+    "src/js/menu/challenge-button.js",
     "src/js/menu/menu.js",
     "src/js/menu/main-menu.js",
+    "src/js/menu/challenges-menu.js",
     "src/js/menu/end-menu.js",
 
     "src/js/sound/ZzFXMicro.js",

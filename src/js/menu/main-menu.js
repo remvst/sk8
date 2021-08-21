@@ -21,5 +21,14 @@ class MainMenu extends Menu {
                 () => G.startScene(new FreeScene()),
             ));
         }
+
+        this.buttons.push(
+            new Button(
+                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
+                this.buttons[this.buttons.length - 1].y + evaluate(BUTTON_HEIGHT + 20),
+                'CHALLENGES',
+                () => G.challenges(),
+            )
+        );
     }
 }

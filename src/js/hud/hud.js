@@ -26,13 +26,11 @@ class HUD {
 
         translate(0, -adjusted * 50);
 
-        const tricks = combo.tricks.slice(-5).map(trickToString);
-
         R.textBaseline = nomangle('bottom');
         fatText(color, numberWithCommas(combo.base) + nomangle('  x  ') + tricks.length, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.5);
 
         R.textBaseline = nomangle('top');
-        fatText(color, tricks.join(' + '), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.4);
+        fatText(color, combo.stringRecap, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.4);
     }
 
     render() {
