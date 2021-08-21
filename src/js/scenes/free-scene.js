@@ -63,11 +63,10 @@ class FreeScene extends Scene {
         world.rail([
             point(poleMiddle.x - 300, poleMiddle.y + 1400, 400),
             point(poleMiddle.x - 800, poleMiddle.y + 1400, 400),
-            point(poleMiddle.x - 1000, poleMiddle.y + 1200, 400),
-            point(poleMiddle.x - 1000, poleMiddle.y + 800, 400),
+            point(poleMiddle.x - 1200, poleMiddle.y + 1000, 400),
         ]);
 
-        world.kicker(point(poleMiddle.x - 1200, poleMiddle.y + 1000), PI / 4);
+        world.kicker(point(poleMiddle.x - 1400, poleMiddle.y + 800), PI / 4);
 
         world.rail([
             point(poleRight.x, poleRight.y + 1200, 100),

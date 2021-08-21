@@ -36,7 +36,6 @@ class Segment extends Renderable {
     renderOnTopOfHero(hero) {
         if (this.p1.x == this.p2.x) return hero.y < min(this.p1.y, this.p2.y);
 
-
         const positionOnSegment = point();
         const ratio = (hero.x - this.p1.x) / (this.p2.x - this.p1.x);
         positionOnSegment.x = hero.x;
