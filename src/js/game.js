@@ -5,8 +5,8 @@ class Game {
         G.clock = 0;
         G.transitionProgress = 1;
 
-        G.menu = new Menu();
-        G.menu.age = -5.5;
+        // G.menu = new Menu();
+        // G.menu.age = -5.5;
 
         G.scenes = [
             new WelcomeScene(),
@@ -22,13 +22,16 @@ class Game {
         // if (DEBUG) G.scene = G.scenes[4];
         // G.nextScene();
 
-        this.startScene(new DemoScene());
+        // this.startScene(new MenuScene());
+        this.startScene(new IntroScene());
         // this.startScene(new DirectionScene());
     }
 
     startScene(scene) {
         this.scene = scene;
         scene.restart();
+
+        this.transition();
     }
 
     cycle(elapsed) {
@@ -43,18 +46,11 @@ class Game {
     }
 
     render() {
-        wrap(() => {
-            if (this.menu) {
-                // translate(this.menu.animationRatio * MENU_WIDTH / 2, 0);
-                // R.globalAlpha = 1 - this.menu.animationRatio;
-            }
-            this.scene.render();
-        });
+        wrap(() => this.scene.render());
 
         if (this.transitionProgress < 1) {
             wrap(() => {
                 R.globalAlpha = 1 - this.transitionProgress;
-                translate(-CANVAS_WIDTH * this.transitionProgress, 0);
                 drawImage(this.transitionSnapshot, 0, 0);
             });
         }
@@ -95,8 +91,6 @@ class Game {
 
         const index = G.scenes.indexOf(G.scene);
         this.startScene(this.scenes[index + 1]);
-
-        this.transition();
     }
 
     transition() {

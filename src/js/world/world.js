@@ -47,10 +47,6 @@ class World {
             fs(groundTexture);
             fr(this.camera.x, this.camera.y, CANVAS_WIDTH * 2, CANVAS_WIDTH * 2);
 
-            if (G.menu) {
-                R.globalAlpha = 1 - G.menu.animationRatio;
-            }
-
             const before = [];
             const after = [];
             for (const element of this.elements) {

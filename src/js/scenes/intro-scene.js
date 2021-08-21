@@ -1,4 +1,4 @@
-class DemoScene extends Scene {
+class IntroScene extends Scene {
 
     setupWorld(world) {
         super.setupWorld(world);
@@ -27,7 +27,7 @@ class DemoScene extends Scene {
         hero.speed = 500;
         hero.renderables = [hero.renderables[0]];
         hero.input.direction = () => angle;
-        hero.input.squat = () => between(-450, hero.x, -350) || hero.grinding;
+        hero.input.squat = () => between(-500, hero.x, -350) || hero.grinding;
         hero.input.grind = () => between(-200, hero.x, 100);
         hero.input.trick = () => between(-350, hero.x, -300);
         hero.input.rotation = () => hero.x > 100 && hero.angle < angle + PI ? 0.5 : 0;
@@ -38,10 +38,11 @@ class DemoScene extends Scene {
     }
 
     cycle(elapsed) {
-        // if (this.world.hero.bailed || this.world.hero.x > evaluate(CANVAS_WIDTH / 2 + 50)) {
-        //     this.setupActualWorld();
-        // }
-
         super.cycle(elapsed);
+
+        if (this.world.hero.bailed || this.world.hero.x > evaluate(CANVAS_WIDTH / 2 + 400)) {
+            G.startScene(new MenuScene());
+            G.menu = new Menu();
+        }
     }
 }

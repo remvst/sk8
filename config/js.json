@@ -47,7 +47,8 @@
     "src/js/scenes/rotation-scene.js",
     "src/js/scenes/grind-scene.js",
     "src/js/scenes/free-scene.js",
-    "src/js/scenes/demo-scene.js",
+    "src/js/scenes/intro-scene.js",
+    "src/js/scenes/menu-scene.js",
 
     "src/js/menu/button.js",
     "src/js/menu/menu.js",
