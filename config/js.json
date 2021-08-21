@@ -57,6 +57,7 @@
 
     "src/js/sound/ZzFXMicro.js",
     "src/js/sound/sounds.js",
+    "src/js/sound/speech.js",
 
     "src/js/keyboard.js",
     "src/js/touch.js",

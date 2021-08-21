@@ -1,5 +1,13 @@
 class JumpScene extends Scene {
 
+    constructor() {
+        super();
+
+        this.hud.setPermanentMessage([
+            nomangle('Click and release to jump'),
+        ]);
+    }
+
     setupDemoWorld() {
         super.setupDemoWorld();
 
@@ -8,10 +16,6 @@ class JumpScene extends Scene {
         hero.input.squat = () => between(3, this.demoWorld.age, 4);
 
         this.demoDuration = 6;
-
-        this.hud.setPermanentMessage([
-            nomangle('Click and release to jump'),
-        ]);
 
         this.nextScene = new TrickScene();
     }

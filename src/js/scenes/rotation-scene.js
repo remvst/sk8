@@ -1,18 +1,21 @@
 class RotationScene extends Scene {
 
+    constructor() {
+        super();
+
+        this.hud.setPermanentMessage( [
+            nomangle('Once in the air, move the mouse'),
+            nomangle('left and right for rotation.'),
+        ]);
+        this.nextScene = new GrindScene();
+    }
+
     setupDemoWorld() {
         super.setupDemoWorld();
 
         const { hero } = this.demoWorld;
         hero.input.pushing = () => between(0.5, this.demoWorld.age, 2);
         hero.input.squat = () => between(3, this.demoWorld.age, 4);
-
-        this.hud.setPermanentMessage( [
-            nomangle('Once in the air, move the mouse'),
-            nomangle('left and right for rotation.'),
-        ]);
-
-        this.nextScene = new GrindScene();
     }
 
     cycle(elapsed) {

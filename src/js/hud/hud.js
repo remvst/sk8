@@ -5,6 +5,7 @@ class HUD {
         this.messageTimeLeft = 0;
         this.displayedScore = 0;
         this.targetScore = 0;
+        this.messageLines = [];
     }
 
     cycle(elapsed) {
@@ -70,8 +71,7 @@ class HUD {
             whiteText(numberWithCommas(~~this.displayedScore), 50, 100, 1);
         }
 
-        const lines = this.messageTimeLeft > 0 ? this.messageLines : this.permanentMessage;
-        if (lines && lines.length) {
+        if (this.messageTimeLeft > 0) {
             wrap(() => {
                 R.globalAlpha = 0.5;
                 fs('#000');
@@ -100,12 +100,12 @@ class HUD {
                 R.textAlign = 'center';
                 R.textBaseline = 'middle';
 
+                const { messageLines } = this;
+
                 const lineHeight = 50;
-                let y = CANVAS_HEIGHT - 100 - lines.length / 4 * lineHeight;
+                let y = CANVAS_HEIGHT - 100 - messageLines.length / 4 * lineHeight;
 
-                // console.log(lines);
-
-                lines.forEach((line, i) => {
+                messageLines.forEach((line, i) => {
                     whiteText(line, 200 + (CANVAS_WIDTH - 200) / 2, y, 0.5);
                     y += lineHeight;
                 });
@@ -119,6 +119,6 @@ class HUD {
     }
 
     setPermanentMessage(messageLines) {
-        this.permanentMessage = messageLines.splice ? messageLines : [messageLines];
+        this.showMessage(messageLines, 999);
     }
 }

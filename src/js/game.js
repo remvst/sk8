@@ -4,6 +4,8 @@ class Game {
         G = this;
         G.clock = 0;
 
+        this.lastHudMessage = null;
+
         this.startScene(new IntroScene());
         this.transition('#000', 1);
     }
@@ -30,6 +32,11 @@ class Game {
         if (G.menu) G.menu.cycle(elapsed);
         G.scene.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
+
+        if (G.scene.hud.messageLines != this.lastHudMessage) {
+            say(G.scene.hud.messageLines.join(''));
+        }
+        this.lastHudMessage = G.scene.hud.messageLines;
     }
 
     render() {

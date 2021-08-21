@@ -3,6 +3,15 @@ railFinalX = 2500;
 
 class GrindScene extends Scene {
 
+    constructor() {
+        super();
+
+        this.hud.setPermanentMessage([
+            nomangle('While jumping, CLICK AND HOLD to grind,'),
+            nomangle('then move your mouse for balance.'),
+        ]);
+    }
+
     setupWorld(world) {
         super.setupWorld(world);
 
@@ -25,11 +34,6 @@ class GrindScene extends Scene {
         hero.input.grind = () => between(railStartX, hero.x, railFinalX);
 
         this.demoDuration = 6;
-
-        this.hud.setPermanentMessage( [
-            nomangle('While jumping, CLICK AND HOLD to grind,'),
-            nomangle('then move your mouse for balance.'),
-        ]);
     }
 
     cycle(elapsed) {

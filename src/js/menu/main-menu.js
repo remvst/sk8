@@ -17,6 +17,6 @@ class MainMenu extends Menu {
                 'ENTER THE CONTEST',
                 () => G.startScene(new FreeScene()),
             ),
-        ]
+        ];
     }
 }
