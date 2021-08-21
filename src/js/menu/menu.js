@@ -5,12 +5,12 @@ class Menu {
         this.buttons = [
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                520,
+                400,
                 'PLAY THE TUTORIAL',
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                400,
+                520,
                 'ENTER THE CONTEST',
             ),
         ];

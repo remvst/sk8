@@ -102,7 +102,7 @@ class Hero extends DraggedElement {
         this.points.forEach(point => {
             point.y *= this.positionSign;
 
-            if (this.grinding) point.z += rnd(-10, 10) * this.speed / 600;
+            if (this.grinding) point.z += rnd(0, 10) * this.speed / 600;
         });
 
         const pushRatio = sin(this.pushAge * PI * 2 / PUSH_PERIOD);

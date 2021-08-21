@@ -8,21 +8,17 @@ class Button {
     render() {
         translate(this.x, this.y);
 
-        // fs('#000');
-        // fr(-5, -5, BUTTON_WIDTH + 10, BUTTON_HEIGHT + 10);
-        //
-        // fs('#fff');
-        // fr(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
+        wrap(() => {
+            R.globalAlpha *= this.contains(MOUSE_POSITION) ? 1 : 0.5;
 
-        R.globalAlpha *= this.contains(MOUSE_POSITION) ? 1 : 0.5;
-
-        fs('#fff');
-        fr(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
+            fs('#000');
+            fr(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
+        });
 
         R.font = '36pt Impact';
         R.textAlign = nomangle('center');
         R.textBaseline = nomangle('middle');
-        fs('#000');
+        fs('#fff');
         fillText(this.label, BUTTON_WIDTH / 2, BUTTON_HEIGHT / 2);
     }
 
