@@ -27,7 +27,7 @@ class HUD {
         translate(0, -adjusted * 50);
 
         R.textBaseline = nomangle('bottom');
-        fatText(color, numberWithCommas(combo.base) + nomangle('  x  ') + tricks.length, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.5);
+        fatText(color, numberWithCommas(combo.base) + nomangle('  x  ') + combo.tricks.length, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.5);
 
         R.textBaseline = nomangle('top');
         fatText(color, combo.stringRecap, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200, 0.4);

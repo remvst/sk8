@@ -87,6 +87,10 @@ class ComboTracker {
 
                     // TODO record good/bad landing
                 }
+
+                if (this.hero.world.scene instanceof FreeScene) {
+                    CHALLENGES.forEach(x => x.checkCompleted(this.hero, this.combo));
+                }
             }
 
             this.combo.bailed = this.hero.bailed;

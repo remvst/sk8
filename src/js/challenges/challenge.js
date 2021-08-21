@@ -7,12 +7,14 @@ class Challenge {
 
     }
 
-    wasCompleted() {
-        return !!localStorage[nomangle('ch') + this.label];
+    checkCompleted(hero, lastCombo) {
+        if (this.check(hero, lastCombo)) {
+            localStorage[nomangle('ch') + this.label] = true;
+        }
     }
 
-    markComplete() {
-        localStorage[nomangle('ch') + this.label] = true;
+    wasCompleted() {
+        return !!localStorage[nomangle('ch') + this.label];
     }
 }
 
@@ -51,28 +53,28 @@ class ScoreChallenge extends Challenge {
     }
 
     check(hero) {
-        return hero.scene.score >= this.targetScore;
+        return hero.world.scene.score >= this.targetScore;
     }
 }
 
 CHALLENGES = [
-    new ScoreChallenge(10000),
     new ScoreChallenge(100000),
-    new ScoreChallenge(200000),
+    new ScoreChallenge(250000),
+    new ScoreChallenge(500000),
 
-    new ComboValueChallenge(10000),
-    new ComboValueChallenge(50000),
+    new ComboValueChallenge(20000),
     new ComboValueChallenge(100000),
+    new ComboValueChallenge(250000),
 
-    new ComboSizeChallenge(5),
-    new ComboSizeChallenge(15),
-    new ComboSizeChallenge(25),
+    new ComboSizeChallenge(10),
+    new ComboSizeChallenge(20),
+    new ComboSizeChallenge(30),
 
     new TrickChallenge(nomangle('RAIL TO RAIL')),
-    new TrickChallenge(nomangle('360 ')),
-    new TrickChallenge(nomangle('540 FLIPPITY')),
+    new TrickChallenge(nomangle('540')),
     new TrickChallenge(nomangle('DOUBLE FLIPPITY')),
     new TrickChallenge(nomangle('TRIPLE FLIPPITY')),
     new TrickChallenge(nomangle('QUADRUPLE FLIPPITY')),
-    new TrickChallenge(nomangle('540 DOUBLE FLIPPITY')),
+    new TrickChallenge(nomangle('720 DOUBLE FLIPPITY')),
+    new TrickChallenge(nomangle('900')),
 ];

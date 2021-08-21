@@ -23,7 +23,7 @@ class EndMenu extends Menu {
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                520,
+                640,
                 nomangle('MAIN MENU'),
                 () => G.mainMenu(),
             ),
