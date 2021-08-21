@@ -55,7 +55,7 @@
     "src/js/menu/main-menu.js",
     "src/js/menu/end-menu.js",
 
-    "src/js/sound/jsfxr.js",
+    "src/js/sound/ZzFXMicro.js",
     "src/js/sound/sounds.js",
 
     "src/js/keyboard.js",

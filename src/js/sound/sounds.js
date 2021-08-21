@@ -1,19 +1,40 @@
-sound = definition => {
-    const pool = Array(5).fill(0).map(() => jsfxr(definition));
-    return () => {
-        // Cycle the queue by removing the first value and moving it to the last
-        pool.push(pool.shift());
+class Sound {
+    constructor(definition, shouldLoop) {
+        this.source = zzfx(...definition);
+        this.source.loop = shouldLoop;
+        this.source.start();
+    }
 
-        // Play the sound
-        pool[0]();
-    };
-};
+    stop() {
+        this.source.stop();
+    }
+}
 
-beepSound = sound([rawFile('config/sounds/beep')]);
-exitSound = sound([rawFile('config/sounds/exit')]);
-failSound = sound([rawFile('config/sounds/fail')]);
-finishSound = sound([rawFile('config/sounds/finish')]);
-jumpSound = sound([rawFile('config/sounds/jump')]);
-landSound = sound([rawFile('config/sounds/land')]);
-nextLevelSound = sound([rawFile('config/sounds/next-level')]);
-notFoundSound = sound([rawFile('config/sounds/not-found')]);
+/*
+// beepSound = sound([rawFile('config/sounds/beep')]);
+// exitSound = sound([rawFile('config/sounds/exit')]);
+// failSound = sound([rawFile('config/sounds/fail')]);
+// finishSound = sound([rawFile('config/sounds/finish')]);
+// jumpSound = sound([rawFile('config/sounds/jump')]);
+// landSound = sound([rawFile('config/sounds/land')]);
+// nextLevelSound = sound([rawFile('config/sounds/next-level')]);
+// notFoundSound = sound([rawFile('config/sounds/not-found')]);*/
+
+jumpSound = () => new Sound([rawFile('config/sounds/jump')]);
+bailSound = () => new Sound([rawFile('config/sounds/bail')]);
+tickSound = () => new Sound([rawFile('config/sounds/tick')]);
+
+grindSound = null;
+
+setGrinding = (grinding) => {
+    if (grinding) {
+        if (!grindSound) {
+            grindSound = new Sound([rawFile('config/sounds/grind')], true);
+        }
+    } else {
+        if (grindSound) {
+            grindSound.stop();
+            grindSound = null;
+        }
+    }
+}

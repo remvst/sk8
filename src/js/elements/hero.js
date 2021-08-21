@@ -259,6 +259,10 @@ class Hero extends DraggedElement {
         }, 2000);
 
         G.transition('#f00', 0.3);
+
+        if (this.input.userControlled) {
+            bailSound();
+        }
     }
 
     cycle(elapsed) {
@@ -440,6 +444,10 @@ class Hero extends DraggedElement {
         this.jumpEndZ = this.z + 150 + squatRatio * 200;
 
         interp(this, 'pushingAnimationRatio', this.pushingAnimationRatio, 0, 0.2);
+
+        if (this.input.userControlled) {
+            jumpSound();
+        }
     }
 
     checkGrinds() {

@@ -4,6 +4,8 @@ class Scene {
         this.score = Number.MIN_SAFE_INTEGER;
         this.timeLeft = -1;
         this.completionAge = -1;
+
+        this.previousRoundedTimeLeft = 0;
     }
 
     isPerformingCompletingAction(hero) {
@@ -67,6 +69,8 @@ class Scene {
             MOUSE_POSITION.y = evaluate(CANVAS_HEIGHT / 2);
         }
 
+        setGrinding(hero && hero.grinding);
+
         if (!hero || hero.bailed) {
             this.didTryCompletingAction = false;
         } else {
@@ -80,6 +84,12 @@ class Scene {
 
         if (this.completionAge > 0 && this.age > this.completionAge) {
             this.proceed();
+        }
+
+        const roundedTimeLeft = floor(this.timeLeft);
+        if (this.timeLeft > 0 && roundedTimeLeft != this.previousRoundedTimeLeft) {
+            this.previousRoundedTimeLeft = roundedTimeLeft;
+            tickSound();
         }
     }
 
