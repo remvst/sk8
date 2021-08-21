@@ -8,6 +8,14 @@ class JumpScene extends Scene {
         ]);
     }
 
+    completionMessage() {
+        return nomangle('Nice! Hold your click to jump higher.');
+    }
+
+    completionDelay() {
+        return 6;
+    }
+
     setupDemoWorld() {
         super.setupDemoWorld();
 

@@ -10,13 +10,16 @@ class MainMenu extends Menu {
                 400,
                 'PLAY THE TUTORIAL',
                 () => G.startScene(new WelcomeScene()),
-            ),
-            new Button(
+            )
+        ];
+
+        if (localStorage[nomangle('tut')]) {
+            this.buttons.push(new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 520,
                 'ENTER THE CONTEST',
                 () => G.startScene(new FreeScene()),
-            ),
-        ];
+            ));
+        }
     }
 }

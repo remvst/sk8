@@ -12,6 +12,10 @@ class GrindScene extends Scene {
         ]);
     }
 
+    completionMessage() {
+        return nomangle('Nice! You are now ready for the contest!');
+    }
+
     setupWorld(world) {
         super.setupWorld(world);
 
@@ -22,6 +26,7 @@ class GrindScene extends Scene {
     }
 
     proceed() {
+        localStorage[nomangle('tut')] = 1;
         G.mainMenu();
     }
 

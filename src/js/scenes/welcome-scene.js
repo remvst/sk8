@@ -20,7 +20,7 @@ class WelcomeScene extends Scene {
     }
 
     completionDelay() {
-        return 3;
+        return 4;
     }
 
     setupDemoWorld() {
