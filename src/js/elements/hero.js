@@ -230,6 +230,10 @@ class Hero extends DraggedElement {
                 });
             }
         }
+
+        if (this.input.userControlled) {
+            landSound();
+        }
     }
 
     bail() {

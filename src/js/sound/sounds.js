@@ -23,6 +23,9 @@ class Sound {
 jumpSound = () => new Sound([rawFile('config/sounds/jump')]);
 bailSound = () => new Sound([rawFile('config/sounds/bail')]);
 tickSound = () => new Sound([rawFile('config/sounds/tick')]);
+landSound = () => new Sound([rawFile('config/sounds/land')]);
+clickSound = () => new Sound([rawFile('config/sounds/click')]);
+trickSound = () => new Sound([rawFile('config/sounds/trick')]);
 
 grindSound = null;
 

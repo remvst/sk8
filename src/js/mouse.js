@@ -52,6 +52,7 @@ onclick = () => {
     if (G.menu) {
         G.menu.buttons.forEach(button => {
             if (button.contains(MOUSE_POSITION)) {
+                clickSound();
                 button.onClick();
             }
         });

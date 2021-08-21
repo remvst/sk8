@@ -69,7 +69,7 @@ class Scene {
             MOUSE_POSITION.y = evaluate(CANVAS_HEIGHT / 2);
         }
 
-        setGrinding(hero && hero.grinding);
+        setGrinding(hero && hero.input.userControlled && hero.grinding);
 
         if (!hero || hero.bailed) {
             this.didTryCompletingAction = false;
@@ -87,10 +87,11 @@ class Scene {
         }
 
         const roundedTimeLeft = floor(this.timeLeft);
-        if (this.timeLeft > 0 && roundedTimeLeft != this.previousRoundedTimeLeft) {
+        if (between(0, this.timeLeft, 15) && roundedTimeLeft != this.previousRoundedTimeLeft) {
             this.previousRoundedTimeLeft = roundedTimeLeft;
             tickSound();
         }
+        this.previousRoundedTimeLeft = roundedTimeLeft;
     }
 
     render() {

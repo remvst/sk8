@@ -58,6 +58,10 @@ class ComboTracker {
                 combo.pushTrick(nomangle('FLIPPITY'), 500);
             }
 
+            if (ceil(this.previous.trickProgress) < ceil(this.hero.trickProgress) && this.hero.input.userControlled) {
+                trickSound();
+            }
+
             combo.setCount(ceil(this.hero.trickProgress));
         }
 

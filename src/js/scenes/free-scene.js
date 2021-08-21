@@ -3,7 +3,7 @@ class FreeScene extends Scene {
     setupWorld(world) {
         super.setupWorld(world);
 
-        this.timeLeft = 5;
+        this.timeLeft = 120;
         this.ended = false;
 
         this.score = 0;
