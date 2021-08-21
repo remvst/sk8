@@ -103,6 +103,8 @@ class HUD {
                 const lineHeight = 50;
                 let y = CANVAS_HEIGHT - 100 - lines.length / 4 * lineHeight;
 
+                // console.log(lines);
+
                 lines.forEach((line, i) => {
                     whiteText(line, 200 + (CANVAS_WIDTH - 200) / 2, y, 0.5);
                     y += lineHeight;

@@ -15,18 +15,21 @@ onmousemove = e => {
         MOUSE_POSITION.x += e.movementX;
         MOUSE_POSITION.y += e.movementY;
     } else {
-        MOUSE_POSITION.x = CANVAS_WIDTH * limit(0, (e.pageX - canvasCoords.left) / canvasCoords.width, 1);
-        MOUSE_POSITION.y = CANVAS_HEIGHT * limit(0, (e.pageY - canvasCoords.top) / canvasCoords.height, 1);
+        MOUSE_POSITION.x = CANVAS_WIDTH * (e.pageX - canvasCoords.left) / canvasCoords.width;
+        MOUSE_POSITION.y = CANVAS_HEIGHT * (e.pageY - canvasCoords.top) / canvasCoords.height;
     }
 
-    const movementX = e.movementX || MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x;
-    const movementY = e.movementY || MOUSE_POSITION.y - PREVIOUS_MOUSE_POSITION.y;
+    MOUSE_POSITION.x = limit(0, MOUSE_POSITION.x, CANVAS_WIDTH);
+    MOUSE_POSITION.y = limit(0, MOUSE_POSITION.y, CANVAS_HEIGHT);
+
+    const deltaX = MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x;
+    const deltaY = MOUSE_POSITION.y - PREVIOUS_MOUSE_POSITION.y;
 
     const hero = G && G.scene.world.hero;
 
     if (hero && hero.draggable) {
-        MOVEMENT_TARGET_DIRECTION.x += movementX;
-        MOVEMENT_TARGET_DIRECTION.y += movementY;
+        MOVEMENT_TARGET_DIRECTION.x += deltaX;
+        MOVEMENT_TARGET_DIRECTION.y += deltaY;
 
         const angle = atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x);
         const dist = min(400, distP(0, 0, MOVEMENT_TARGET_DIRECTION.x, MOVEMENT_TARGET_DIRECTION.y));
@@ -35,7 +38,7 @@ onmousemove = e => {
 
         ROTATION_ACC = 0;
     } else {
-        ROTATION_ACC = limit(-1, ROTATION_ACC + movementX / 200, 1);
+        ROTATION_ACC = limit(-1, ROTATION_ACC + deltaX / 200, 1);
     }
 };
 
@@ -44,3 +47,13 @@ onmousedown = () => {
     document.body.requestPointerLock();
 };
 onmouseup = () => MOUSE_IS_DOWN = false;
+
+onclick = () => {
+    if (G.menu) {
+        G.menu.buttons.forEach(button => {
+            if (button.contains(MOUSE_POSITION)) {
+                button.onClick();
+            }
+        });
+    }
+}

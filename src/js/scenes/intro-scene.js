@@ -41,8 +41,7 @@ class IntroScene extends Scene {
         super.cycle(elapsed);
 
         if (this.world.hero.bailed || this.world.hero.x > evaluate(CANVAS_WIDTH / 2 + 400)) {
-            G.startScene(new MenuScene());
-            G.menu = new Menu();
+            G.mainMenu();
         }
     }
 }

@@ -1,8 +1,9 @@
 class Button {
-    constructor(x, y, label) {
+    constructor(x, y, label, onClick) {
         this.x = x;
         this.y = y;
         this.label = label;
+        this.onClick = onClick;
     }
 
     render() {

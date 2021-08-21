@@ -12,6 +12,8 @@ class JumpScene extends Scene {
         this.hud.setPermanentMessage([
             nomangle('Click and release to jump'),
         ]);
+
+        this.nextScene = new TrickScene();
     }
 
     isPerformingCompletingAction(hero) {

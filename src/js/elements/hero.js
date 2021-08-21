@@ -419,6 +419,7 @@ class Hero extends DraggedElement {
             squatRatio += this.speed / 600;
         }
 
+        this.velocityZ = 1;
         this.grinding = false;
         this.pushing = false;
 

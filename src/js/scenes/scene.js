@@ -3,10 +3,17 @@ class Scene {
         this.hud = new HUD(this);
         this.score = Number.MIN_SAFE_INTEGER;
         this.timeLeft = -1;
+        this.completionAge = -1;
     }
 
     isPerformingCompletingAction(hero) {
         return false;
+    }
+
+    proceed() {
+        if (this.nextScene) {
+            G.startScene(this.nextScene);
+        }
     }
 
     restart() {
@@ -52,16 +59,27 @@ class Scene {
         }
         this.hud.cycle(elapsed);
 
-        if (!this.world.hero) {
+        const { hero } = this.world;
+        if (!hero) return;
+
+        if (hero && hero.input.userControlled) {
+            MOUSE_POSITION.x = evaluate(CANVAS_WIDTH / 2);
+            MOUSE_POSITION.y = evaluate(CANVAS_HEIGHT / 2);
+        }
+
+        if (!hero || hero.bailed) {
             this.didTryCompletingAction = false;
         } else {
-            this.didTryCompletingAction = this.didTryCompletingAction || this.isPerformingCompletingAction(this.world.hero);
+            this.didTryCompletingAction = this.didTryCompletingAction || this.isPerformingCompletingAction(hero);
 
-            if (this.world.hero.landed && !this.world.hero.bailed && this.didTryCompletingAction && !this.completed) {
-                this.completed = true;
+            if (this.completionAge < 0 && hero.landed && this.didTryCompletingAction && !this.completed) {
+                this.completionAge = this.age + this.completionDelay();
                 this.hud.setPermanentMessage(this.completionMessage());
-                setTimeout(() => G.nextScene(), this.completionDelay() * 1000);
             }
+        }
+
+        if (this.completionAge > 0 && this.age > this.completionAge) {
+            this.proceed();
         }
     }
 

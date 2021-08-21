@@ -4,6 +4,7 @@ class WelcomeScene extends Scene {
         super.setupActualWorld();
 
         this.world.hero.input = new EmptyInput();
+        this.nextScene = new PushScene();
     }
 
     completionMessage() {

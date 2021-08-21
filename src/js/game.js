@@ -3,31 +3,17 @@ class Game {
     constructor() {
         G = this;
         G.clock = 0;
-        G.transitionProgress = 1;
 
-        // G.menu = new Menu();
-        // G.menu.age = -5.5;
-
-        G.scenes = [
-            new WelcomeScene(),
-            new PushScene(),
-            new DirectionScene(),
-            new JumpScene(),
-            new TrickScene(),
-            new GrindScene(),
-            new RotationScene(),
-            new FreeScene(),
-        ];
-
-        // if (DEBUG) G.scene = G.scenes[4];
-        // G.nextScene();
-
-        // this.startScene(new MenuScene());
         this.startScene(new IntroScene());
-        // this.startScene(new DirectionScene());
+    }
+
+    mainMenu() {
+        G.startScene(new MenuScene());
+        G.menu = new Menu();
     }
 
     startScene(scene) {
+        this.menu = null;
         this.scene = scene;
         scene.restart();
 
@@ -84,13 +70,6 @@ class Game {
             fill();
             stroke();
         });
-    }
-
-    nextScene() {
-        INTERPOLATIONS = [];
-
-        const index = G.scenes.indexOf(G.scene);
-        this.startScene(this.scenes[index + 1]);
     }
 
     transition() {

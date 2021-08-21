@@ -11,6 +11,8 @@ class RotationScene extends Scene {
             nomangle('Once in the air, move the mouse'),
             nomangle('left and right for rotation.'),
         ]);
+
+        this.nextScene = new GrindScene();
     }
 
     cycle(elapsed) {

@@ -12,6 +12,10 @@ class GrindScene extends Scene {
         ]));
     }
 
+    proceed() {
+        G.mainMenu();
+    }
+
     setupDemoWorld() {
         super.setupDemoWorld();
 

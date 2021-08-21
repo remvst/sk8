@@ -7,11 +7,13 @@ class Menu {
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 400,
                 'PLAY THE TUTORIAL',
+                () => G.startScene(new WelcomeScene()),
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 520,
                 'ENTER THE CONTEST',
+                () => G.startScene(new FreeScene()),
             ),
         ];
     }

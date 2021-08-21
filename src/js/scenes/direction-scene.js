@@ -15,6 +15,8 @@ class DirectionScene extends Scene {
             nomangle('Once you\'ve gained some speed,'),
             nomangle('move around using your mouse.'),
         ]);
+
+        this.nextScene = new JumpScene();
     }
 
     isPerformingCompletingAction(hero) {

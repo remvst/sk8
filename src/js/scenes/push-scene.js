@@ -10,6 +10,8 @@ class PushScene extends Scene {
             nomangle('Let\'s start by gaining some speed.'),
             nomangle('Hold [SPACE] to push.'),
         ]);
+
+        this.nextScene = new DirectionScene();
     }
 
     isPerformingCompletingAction(hero) {

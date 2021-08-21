@@ -14,6 +14,8 @@ class TrickScene extends Scene {
         this.hud.setPermanentMessage( [
             nomangle('While jumping, hold SPACE to perform a trick'),
         ]);
+
+        this.nextScene = new RotationScene();
     }
 
     isPerformingCompletingAction(hero) {
