@@ -5,8 +5,8 @@ class Game {
         G.clock = 0;
         G.transitionProgress = 1;
 
-        // G.menu = new Menu();
-        // G.menu.age = -5.5;
+        G.menu = new Menu();
+        G.menu.age = -5.5;
 
         G.scenes = [
             new WelcomeScene(),
@@ -23,7 +23,7 @@ class Game {
         // G.nextScene();
 
         this.startScene(new DemoScene());
-        this.startScene(new FreeScene());
+        // this.startScene(new DirectionScene());
     }
 
     startScene(scene) {
@@ -33,6 +33,7 @@ class Game {
 
     cycle(elapsed) {
         if (DEBUG && down[KEYBOARD_G]) elapsed *= 0.1;
+        if (DEBUG && down[KEYBOARD_F]) elapsed *= 4;
 
         G.clock += elapsed;
 
@@ -44,7 +45,8 @@ class Game {
     render() {
         wrap(() => {
             if (this.menu) {
-                translate(this.menu.animationRatio * MENU_WIDTH / 2, 0);
+                // translate(this.menu.animationRatio * MENU_WIDTH / 2, 0);
+                // R.globalAlpha = 1 - this.menu.animationRatio;
             }
             this.scene.render();
         });

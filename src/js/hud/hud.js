@@ -50,7 +50,7 @@ class HUD {
         }
 
         const { hero } = this.scene.world;
-        if (hero) {
+        if (hero && hero.input.userControlled) {
             wrap(() => this.renderCombo(
                 hero.comboTracker.lastCombo,
                 hero.comboTracker.lastCombo.landed ? '#0f0' : '#f00',
@@ -63,10 +63,12 @@ class HUD {
             ));
         }
 
-        R.textBaseline = 'top';
-        R.textAlign = 'left';
-        whiteText(nomangle('SCORE'), 50, 50, 0.5);
-        whiteText(numberWithCommas(~~this.displayedScore), 50, 100, 1);
+        if (this.scene.score >= 0) {
+            R.textBaseline = 'top';
+            R.textAlign = 'left';
+            whiteText(nomangle('SCORE'), 50, 50, 0.5);
+            whiteText(numberWithCommas(~~this.displayedScore), 50, 100, 1);
+        }
 
         const lines = this.messageTimeLeft > 0 ? this.messageLines : this.permanentMessage;
         if (lines && lines.length) {
@@ -102,7 +104,7 @@ class HUD {
                 let y = CANVAS_HEIGHT - 100 - lines.length / 4 * lineHeight;
 
                 lines.forEach((line, i) => {
-                    fillText(line, 200 + (CANVAS_WIDTH - 200) / 2, y);
+                    whiteText(line, 200 + (CANVAS_WIDTH - 200) / 2, y, 0.5);
                     y += lineHeight;
                 });
             });

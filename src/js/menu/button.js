@@ -16,11 +16,14 @@ class Button {
 
         R.globalAlpha *= this.contains(MOUSE_POSITION) ? 1 : 0.5;
 
+        fs('#fff');
+        fr(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
+
         R.font = '36pt Impact';
-        R.textAlign = nomangle('left');
+        R.textAlign = nomangle('center');
         R.textBaseline = nomangle('middle');
         fs('#000');
-        fillText(this.label, 0, BUTTON_HEIGHT / 2);
+        fillText(this.label, BUTTON_WIDTH / 2, BUTTON_HEIGHT / 2);
     }
 
     contains(pt) {

@@ -17,7 +17,7 @@ class WelcomeScene extends Scene {
     setupDemoWorld() {
         this.demoWorld = null;
         this.hud.setPermanentMessage( [
-            nomangle('Welcome to SPACE SK8R'),
+            nomangle('Welcome to my space-themed skatepark!'),
         ]);
     }
 

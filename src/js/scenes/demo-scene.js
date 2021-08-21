@@ -9,10 +9,8 @@ class DemoScene extends Scene {
         ]);
         world.addElement(this.rail);
 
-        const pole = new Pole();
-        pole.x = 100;
-        pole.y = -300;
-        world.addElement(pole);
+        world.camera.followedTarget = null;
+        world.camera.center.y = -100;
     }
 
     setupActualWorld() {
@@ -33,9 +31,6 @@ class DemoScene extends Scene {
         hero.input.grind = () => between(-200, hero.x, 100);
         hero.input.trick = () => between(-350, hero.x, -300);
         hero.input.rotation = () => hero.x > 100 && hero.angle < angle + PI ? 0.5 : 0;
-
-        this.world.camera.followedTarget = null;
-        this.world.camera.centerY = -100;
     }
 
     setupDemoWorld() {
@@ -43,7 +38,10 @@ class DemoScene extends Scene {
     }
 
     cycle(elapsed) {
+        // if (this.world.hero.bailed || this.world.hero.x > evaluate(CANVAS_WIDTH / 2 + 50)) {
+        //     this.setupActualWorld();
+        // }
+
         super.cycle(elapsed);
-        if (this.world.hero.x > 600) this.setupActualWorld();
     }
 }

@@ -1,7 +1,7 @@
 class Scene {
     constructor() {
         this.hud = new HUD(this);
-        this.score = 0;
+        this.score = Number.MIN_SAFE_INTEGER;
         this.timeLeft = -1;
     }
 
@@ -57,7 +57,7 @@ class Scene {
         } else {
             this.didTryCompletingAction = this.didTryCompletingAction || this.isPerformingCompletingAction(this.world.hero);
 
-            if (this.world.hero.landed && this.didTryCompletingAction && !this.completed) {
+            if (this.world.hero.landed && !this.world.hero.bailed && this.didTryCompletingAction && !this.completed) {
                 this.completed = true;
                 this.hud.setPermanentMessage(this.completionMessage());
                 setTimeout(() => G.nextScene(), this.completionDelay() * 1000);
@@ -76,15 +76,14 @@ class Scene {
         wrap(() => {
             if (!this.demoWorld) return;
 
-            const worldScale = 0.3;
             translate(
-                CANVAS_WIDTH - 50 - CANVAS_WIDTH * worldScale,
+                evaluate(CANVAS_WIDTH - 50 - CANVAS_WIDTH * DEMO_SCALE),
                 50,
             );
             fs('#fff');
-            fr(-2, -2, CANVAS_WIDTH * worldScale + 4, CANVAS_HEIGHT * worldScale + 4);
+            fr(-2, -2, evaluate(CANVAS_WIDTH * DEMO_SCALE + 4), evaluate(CANVAS_HEIGHT * DEMO_SCALE + 4));
 
-            scale(worldScale, worldScale);
+            scale(DEMO_SCALE, DEMO_SCALE);
             fs('#000');
             beginPath();
             rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);

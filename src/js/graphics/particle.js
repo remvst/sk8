@@ -23,7 +23,7 @@ class Particle {
     }
 
     render() {
-        R.globalAlpha = this.alpha;
+        R.globalAlpha *= this.alpha;
         fs(this.color);
         fr(
             this.point.projectToActual().x - this.size / 2,

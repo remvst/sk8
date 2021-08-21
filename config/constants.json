@@ -17,6 +17,8 @@
     "RAIL_BAIL_PADDING": 10,
     "RAIL_GRIND_PADDING": 80,
 
+    "DEMO_SCALE": 0.3,
+
     "PUSH_PERIOD": 0.5,
 
     "KEYBOARD_TAB": 9,
