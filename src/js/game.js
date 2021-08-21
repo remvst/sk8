@@ -10,7 +10,7 @@ class Game {
 
     mainMenu() {
         G.startScene(new MenuScene());
-        G.menu = new Menu();
+        G.menu = new MainMenu();
     }
 
     startScene(scene) {

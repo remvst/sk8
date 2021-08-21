@@ -3,7 +3,8 @@ class FreeScene extends Scene {
     setupWorld(world) {
         super.setupWorld(world);
 
-        this.timeLeft = 120;
+        this.timeLeft = 5;
+        this.ended = false;
 
         this.score = 0;
 
@@ -310,6 +311,14 @@ class FreeScene extends Scene {
 
         if (this.timeLeft > 0) {
             this.timeLeft = max(0, this.timeLeft - elapsed);
+        }
+
+        if (this.timeLeft <= 0 && this.world.hero.landed && !this.ended) {
+            this.ended = true;
+            this.world.hero.comboTracker.locked = true;
+            this.world.hero.input = new EmptyInput();
+
+            setTimeout(() => G.menu = new EndMenu(this.score), 2000);
         }
     }
 }

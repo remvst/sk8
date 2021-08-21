@@ -8,6 +8,7 @@ class ComboTracker {
 
         this.combo = new Combo();
         this.lastCombo = null;
+        this.locked = false;
     }
 
     updatePrevious() {
@@ -31,7 +32,7 @@ class ComboTracker {
             combo.pushTrick(nomangle('OLLIE'), 100);
         }
 
-        if (this.previous.lastRail && this.hero.lastRail != this.previous.lastRail) {
+        if (this.hero.lastRail && this.previous.lastRail && this.hero.lastRail != this.previous.lastRail) {
             combo.pushTrick(nomangle('RAIL TO RAIL'), 400);
         }
 
@@ -62,7 +63,9 @@ class ComboTracker {
 
         if ((this.hero.landed || this.hero.bailed) && this.combo.tricks.length) {
             if (!this.hero.bailed) {
-                this.hero.world.scene.score += this.combo.total;
+                if (!this.locked) {
+                    this.hero.world.scene.score += this.combo.total;
+                }
 
                 if (this.previous.rotationAcc > PI / 2) {
                     let angleRatio = abs(normalize(this.previous.rotationAcc) / PI);

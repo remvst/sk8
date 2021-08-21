@@ -137,6 +137,6 @@ class Scene {
             });
         }
 
-        this.hud.render();
+        if (!G.menu) this.hud.render();
     }
 }

@@ -2,20 +2,7 @@ class Menu {
 
     constructor() {
         this.age = 0;
-        this.buttons = [
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                400,
-                'PLAY THE TUTORIAL',
-                () => G.startScene(new WelcomeScene()),
-            ),
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                520,
-                'ENTER THE CONTEST',
-                () => G.startScene(new FreeScene()),
-            ),
-        ];
+        this.buttons = [];
     }
 
     cycle(elapsed) {
@@ -38,7 +25,7 @@ class Menu {
         R.textBaseline = nomangle('middle');
         fs('#000');
 
-        fatText('#fff', nomangle('STICK SKATER'), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4, 2);
+        fatText('#fff', this.title, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4, 2);
         // fillText(nomangle('STICK SKATER'), MENU_WIDTH / 2, 100);
 
         this.buttons.forEach(x => wrap(() => x.render()));
