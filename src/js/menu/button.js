@@ -29,6 +29,6 @@ class Button {
     }
 
     contains(pt) {
-        return between(this.x, pt.x, this.x + BUTTON_WIDTH) && between(this.y, pt.y, this.y + BUTTON_HEIGHT);
+        return this.enabled && between(this.x, pt.x, this.x + BUTTON_WIDTH) && between(this.y, pt.y, this.y + BUTTON_HEIGHT);
     }
 }
