@@ -22,7 +22,7 @@ class MenuScene extends Scene {
         hero.speed = 500;
 
         hero.input.direction = () => hero.angle;
-        hero.input.squat = () => between(squatX, hero.x, squatX + 100);
+        hero.input.squat = () => between(squatX, hero.x, squatX + 200);
 
         if (random() < 0.5) hero.input.trick = () => hero.velocityZ > 0;
         if (random() < 0.5) {

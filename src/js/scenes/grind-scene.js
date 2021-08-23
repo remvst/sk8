@@ -35,7 +35,7 @@ class GrindScene extends Scene {
 
         const { hero } = this.demoWorld;
         hero.input.pushing = () => hero.x < railStartX - 600;
-        hero.input.squat = () => between(railStartX - 400, hero.x, railStartX - 300);
+        hero.input.squat = () => between(railStartX - 500, hero.x, railStartX - 300);
         hero.input.grind = () => between(railStartX, hero.x, railFinalX);
 
         this.demoDuration = 6;
