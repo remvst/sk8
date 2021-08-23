@@ -43,7 +43,7 @@ class ComboSizeChallenge extends Challenge {
     }
 
     check(hero, lastCombo) {
-        return lastCombo.total >= this.targetCount;
+        return lastCombo.tricks.length >= this.targetCount;
     }
 }
 

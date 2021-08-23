@@ -4,19 +4,20 @@ class Input {
     }
 
     squat() {
-        return MOUSE_IS_DOWN;
+        return MOUSE_IS_DOWN || mobileSquat();
     }
 
     grind() {
-        return MOUSE_IS_DOWN;
+        return MOUSE_IS_DOWN || mobileSquat();
     }
 
     trick() {
-        return down[KEYBOARD_SPACE];
+        return down[KEYBOARD_SPACE] || mobileTrick();
     }
 
     pushing() {
-        return down[KEYBOARD_SPACE];
+        if (RELATIVE_TOUCHES.filter(x => between(CANVAS_WIDTH / 2, x.x, CANVAS_WIDTH * 3 / 4)).length) return true;
+        return down[KEYBOARD_SPACE] || mobileTrick();
     }
 
     direction() {

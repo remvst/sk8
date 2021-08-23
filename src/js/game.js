@@ -28,6 +28,14 @@ class Game {
     }
 
     cycle(elapsed) {
+        const direction = mobileDirection();
+        if (direction) {
+            let newAngle = atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x);
+            newAngle += elapsed * mobileDirection() * PI;
+            MOVEMENT_TARGET_DIRECTION.x = cos(newAngle) * 400;
+            MOVEMENT_TARGET_DIRECTION.y = sin(newAngle) * 400;
+        }
+
         if (DEBUG && down[KEYBOARD_G]) elapsed *= 0.1;
         if (DEBUG && down[KEYBOARD_F]) elapsed *= 4;
 
@@ -91,20 +99,20 @@ class Game {
         fs('#fff');
 
         wrap(() => {
-            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_LEFT];
+            R.globalAlpha = 0.5 + 0.5 * (mobileDirection() < 0);
             translate(CANVAS_WIDTH / 8, CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2);
             scale(-1, 1);
             renderMobileArrow();
         });
 
         wrap(() => {
-            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_RIGHT];
+            R.globalAlpha = 0.5 + 0.5 * (mobileDirection() > 0);
             translate(CANVAS_WIDTH * 3 / 8, CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2);
             renderMobileArrow();
         });
 
         wrap(() => {
-            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_RIGHT];
+            R.globalAlpha = 0.5 + 0.5 * mobileTrick();
 
             fr(
                 evaluate(CANVAS_WIDTH * 5 / 8 - MOBILE_BUTTON_SIZE / 2),
@@ -115,7 +123,7 @@ class Game {
         });
 
         wrap(() => {
-            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_SPACE];
+            R.globalAlpha = 0.5 + 0.5 * mobileSquat();
 
             beginPath();
             arc(

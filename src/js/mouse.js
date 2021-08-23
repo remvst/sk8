@@ -5,22 +5,29 @@ MOUSE_IS_DOWN = false;
 MOVEMENT_TARGET_DIRECTION = point();
 ROTATION_ACC = 0;
 
-onmousemove = e => {
+toGamePosition = (e, out) => {
     const canvasCoords = CANVAS.getBoundingClientRect();
 
+    const height = CANVAS_HEIGHT + MOBILE * MOBILE_CONTROLS_HEIGHT;
+    if (document.pointerLockElement) {
+        out.x += CANVAS_WIDTH * e.movementX / canvasCoords.width;
+        out.y += height * e.movementY / canvasCoords.height;
+    } else {
+        out.x = CANVAS_WIDTH * (e.pageX - canvasCoords.left) / canvasCoords.width;
+        out.y = height * (e.pageY - canvasCoords.top) / canvasCoords.height;
+    }
+
+    out.x = limit(0, out.x, CANVAS_WIDTH);
+    out.y = limit(0, out.y, CANVAS_HEIGHT);
+
+    return out;
+};
+
+onmousemove = e => {
     PREVIOUS_MOUSE_POSITION.x = MOUSE_POSITION.x;
     PREVIOUS_MOUSE_POSITION.y = MOUSE_POSITION.y;
 
-    if (document.pointerLockElement) {
-        MOUSE_POSITION.x += e.movementX;
-        MOUSE_POSITION.y += e.movementY;
-    } else {
-        MOUSE_POSITION.x = CANVAS_WIDTH * (e.pageX - canvasCoords.left) / canvasCoords.width;
-        MOUSE_POSITION.y = CANVAS_HEIGHT * (e.pageY - canvasCoords.top) / canvasCoords.height;
-    }
-
-    MOUSE_POSITION.x = limit(0, MOUSE_POSITION.x, CANVAS_WIDTH);
-    MOUSE_POSITION.y = limit(0, MOUSE_POSITION.y, CANVAS_HEIGHT);
+    toGamePosition(e, MOUSE_POSITION)
 
     const deltaX = MOUSE_POSITION.x - PREVIOUS_MOUSE_POSITION.x;
     const deltaY = MOUSE_POSITION.y - PREVIOUS_MOUSE_POSITION.y;

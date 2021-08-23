@@ -1,14 +1,37 @@
-ontouchstart = ontouchmove = ontouchend = ontouchcancel = e => {
-    down = {};
+TOUCHES = [];
+RELATIVE_TOUCHES = [];
 
+ontouchstart = ontouchmove = ontouchend = ontouchcancel = e => {
     e.preventDefault();
 
-    const canvasCoords = CANVAS.getBoundingClientRect();
-    for (let i = 0 ; i < e.touches.length ; i++) {
-        const x = CANVAS_WIDTH * (e.touches[i].pageX - canvasCoords.left) / canvasCoords.width;
-        const buttonIndex = ~~(x / (CANVAS_WIDTH / 4));
-        down[KEYBOARD_LEFT] = down[KEYBOARD_LEFT] || buttonIndex == 0;
-        down[KEYBOARD_RIGHT] = down[KEYBOARD_RIGHT] || buttonIndex == 1;
-        down[KEYBOARD_SPACE] = down[KEYBOARD_SPACE] || between(2, buttonIndex, 3);
+    TOUCHES = Array.from(e.touches);
+    RELATIVE_TOUCHES = TOUCHES.map(x => toGamePosition(x, {}));
+
+    // Update mouse position
+    if (TOUCHES.length) {
+        MOUSE_POSITION.x = RELATIVE_TOUCHES[0].x;
+        MOUSE_POSITION.y = RELATIVE_TOUCHES[0].y;
     }
+};
+
+ontouchend = (e) => {
+    e.preventDefault();
+    if (TOUCHES.length) {
+        onclick();
+    }
+    ontouchmove(e);
+}
+
+mobileDirection = () => {
+    if (RELATIVE_TOUCHES.filter(x => between(0, x.x, CANVAS_WIDTH / 4)).length) return -1;
+    if (RELATIVE_TOUCHES.filter(x => between(CANVAS_WIDTH / 4, x.x, CANVAS_WIDTH / 2)).length) return 1;
+    return 0;
+};
+
+mobileTrick = () => {
+    return RELATIVE_TOUCHES.filter(x => between(evaluate(CANVAS_WIDTH / 2), x.x, evaluate(CANVAS_WIDTH * 3 / 4))).length;
+};
+
+mobileSquat = () => {
+    return RELATIVE_TOUCHES.filter(x => between(evaluate(CANVAS_WIDTH * 3 / 4), x.x, CANVAS_WIDTH)).length;
 };
