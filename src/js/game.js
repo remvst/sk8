@@ -83,6 +83,50 @@ class Game {
             fill();
             stroke();
         });
+
+        // Mobile controls
+        fs('#000');
+        fr(0, CANVAS_HEIGHT, CANVAS_WIDTH, MOBILE_CONTROLS_HEIGHT);
+
+        fs('#fff');
+
+        wrap(() => {
+            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_LEFT];
+            translate(CANVAS_WIDTH / 8, CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2);
+            scale(-1, 1);
+            renderMobileArrow();
+        });
+
+        wrap(() => {
+            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_RIGHT];
+            translate(CANVAS_WIDTH * 3 / 8, CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2);
+            renderMobileArrow();
+        });
+
+        wrap(() => {
+            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_RIGHT];
+
+            fr(
+                evaluate(CANVAS_WIDTH * 5 / 8 - MOBILE_BUTTON_SIZE / 2),
+                evaluate(CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2 - MOBILE_BUTTON_SIZE / 2),
+                MOBILE_BUTTON_SIZE,
+                MOBILE_BUTTON_SIZE,
+            );
+        });
+
+        wrap(() => {
+            R.globalAlpha = 0.5 + 0.5 * !!down[KEYBOARD_SPACE];
+
+            beginPath();
+            arc(
+                evaluate(CANVAS_WIDTH * 7 / 8),
+                evaluate(CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2),
+                evaluate(MOBILE_BUTTON_SIZE / 2),
+                0,
+                TWO_PI,
+            );
+            fill();
+        });
     }
 
     transition(pattern, duration = 0.3) {

@@ -12,3 +12,11 @@ renderArrow = () => {
     lineTo(-50, 50);
     fill();
 }
+
+renderMobileArrow = () => {
+    beginPath();
+    moveTo(MOBILE_BUTTON_SIZE / 2, 0);
+    lineTo(-MOBILE_BUTTON_SIZE / 2, MOBILE_BUTTON_SIZE / 2);
+    lineTo(-MOBILE_BUTTON_SIZE / 2, -MOBILE_BUTTON_SIZE / 2);
+    fill();
+};
