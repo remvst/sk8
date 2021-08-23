@@ -8,8 +8,9 @@ class Challenge {
     }
 
     checkCompleted(hero, lastCombo) {
-        if (this.check(hero, lastCombo)) {
+        if (!this.wasCompleted() && this.check(hero, lastCombo)) {
             localStorage[nomangle('ch') + this.label] = true;
+            return true;
         }
     }
 
@@ -67,8 +68,8 @@ CHALLENGES = [
     new ComboValueChallenge(250000),
 
     new ComboSizeChallenge(10),
+    new ComboSizeChallenge(15),
     new ComboSizeChallenge(20),
-    new ComboSizeChallenge(30),
 
     new TrickChallenge(nomangle('RAIL TO RAIL')),
     new TrickChallenge(nomangle('540')),

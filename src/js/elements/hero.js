@@ -277,7 +277,7 @@ class Hero extends DraggedElement {
         if (this.age > this.pushingUntil) {
             if (this.landed && this.input.pushing()) {
                 this.pushing = true;
-                this.speed = min(600, this.speed + 200);
+                this.speed = min(600, this.speed + 300);
                 this.pushingUntil = this.age + PUSH_PERIOD;
                 this.pushAge = 0;
                 if (!wasPushing) {

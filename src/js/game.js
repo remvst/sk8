@@ -38,7 +38,7 @@ class Game {
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
 
         if (G.scene.hud.messageLines != this.lastHudMessage) {
-            say(G.scene.hud.messageLines.join(''));
+            say(G.scene.hud.messageLines.join(' '));
         }
         this.lastHudMessage = G.scene.hud.messageLines;
     }

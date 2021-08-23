@@ -8,27 +8,25 @@ class MainMenu extends Menu {
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 400,
-                'PLAY THE TUTORIAL',
+                nomangle('PLAY THE TUTORIAL'),
                 () => G.startScene(new WelcomeScene()),
-            )
-        ];
-
-        if (localStorage[nomangle('tut')]) {
-            this.buttons.push(new Button(
+            ),
+            new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 520,
-                'ENTER THE CONTEST',
+                nomangle('NEW SESSION'),
                 () => G.startScene(new FreeScene()),
-            ));
+            ),
+            new Button(
+                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
+                640,
+                nomangle('CHALLENGES'),
+                () => G.challenges(),
+            ),
+        ];
 
-            this.buttons.push(
-                new Button(
-                    (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                    640,
-                    'CHALLENGES',
-                    () => G.challenges(),
-                )
-            );
-        }
+        this.buttons.forEach((x, i) => {
+            x.enabled = !i || localStorage[nomangle('tut')];
+        });
     }
 }

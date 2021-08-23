@@ -4,7 +4,7 @@ class WelcomeScene extends Scene {
         super();
 
         this.hud.setPermanentMessage([
-            nomangle('Welcome to my space-themed skatepark!'),
+            nomangle('Welcome to STICK SKATER!'),
         ]);
     }
 

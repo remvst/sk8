@@ -142,6 +142,7 @@ class FreeScene extends Scene {
 
         if (this.timeLeft <= 0 && this.world.hero.landed && !this.ended) {
             this.ended = true;
+            this.world.hero.speed = 0;
             this.world.hero.comboTracker.locked = true;
             this.world.hero.input = new EmptyInput();
 

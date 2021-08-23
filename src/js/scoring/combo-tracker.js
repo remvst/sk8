@@ -89,7 +89,11 @@ class ComboTracker {
                 }
 
                 if (this.hero.world.scene instanceof FreeScene) {
-                    CHALLENGES.forEach(x => x.checkCompleted(this.hero, this.combo));
+                    CHALLENGES.forEach(x => {
+                        if (x.checkCompleted(this.hero, this.combo)) {
+                            G.scene.hud.showMessage(nomangle('Challenge completed: ') + x.label, 4);
+                        }
+                    });
                 }
             }
 

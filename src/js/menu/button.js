@@ -4,10 +4,15 @@ class Button {
         this.y = y;
         this.label = label;
         this.onClick = onClick;
+        this.enabled = true;
     }
 
     render() {
         translate(this.x, this.y);
+
+        if (!this.enabled) {
+            R.globalAlpha *= 0.5;
+        }
 
         wrap(() => {
             R.globalAlpha *= this.contains(MOUSE_POSITION) ? 1 : 0.5;

@@ -13,7 +13,7 @@ class GrindScene extends Scene {
     }
 
     completionMessage() {
-        return nomangle('Nice! You are now ready for the contest!');
+        return nomangle('Nice! You are now ready to use the skatepark!');
     }
 
     setupWorld(world) {

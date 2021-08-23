@@ -43,7 +43,12 @@ class Scene {
     }
 
     completionMessage() {
-        return nomangle('Nice!');
+        return pick([
+            nomangle('Nice!'),
+            nomangle('Perfect!'),
+            nomangle('You\'re a natural!'),
+            nomangle('Sick!'),
+        ]);
     }
 
     completionDelay() {
