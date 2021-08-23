@@ -15,11 +15,11 @@ class EndMenu extends Menu {
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 520,
                 nomangle('SHARE'),
-                () => tweet(
+                () => tweet([
                     nomangle('I scored '),
                     numberWithCommas(score),
                     nomangle('pts on STICK SKATER'),
-                ),
+                ].join('')),
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
