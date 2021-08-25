@@ -75,6 +75,27 @@ class World {
             if (this.hero && !this.hero.bailed) wrap(() => this.hero.renderables[0].renderActual());
             after.forEach(renderable => wrap(() => renderable.renderActual()));
         });
+
+        if (this.hero.input.userControlled && this.hero.grinding) {
+            wrap(() => {
+                R.lineWidth = 20;
+                translate(this.hero.center.projectToActual().x - this.camera.x, this.hero.center.projectToActual().y - this.camera.y);
+                rotate(-PI / 2);
+                ss('#fff');
+                beginPath();
+                arc(0, 0, 200, -PI / 4, PI / 4);
+                stroke();
+
+                rotate(this.hero.balance * PI / 4);
+                translate(200, 0);
+                beginPath();
+                fs('#f00');
+                moveTo(0, 0);
+                lineTo(40, 20);
+                lineTo(40, -20);
+                fill();
+            })
+        }
     }
 
     particle(properties) {

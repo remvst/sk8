@@ -134,9 +134,9 @@ class Scene {
         });
 
         const { hero } = this.world;
-        if (hero && hero.input.userControlled) {
+        if (hero) {
             wrap(() => {
-                if (!hero.landed) return;
+                if (!hero.landed || !hero.input.userControlled) return;
 
                 translate(
                     CANVAS_WIDTH / 2 + MOVEMENT_TARGET_DIRECTION.x,

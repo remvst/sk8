@@ -81,7 +81,7 @@ class Hero extends DraggedElement {
             new Segment(this.shoulders, this.rightHand, '#fff', 16),
             new Segment(this.shoulders, this.headCenter, '#fff', 16),
             new Sphere(this.headCenter, 20, '#fff'),
-        ]), this.balanceRenderable = new BalanceRenderable(this.center)];
+        ])];
     }
 
     get draggable() {
@@ -89,9 +89,6 @@ class Hero extends DraggedElement {
     }
 
     updateRenderables() {
-        this.balanceRenderable.visible = this.grinding;
-        this.balanceRenderable.balance = this.balance;
-
         const kneeForwardFactor = 0.5 + this.squatFactor * 0.5;
         const halfLegLength = 100 - kneeForwardFactor * 60;
 
@@ -242,6 +239,7 @@ class Hero extends DraggedElement {
         }
 
         this.bailed = true;
+        this.grinding = false;
 
         const copy = new Element();
         copy.renderables = this.renderables.map(renderable => renderable.clone());

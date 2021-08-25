@@ -38,7 +38,6 @@
     "src/js/3d/segment.js",
     "src/js/3d/sphere.js",
     "src/js/3d/composite-renderable.js",
-    "src/js/3d/balance-renderable.js",
     "src/js/3d/arc.js",
 
     "src/js/scenes/scene.js",
