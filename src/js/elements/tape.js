@@ -34,7 +34,7 @@ class Tape extends Element {
     cycle(elapsed) {
         super.cycle(elapsed);
 
-        if (dist(this, this.world.hero) < 50 && abs(this.z - this.world.hero.z) < 100) {
+        if (dist(this, this.world.hero) < 100 && abs(this.z - (this.world.hero.z + 100)) < 150) {
             this.world.removeElement(this);
 
             pickupSound();

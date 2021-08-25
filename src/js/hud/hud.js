@@ -35,7 +35,7 @@ class HUD {
 
     render() {
         R.font = 'italic 72pt Impact';
-        R.textAlign = 'center';
+        R.textAlign = nomangle('center');
         R.textBaseline = 'top';
 
         if (this.scene.timeLeft >= 0) {
@@ -95,7 +95,7 @@ class HUD {
                 stroke();
 
                 R.font = '36pt Impact'
-                R.textAlign = 'center';
+                R.textAlign = nomangle('center');
                 R.textBaseline = 'middle';
 
                 const { messageLines } = this;
