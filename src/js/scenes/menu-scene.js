@@ -27,7 +27,7 @@ class MenuScene extends Scene {
         if (random() < 0.5) hero.input.trick = () => hero.velocityZ > 0;
         if (random() < 0.5) {
             const targetAngle = hero.angle + pick([-1, 1, 2, -2]) * PI;
-            hero.input.rotation = () => limit(-1, (targetAngle - hero.angle) / PI, 1);
+            hero.input.rotation = () => sign(targetAngle - hero.angle);
         }
     }
 
