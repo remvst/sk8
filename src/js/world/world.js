@@ -102,14 +102,14 @@ class World {
         this.addElement(k);
     }
 
-    arcRail(center, radius, count, fromAngle, toAngle) {
+    arcRail(center, radius, count, fromAngle, toAngle, z = 100) {
         const pts = [];
         for (let i = 0 ; i <= count ; i++) {
             const angle = (i / count) * (toAngle - fromAngle) + fromAngle;
             pts.push(point(
                 center.x + cos(angle) * radius,
                 center.y + sin(angle) * radius,
-                100,
+                z,
             ));
         }
         this.addElement(new Rail(pts));
