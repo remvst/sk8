@@ -57,6 +57,19 @@ class ScoreChallenge extends Challenge {
         return hero.world.scene.score >= this.targetScore;
     }
 }
+class TapesChallenge extends Challenge {
+    constructor() {
+        super();
+        this.label = nomangle('ALL TAPES');
+    }
+
+    check(hero) {
+        for (const element of hero.world.elements) {
+            if (element instanceof Tape) return false;
+        }
+        return true;
+    }
+}
 
 CHALLENGES = [
     new ScoreChallenge(100000),
@@ -77,5 +90,5 @@ CHALLENGES = [
     new TrickChallenge(nomangle('TRIPLE FLIPPITY')),
     new TrickChallenge(nomangle('QUADRUPLE FLIPPITY')),
     new TrickChallenge(nomangle('720 DOUBLE FLIPPITY')),
-    new TrickChallenge(nomangle('900')),
+    new TapesChallenge(),
 ];

@@ -89,11 +89,7 @@ class ComboTracker {
                 }
 
                 if (this.hero.world.scene instanceof FreeScene) {
-                    CHALLENGES.forEach(x => {
-                        if (x.checkCompleted(this.hero, this.combo)) {
-                            G.scene.hud.showMessage(nomangle('Challenge completed: ') + x.label, 4);
-                        }
-                    });
+                    this.checkAllChallenges();
                 }
             }
 
@@ -107,5 +103,13 @@ class ComboTracker {
         }
 
         this.updatePrevious();
+    }
+
+    checkAllChallenges() {
+        CHALLENGES.forEach(x => {
+            if (x.checkCompleted(this.hero, this.combo)) {
+                G.scene.hud.showMessage(nomangle('Challenge completed: ') + x.label, 4);
+            }
+        });
     }
 }

@@ -26,6 +26,7 @@
     "src/js/elements/kicker.js",
     "src/js/elements/rail.js",
     "src/js/elements/pole.js",
+    "src/js/elements/tape.js",
 
     "src/js/scoring/combo.js",
     "src/js/scoring/combo-tracker.js",

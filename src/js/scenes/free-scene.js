@@ -159,6 +159,11 @@ class FreeScene extends Scene {
 
         world.kicker(point(lastPt.x + 200, lastPt.y), PI);
 
+        const tape = new Tape();
+        tape.x = 100;
+        tape.z = 100;
+        world.addElement(tape);
+
         world.hero.x = 100;
     }
 

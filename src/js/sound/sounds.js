@@ -10,22 +10,13 @@ class Sound {
     }
 }
 
-/*
-// beepSound = sound([rawFile('config/sounds/beep')]);
-// exitSound = sound([rawFile('config/sounds/exit')]);
-// failSound = sound([rawFile('config/sounds/fail')]);
-// finishSound = sound([rawFile('config/sounds/finish')]);
-// jumpSound = sound([rawFile('config/sounds/jump')]);
-// landSound = sound([rawFile('config/sounds/land')]);
-// nextLevelSound = sound([rawFile('config/sounds/next-level')]);
-// notFoundSound = sound([rawFile('config/sounds/not-found')]);*/
-
 jumpSound = () => new Sound([rawFile('config/sounds/jump')]);
 bailSound = () => new Sound([rawFile('config/sounds/bail')]);
 tickSound = () => new Sound([rawFile('config/sounds/tick')]);
 landSound = () => new Sound([rawFile('config/sounds/land')]);
 clickSound = () => new Sound([rawFile('config/sounds/click')]);
 trickSound = () => new Sound([rawFile('config/sounds/trick')]);
+pickupSound = () => new Sound([rawFile('config/sounds/pickup')]);
 
 grindSound = null;
 
