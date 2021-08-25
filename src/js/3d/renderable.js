@@ -25,8 +25,6 @@ class Renderable {
     }
 
     renderOnTopOfHero(hero) {
-        if (hero === this) {
-            return false;
-        }
+    
     }
 }

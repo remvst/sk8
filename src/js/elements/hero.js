@@ -81,7 +81,7 @@ class Hero extends DraggedElement {
             new Segment(this.shoulders, this.rightHand, '#fff', 16),
             new Segment(this.shoulders, this.headCenter, '#fff', 16),
             new Sphere(this.headCenter, 20, '#fff'),
-        ])];
+        ], this.center)];
     }
 
     get draggable() {

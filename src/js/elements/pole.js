@@ -7,7 +7,7 @@ class Pole extends Element {
         this.top = this.newPoint();
 
             // Link to ground
-        this.renderables = [new Segment(
+        this.renderables = [new CompositeRenderable([new Segment(
             this.base,
             this.top,
             '#eee',
@@ -28,7 +28,7 @@ class Pole extends Element {
             0,
             PI,
             '#fff',
-        )];
+        )], this.base)];
     }
 
     updateRenderables() {
