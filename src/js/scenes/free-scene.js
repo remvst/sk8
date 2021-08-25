@@ -125,6 +125,26 @@ class FreeScene extends Scene {
         world.arcRail(point(-1800, 1800), 300, 6, PI, 0);
         world.arcRail(point(-2200, 1400), 300, 6, PI / 2, PI * 3 / 2);
 
+        world.rail([point(-1800, 0, 100), point(-2200, 0, 100)]);
+        world.rail([point(-2400, 0, 200), point(-2800, 0, 200)]);
+        world.rail([point(-3000, 0, 300), point(-3400, 0, 300)]);
+        world.arcRail(point(-3600, 400), 400, 6, -PI / 2, -PI * 3 / 2);
+        world.rail([point(-1800, 800, 100), point(-2200, 800, 100)]);
+        world.rail([point(-2400, 800, 200), point(-2800, 800, 200)]);
+        world.rail([point(-3000, 800, 300), point(-3400, 800, 300)]);
+
+        world.kicker(point(-3000, 400), 0);
+        world.rail([point(-2800, 400, 400), point(-2200, 400, 400)]);
+        world.kicker(point(-2000, 400), PI);
+
+        world.kicker(point(1500, 0), 0);
+        world.rail([point(1800, 100, 400), point(2200, 100, 400), point(2400, 50, 400)]);
+        world.rail([point(1800, -100, 400), point(2200, -100, 400), point(2400, -50, 400)]);
+
+        world.rail([point(3400, 100, 400), point(3000, 100, 400), point(2600, 50, 400)]);
+        world.rail([point(3400, -100, 400), point(3000, -100, 400), point(2600, -50, 400)]);
+        world.kicker(point(3800, 0), PI);
+
         world.hero.x = 100;
     }
 
