@@ -38,6 +38,7 @@ class Scene {
     setupDemoWorld() {
         this.demoWorld = new World();
         this.demoWorld.scene = this;
+        this.demoWorld.backgroundColor = '#000';
         this.demoWorld.addElement(new Hero(new EmptyInput()));
         this.setupWorld(this.demoWorld);
     }
@@ -100,11 +101,6 @@ class Scene {
     }
 
     render() {
-        wrap(() => {
-            fs('#170e65');
-            fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        });
-
         this.world.render();
 
         wrap(() => {
@@ -118,10 +114,8 @@ class Scene {
             fr(-2, -2, evaluate(CANVAS_WIDTH * DEMO_SCALE + 4), evaluate(CANVAS_HEIGHT * DEMO_SCALE + 4));
 
             scale(DEMO_SCALE, DEMO_SCALE);
-            fs('#000');
             beginPath();
             rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-            fill();
             clip();
             this.demoWorld.render();
 

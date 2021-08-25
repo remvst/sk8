@@ -4,6 +4,8 @@ class World {
         this.elements = [];
         this.particles = [];
 
+        this.backgroundColor = '#170e65';
+
         this.camera = new Camera();
     }
 
@@ -42,6 +44,9 @@ class World {
         this.elements.forEach(e => e.prerender());
 
         wrap(() => {
+            fs(this.backgroundColor);
+            fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
             translate(-this.camera.x, -this.camera.y);
 
             fs(groundTexture);
