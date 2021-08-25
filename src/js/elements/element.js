@@ -48,20 +48,7 @@ class Element {
         });
     }
 
-    get minY() {
-        return this.y;
-    }
-
     contains(position) {
         return false;
-    }
-
-    renderBefore(other) {
-        // if (this.contains(other)) {
-        //     // console.log();
-        //     return true;
-        // }
-
-        return this.minY < other.minY;
     }
 }

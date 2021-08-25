@@ -9,32 +9,25 @@ class Arc extends Renderable {
         this.color = color;
     }
 
-    renderActual() {
-        ss('#fff');
+    renderArc(color, func) {
+        ss(color);
         R.lineWidth = 40;
         R.lineWidth = 80;
 
-        translate(this.center.projectToActual().x, this.center.projectToActual().y);
+        translate(this.center[func]().x, this.center[func]().y);
         rotate(PI / 10);
         scale(1, 0.3);
         beginPath();
-        arc(0 ,0 , 150, this.fromAngle, this.toAngle);
+        arc(0,0 , 150, this.fromAngle, this.toAngle);
         stroke();
     }
 
+    renderActual() {
+        this.renderArc(this.color, 'projectToActual');
+    }
+
     renderShadow() {
-
-            ss(SHADOW_COLOR);
-            R.lineWidth = 40;
-            R.lineWidth = 80;
-
-            translate(this.center.projectToShadow().x, this.center.projectToShadow().y);
-            rotate(PI / 10);
-            scale(1, 0.3);
-            beginPath();
-            arc(0 ,0 , 150, this.fromAngle, this.toAngle);
-            stroke();
-        // this.renderSphere(SHADOW_COLOR, 'projectToShadow');
+        this.renderArc(SHADOW_COLOR, 'projectToShadow');
     }
 
     clone() {
