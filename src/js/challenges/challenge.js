@@ -60,7 +60,7 @@ class ScoreChallenge extends Challenge {
 class TapesChallenge extends Challenge {
     constructor() {
         super();
-        this.label = nomangle('ALL TAPES');
+        this.label = nomangle('ALL 5 TAPES');
     }
 
     check(hero) {

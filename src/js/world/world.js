@@ -114,4 +114,12 @@ class World {
         }
         this.addElement(new Rail(pts));
     }
+
+    tape(center) {
+        const tape = new Tape();
+        tape.x = center.x;
+        tape.y = center.y;
+        tape.z = center.z;
+        this.addElement(tape);
+    }
 }

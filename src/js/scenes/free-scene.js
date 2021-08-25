@@ -53,9 +53,10 @@ class FreeScene extends Scene {
             point(poleRight.x + poleXRadius, poleRight.y - poleXRadius, 100),
         ]);
 
-        world.kicker(point(poleMiddle.x + 200, poleMiddle.y + 800), PI);
-        world.kicker(point(poleMiddle.x - 200, poleMiddle.y + 800), 0);
-        world.kicker(point(poleMiddle.x, poleMiddle.y + 1000), -PI / 2);
+        world.kicker(point(poleMiddle.x + 400, poleMiddle.y + 800), PI);
+        world.kicker(point(poleMiddle.x - 400, poleMiddle.y + 800), 0);
+        world.kicker(point(poleMiddle.x, poleMiddle.y + 1200), -PI / 2);
+        world.tape(point(poleMiddle.x, poleMiddle.y + 800, 600));
 
 
         world.kicker(point(poleMiddle.x, poleMiddle.y + 1400), PI);
@@ -65,6 +66,7 @@ class FreeScene extends Scene {
             point(poleMiddle.x - 800, poleMiddle.y + 1400, 400),
             point(poleMiddle.x - 1200, poleMiddle.y + 1000, 400),
         ]);
+        world.tape(point(poleMiddle.x - 800, poleMiddle.y + 1400, 600));
 
         world.kicker(point(poleMiddle.x - 1400, poleMiddle.y + 800), PI / 4);
 
@@ -111,6 +113,7 @@ class FreeScene extends Scene {
 
         world.kicker(point(-250, -1100), 0);
         world.kicker(point(250, -1100), PI);
+        world.tape(point(0, -1100, 500));
 
         world.pole(point(1200, -900));
 
@@ -137,6 +140,7 @@ class FreeScene extends Scene {
         world.kicker(point(-3000, 400), 0);
         world.rail([point(-2800, 400, 400), point(-2200, 400, 400)]);
         world.kicker(point(-2000, 400), PI);
+        world.tape(point(-2500, 400, 600));
 
         world.kicker(point(1500, 0), 0);
         world.rail([point(1800, 100, 400), point(2200, 100, 400), point(2400, 50, 400)]);
@@ -159,10 +163,7 @@ class FreeScene extends Scene {
 
         world.kicker(point(lastPt.x + 200, lastPt.y), PI);
 
-        const tape = new Tape();
-        tape.x = 100;
-        tape.z = 100;
-        world.addElement(tape);
+        world.tape(point(pts[0].x, pts[0].y, pts[0].z + 100));
 
         world.hero.x = 100;
     }
