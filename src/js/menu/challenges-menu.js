@@ -5,7 +5,7 @@ class ChallengesMenu extends Menu {
         const previousMenu = G.menu;
 
         this.title = nomangle('CHALLENGES: ') + CHALLENGES.filter(x => x.wasCompleted()).length + '/' + CHALLENGES.length;
-        this.buttons= [
+        this.buttons = [
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 700,

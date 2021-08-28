@@ -38,6 +38,7 @@ class HUD {
         R.textAlign = nomangle('center');
         R.textBaseline = 'top';
 
+        // Timer
         if (this.scene.timeLeft >= 0) {
             fatText(
                 this.scene.timeLeft > 15 ? '#fff' : '#f00',
@@ -48,6 +49,7 @@ class HUD {
             );
         }
 
+        // Combo
         const { hero } = this.scene.world;
         if (hero && hero.input.userControlled) {
             wrap(() => this.renderCombo(
@@ -62,6 +64,7 @@ class HUD {
             ));
         }
 
+        // Score
         if (this.scene.score >= 0) {
             R.textBaseline = 'top';
             R.textAlign = 'left';
@@ -69,6 +72,7 @@ class HUD {
             whiteText(numberWithCommas(~~this.displayedScore), 50, 100, 1);
         }
 
+        // Message
         if (this.messageTimeLeft > 0) {
             wrap(() => {
                 R.globalAlpha = 0.5;
@@ -94,9 +98,9 @@ class HUD {
                 lineTo(200, CANVAS_HEIGHT - 50);
                 stroke();
 
-                R.font = '36pt Impact'
+                R.font = nomangle('36pt Impact');
                 R.textAlign = nomangle('center');
-                R.textBaseline = 'middle';
+                R.textBaseline = nomangle('middle');
 
                 const { messageLines } = this;
 

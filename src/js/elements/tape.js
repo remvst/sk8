@@ -13,21 +13,9 @@ class Tape extends Element {
         this.sphereRight = this.newPoint();
 
         this.renderables = [
-            // new Segment(this.leftTop, this.leftBottom, '#fff', 8),
-            // new Segment(this.rightTop, this.rightBottom, '#fff', 8),
-            // // new Segment(this.leftTop, this.rightTop),
-            // // new Segment(this.leftBottom, this.rightBottom),
-            // new Segment(this.highTop, this.highBottom, '#fff', 8),
-            // new Segment(this.leftTop, this.highTop, '#fff', 8),
-            // new Segment(this.leftBottom, this.highBottom, '#fff', 8),
-            // new Segment(this.highTop, this.rightTop, '#fff', 8),
-            // new Segment(this.highBottom, this.rightBottom, '#fff', 8),
-
             new Plane([this.leftTop, this.leftBottom, this.rightBottom, this.rightTop], '#000'),
             new Sphere(this.sphereLeft, 12, '#fff'),
             new Sphere(this.sphereRight, 12, '#fff'),
-
-            // new Disk(this.edgeCenter(), 10),
         ];
     }
 

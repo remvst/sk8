@@ -15,7 +15,7 @@ class ChallengeButton {
             fr(0, 0, CHALLENGE_BUTTON_WIDTH, CHALLENGE_BUTTON_HEIGHT);
         });
 
-        R.font = '24pt Impact';
+        R.font = nomangle('24pt Impact');
         R.textAlign = nomangle('center');
         R.textBaseline = nomangle('middle');
         fs('#fff');
