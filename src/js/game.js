@@ -4,6 +4,8 @@ class Game {
         G = this;
         G.clock = 0;
 
+        G.gameSpeed = 1;
+
         this.lastHudMessage = null;
 
         this.startScene(new IntroScene());
@@ -20,11 +22,11 @@ class Game {
     }
 
     startScene(scene) {
+        this.transition();
+
         this.menu = null;
         this.scene = scene;
         scene.restart();
-
-        this.transition();
     }
 
     cycle(elapsed) {
@@ -53,14 +55,6 @@ class Game {
 
     render() {
         wrap(() => this.scene.render());
-
-        if (this.transitionProgress < 1) {
-            wrap(() => {
-                R.globalAlpha = 1 - this.transitionProgress;
-                fs(this.transitionPattern);
-                fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-            });
-        }
 
         if (this.menu) {
             wrap(() => this.menu.render());
@@ -91,6 +85,14 @@ class Game {
             fill();
             stroke();
         });
+
+        if (this.transitionProgress < 1) {
+            wrap(() => {
+                R.globalAlpha = 1 - this.transitionProgress;
+                fs(this.transitionPattern);
+                fr(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            });
+        }
 
         // Mobile controls
         fs('#000');
@@ -142,6 +144,6 @@ class Game {
             r.drawImage(CANVAS, 0, 0);
         });
 
-        interp(this, 'transitionProgress', 0, 1, 0.3);
+        interp(this, 'transitionProgress', 0, 1, duration);
     }
 }

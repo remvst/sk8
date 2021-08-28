@@ -30,7 +30,7 @@ class World {
 
     cycle(elapsed) {
         this.age += elapsed;
-        this.elements.forEach(e => e.cycle(elapsed));
+        this.elements.forEach(e => e.cycle(elapsed * G.gameSpeed));
         this.camera.cycle(elapsed);
     }
 

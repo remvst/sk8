@@ -185,6 +185,8 @@ class FreeScene extends Scene {
             this.world.hero.comboTracker.locked = true;
             this.world.hero.input = new EmptyInput();
 
+            G.transition('#fff', 1);
+
             setTimeout(() => G.menu = new EndMenu(this.score), 2000);
         }
     }

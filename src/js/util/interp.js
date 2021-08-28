@@ -46,6 +46,7 @@ interp = (
             }
         }
     };
+    interpolation.cycle(0);
     INTERPOLATIONS.push(interpolation);
 };
 

@@ -2,7 +2,7 @@ class Button {
     constructor(x, y, label, onClick) {
         this.x = x;
         this.y = y;
-        this.label = label;
+        this.label = label.call ? label : () => label;
         this.onClick = onClick;
         this.enabled = true;
     }
@@ -25,7 +25,7 @@ class Button {
         R.textAlign = nomangle('center');
         R.textBaseline = nomangle('middle');
         fs('#fff');
-        fillText(this.label, BUTTON_WIDTH / 2, BUTTON_HEIGHT / 2);
+        fillText(this.label(), BUTTON_WIDTH / 2, BUTTON_HEIGHT / 2);
     }
 
     contains(pt) {

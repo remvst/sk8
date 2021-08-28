@@ -1,14 +1,19 @@
 class ChallengesMenu extends Menu {
     constructor(score) {
-        super()
+        super();
+
+        const previousMenu = G.menu;
 
         this.title = nomangle('CHALLENGES: ') + CHALLENGES.filter(x => x.wasCompleted()).length + '/' + CHALLENGES.length;
         this.buttons= [
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 700,
-                'MAIN MENU',
-                () => G.mainMenu(),
+                nomangle('BACK'),
+                () => {
+                    G.transition();
+                    G.menu = previousMenu;
+                },
             )
         ];
     }
