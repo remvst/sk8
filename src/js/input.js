@@ -4,32 +4,49 @@ class Input {
     }
 
     squat() {
-        return MOUSE_IS_DOWN || mobileSquat();
+        return MOUSE_IS_DOWN || mobileSquat() || isGamepadButtonPressed(0);
     }
 
     grind() {
-        return MOUSE_IS_DOWN || mobileSquat();
+        return this.squat();
     }
 
     trick() {
+        if (isGamepadButtonPressed(1) || isGamepadButtonPressed(2)) return true;
         return down[KEYBOARD_SPACE] || mobileTrick();
     }
 
     pushing() {
-        if (RELATIVE_TOUCHES.filter(x => between(CANVAS_WIDTH / 2, x.x, CANVAS_WIDTH * 3 / 4)).length) return true;
-        return down[KEYBOARD_SPACE] || mobileTrick();
+        return this.trick();
     }
 
     direction() {
-        const axisValue = gamepadAxisValue(0);
-        if (abs(axisValue) > 0) return axisValue;
+        // const axisValue = gamepadAxisValue(0);
+        // if (abs(axisValue) > 0) return axisValue;
+
+
+        // const axisValueX = gamepadAxisValue(0);
+        // const axisValueY = gamepadAxisValue(1);
+        // if (axisValueX || axisValueY) {
+        //     const angle = atan2(axisValueY, axisValueX);
+        //     MOVEMENT_TARGET_DIRECTION.x = 400 * cos(angle);
+        //     MOVEMENT_TARGET_DIRECTION.y = 400 * sin(angle);
+        //
+        //     // console.log(angle);
+        // }
+
+        // console.log(axisValueX, axisValueY);
 
         return atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x);
     }
 
     rotation() {
-        const axisValue = gamepadAxisValue(0);
-        if (abs(axisValue) > 0) return axisValue;
+        // const axisValue = gamepadAxisValue(0);
+        // if (abs(axisValue) > 0) return axisValue;
+
+        if (mobileDirection()) {
+            ROTATION_ACC = mobileDirection() * 0.5;
+        }
 
         return ROTATION_ACC;
     }

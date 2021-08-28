@@ -31,7 +31,7 @@ class Game {
 
     cycle(elapsed) {
         const direction = mobileDirection();
-        if (direction) {
+        if (direction && this.scene.world.hero.draggable) {
             let newAngle = atan2(MOVEMENT_TARGET_DIRECTION.y, MOVEMENT_TARGET_DIRECTION.x);
             newAngle += elapsed * mobileDirection() * PI;
             MOVEMENT_TARGET_DIRECTION.x = cos(newAngle) * 400;

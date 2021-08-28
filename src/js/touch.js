@@ -23,6 +23,9 @@ ontouchend = (e) => {
 }
 
 mobileDirection = () => {
+    const axisValue = gamepadAxisValue(0);
+    if (abs(axisValue) > 0) return axisValue;
+
     if (RELATIVE_TOUCHES.filter(x => between(0, x.x, CANVAS_WIDTH / 4)).length) return -1;
     if (RELATIVE_TOUCHES.filter(x => between(CANVAS_WIDTH / 4, x.x, CANVAS_WIDTH / 2)).length) return 1;
     return 0;

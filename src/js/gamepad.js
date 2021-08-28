@@ -16,7 +16,7 @@ gamepadAxisValue = (axisIndex) => {
     for (var i = 0; i < pads.length; i++) {
         try {
             const value = pads[i].axes[axisIndex];
-            if (value < 0.1) return 0;
+            if (abs(value) < 0.1) return 0;
             return pads[i].axes[axisIndex];
         } catch (e) {}
     }
