@@ -21,7 +21,7 @@ class Button {
             fr(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
         });
 
-        R.font = '36pt Impact';
+        R.font = nomangle('36pt Impact');
         R.textAlign = nomangle('center');
         R.textBaseline = nomangle('middle');
         fs('#fff');

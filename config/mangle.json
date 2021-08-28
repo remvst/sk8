@@ -80,6 +80,12 @@
         "elements",
         "visible",
         "points",
-        "rotation"
+        "rotation",
+        "addElement",
+        "removeElement",
+        "transition",
+        "contains",
+        "balance",
+        "total"
     ]
 }

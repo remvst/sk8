@@ -49,7 +49,7 @@ class ComboSizeChallenge extends Challenge {
 
 class ScoreChallenge extends Challenge {
     constructor(targetScore) {
-        super(numberWithCommas(targetScore) + 'PT SCORE');
+        super(numberWithCommas(targetScore) + nomangle('PT SCORE'));
         this.targetScore = targetScore;
     }
 
