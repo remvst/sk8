@@ -81,8 +81,8 @@ class Rail extends Element {
         pt.z -= p1.z;
 
         const rotated = point();
-        rotated.x = pt.x * Math.cos(angle) + pt.y * Math.sin(angle);
-        rotated.y = -pt.x * Math.sin(angle) + pt.y * Math.cos(angle);
+        rotated.x = pt.x * cos(angle) + pt.y * sin(angle);
+        rotated.y = -pt.x * sin(angle) + pt.y * cos(angle);
 
         return rotated;
     }

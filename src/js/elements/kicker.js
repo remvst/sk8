@@ -58,12 +58,11 @@ class Kicker extends Element {
     }
 
     distanceToEdge(pos) {
-        // const distance = dist(pos, this.edgeCenter());
         const distance = 9999;
         const angleToPos = atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x)
 
         const angle = atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x) - this.angle;
-        const distanceToEdge = Math.cos(angle) * distance;
+        const distanceToEdge = cos(angle) * distance;
         return distanceToEdge;
     }
 
@@ -85,8 +84,6 @@ class Kicker extends Element {
     }
 
     updateRenderables() {
-        const animationRatio = (Date.now() % 5000) / 5000;
-
         const radius = this.length / 2;
 
         this.leftTop.set(-radius, -radius, 0);

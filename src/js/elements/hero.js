@@ -133,8 +133,8 @@ class Hero extends Element {
             slope = PI / 4;
         }
 
-        this.leftFoot.z = this.leftFoot.z - Math.sin(slope) * footDistance / 2;
-        this.rightFoot.z = this.rightFoot.z + Math.sin(slope) * footDistance / 2;
+        this.leftFoot.z = this.leftFoot.z - sin(slope) * footDistance / 2;
+        this.rightFoot.z = this.rightFoot.z + sin(slope) * footDistance / 2;
 
         const slopeRatio = 0.5 - (this.trickProgress % 1);
         const boardSlope = slopeRatio * ((this.trickProgress % 2) >= 1 ? -slope : slope);
@@ -426,7 +426,7 @@ class Hero extends Element {
         if (kicker) {
             const relative = kicker.relativePosition(foot);
             const progress = 1 - (kicker.radius - relative.x) / kicker.length;
-            foot.z = Math.max(foot.z, progress * kicker.height);
+            foot.z = max(foot.z, progress * kicker.height);
         }
     }
 
@@ -503,7 +503,7 @@ class Hero extends Element {
                 }
 
                 if (this.grinding && !wasGrinding) {
-                    const clicks = Math.round((this.angle - grindCollision.grindingAngle) / (PI / 2));
+                    const clicks = round((this.angle - grindCollision.grindingAngle) / (PI / 2));
                     this.grindingOffsetAngle = clicks * PI / 2;
                 }
 

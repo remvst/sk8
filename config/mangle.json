@@ -75,6 +75,11 @@
         "name",
         "ratio",
         "size",
-        "index"
+        "index",
+        "age",
+        "elements",
+        "visible",
+        "points",
+        "rotation"
     ]
 }

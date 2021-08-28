@@ -10,7 +10,7 @@ class Sphere extends Renderable {
     renderSphere(color, funcName) {
         fs(color);
         beginPath();
-        arc(this.center[funcName]().x, this.center[funcName]().y, this.radius, 0, Math.PI * 2);
+        arc(this.center[funcName]().x, this.center[funcName]().y, this.radius, 0, TWO_PI);
         fill();
     }
 
