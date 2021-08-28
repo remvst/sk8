@@ -88,6 +88,10 @@
         "balance",
         "total",
         "draggable",
-        "buttons"
+        "buttons",
+        "source",
+        "buffer",
+        "attack",
+        "lineHeight"
     ]
 }

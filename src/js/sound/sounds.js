@@ -1,12 +1,12 @@
 class Sound {
     constructor(definition, shouldLoop) {
-        this.source = zzfx(...definition);
-        this.source.loop = shouldLoop;
-        this.source.start();
+        this.zzfx = zzfx(...definition);
+        this.zzfx.loop = shouldLoop;
+        this.zzfx.start();
     }
 
-    stop() {
-        this.source.stop();
+    stopSound() {
+        this.zzfx.stop();
     }
 }
 
@@ -27,7 +27,7 @@ setGrinding = (grinding) => {
         }
     } else {
         if (grindSound) {
-            grindSound.stop();
+            grindSound.stopSound();
             grindSound = null;
         }
     }
