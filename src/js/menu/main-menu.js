@@ -34,8 +34,6 @@ class MainMenu extends Menu {
             )
         ];
 
-        this.buttons.forEach((x, i) => {
-            x.enabled = i != 1 || localStorage[nomangle('tut')];
-        });
+        this.buttons[1].enabled = localStorage[nomangle('tut')];
     }
 }
