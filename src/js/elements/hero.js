@@ -1,7 +1,13 @@
-class Hero extends DraggedElement {
+class Hero extends Element {
 
     constructor(input) {
-        super(input);
+        super();
+
+        this.velocityZ = 0;
+        this.speed = 0;
+        this.momentum = point();
+        this.input = input;
+
         this.velocityZ = 0;
 
         this.jumpStartZ = 0;
@@ -269,6 +275,17 @@ class Hero extends DraggedElement {
 
     cycle(elapsed) {
         super.cycle(elapsed);
+
+        if (this.draggable) {
+            const angleDirection = this.input.direction();
+            const diff = limit(-elapsed * PI * 1.5, normalize(angleDirection - this.angle), elapsed * PI * 1.5);
+            this.angle += diff;
+
+            this.momentum.set(cos(this.angle), sin(this.angle));
+        }
+
+        this.x += elapsed * this.momentum.x * this.speed;
+        this.y += elapsed * this.momentum.y * this.speed;
 
         const wasPushing = this.pushing;
 
