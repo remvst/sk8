@@ -34,10 +34,6 @@ class Arc extends Renderable {
         return new Arc(this.center, this.radius, this.fromAngle, this.toAngle, this.color);
     }
 
-    animateToGround(origin) {
-        this.makePointsFall([this.center], origin);
-    }
-
     renderOnTopOfHero(hero) {
         return this.center.y > hero.y;
     }

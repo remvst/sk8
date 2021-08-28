@@ -4,8 +4,8 @@ say = (message) => {
     const voices = speechSynthesis.getVoices();
 
     const idealVoice = (
-        voices.filter(x => x.lang == 'en-US')
-            .concat(voices.filter((x) => x.lang.split('-')[0] == 'en'))
+        voices.filter(x => x.lang == nomangle('en-US'))
+            .concat(voices.filter((x) => x.lang.split('-')[0] == nomangle('en')))
     )[0];
 
     const x = new SpeechSynthesisUtterance(message);
