@@ -86,6 +86,8 @@
         "transition",
         "contains",
         "balance",
-        "total"
+        "total",
+        "draggable",
+        "buttons"
     ]
 }
