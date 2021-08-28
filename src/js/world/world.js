@@ -20,11 +20,6 @@ class World {
     }
 
     removeElement(element) {
-        if (this.hero == element) {
-            // this.simulatedHero.hero = null;
-            // this.hero = null;
-        }
-
         remove(this.elements, element);
     }
 
