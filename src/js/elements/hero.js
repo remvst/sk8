@@ -248,7 +248,7 @@ class Hero extends Element {
         this.grinding = false;
 
         const copy = new Element();
-        copy.renderables = this.renderables.map(renderable => renderable.clone());
+        copy.renderables = this.renderables.map(x => x.clone());
         copy.renderables.forEach(renderable => {
             renderable.animateToGround(this);
         });

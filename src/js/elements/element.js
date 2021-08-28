@@ -4,8 +4,6 @@ class Element {
         this.previous = point();
         this.renderables = [];
         this.points = [];
-
-        this.centerPoint = point();
     }
 
     cycle(elapsed) {
@@ -14,7 +12,6 @@ class Element {
     }
 
     prerender() {
-        this.centerPoint.set(this.x, this.y, this.z);
         this.updateRenderables();
     }
 
