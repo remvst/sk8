@@ -101,7 +101,7 @@ class World {
     }
 
     rail(pts) {
-        this.addElement(new Rail(pts));
+        return this.addElement(new Rail(pts));
     }
 
     pole(pt) {
@@ -138,5 +138,12 @@ class World {
         tape.y = center.y;
         tape.z = center.z;
         return this.addElement(tape);
+    }
+
+    addFeature(elements, transformation) {
+        elements.forEach((x) => {
+            this.removeElement(x);
+            this.addElement(x.transformed(transformation));
+        });
     }
 }

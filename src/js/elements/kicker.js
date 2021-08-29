@@ -33,6 +33,7 @@ class Kicker extends Element {
         const kicker = new Kicker();
         kicker.x = pt.x;
         kicker.y = pt.y;
+        kicker.angle = this.angle;
         return kicker;
     }
 

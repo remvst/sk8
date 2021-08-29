@@ -11,11 +11,30 @@ class FreeScene extends Scene {
         const spacing = 1000;
         const radius = spacing * 2;
 
+        const translate = (x, y = 0, z = 0) => (pt) => point(pt.x + x, pt.y + y, pt.z + z);
+        const scale = (x, y = 1, z = 1) => (pt) => point(pt.x * x, pt.y * y, pt.z * z);
+        const rotate = (rotation) => pt => {
+            const distance = dist(pt, point());
+            const angle = atan2(pt.y, pt.x);
+            return point(
+                cos(angle + rotation) * distance,
+                sin(angle + rotation) * distance,
+                pt.z,
+            );
+        };
+        const multi = (...transforms) => pt => {
+            let transformed = pt;
+            transforms.forEach(transformation => transformed = transformation(transformed));
+            return transformed;
+        };
+
         const transforms = [
             x => point(x.x, -x.y, x.z),
             x => point(x.y, x.x, x.z),
             x => point(-x.y, x.x, x.z),
         ];
+
+        const identity = x => x;
 
         const pole = world.pole(point(-radius, -radius));
         world.arcRail(pole, spacing / 2 - 50, 15, 0, -PI * 3 / 2);
@@ -29,9 +48,78 @@ class FreeScene extends Scene {
             if (element.transformed) {
                 transforms.forEach((transform) => {
                     world.addElement(element.transformed(transform));
-                })
+                });
             }
         });
+
+        // Two kickers facing each other
+        // world.addFeature([
+        //     world.kicker(point(-300, 0), 0),
+        //     world.kicker(point(300, 0), PI),
+        // ], identity);
+
+        // Two kickers and a rail in between
+        // world.addFeature([
+        //     world.kicker(point(-600, 0), 0),
+        //     world.kicker(point(600, 0), PI),
+        //     world.rail([
+        //         point(-400, 0, 500),
+        //         point(400, 0, 500),
+        //     ]),
+        // ], identity);
+
+        // Two rail steps
+        // world.addFeature([
+        //     world.rail([
+        //         point(-200, 0, 400),
+        //         point(200, 0, 400),
+        //     ]),
+        //     world.rail([
+        //         point(-800, 0, 200),
+        //         point(-400, 0, 200),
+        //     ]),
+        // ], identity);
+
+        // Kinked rail
+        // world.addFeature([
+        //     world.rail([
+        //         point(-400, -50, 200),
+        //         point(-100, -50, 200),
+        //         point(100, 50, 200),
+        //         point(400, 50, 200),
+        //     ]),
+        // ], identity);
+
+        // Kicker rail
+        // world.addFeature([
+        //     world.rail([
+        //         point(-400, 0, 200),
+        //         point(-100, 0, 200),
+        //         point(100, 0, 500),
+        //     ]),
+        // ], identity);
+
+        // Zigzag rail
+        // world.addFeature([
+        //     world.rail([
+        //             point(-300, 50, 200),
+        //             point(-100, -50, 200),
+        //             point(100, 50, 200),
+        //             point(300, -50, 200),
+        //     ]),
+        // ], translate(0, -100));
+
+        // Kinked rail without last bit
+        world.addFeature([
+            world.rail([
+                point(-400, -50, 200),
+                point(-100, -50, 200),
+                point(100, 50, 200),
+            ]),
+        ], multi(
+            rotate(PI / 4),
+            scale(2, 2, 3),
+        ));
 
         return;
 
