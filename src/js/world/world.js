@@ -17,6 +17,7 @@ class World {
 
         element.world = this;
         this.elements.push(element);
+        return element;
     }
 
     removeElement(element) {
@@ -107,7 +108,7 @@ class World {
         const p = new Pole();
         p.x = pt.x;
         p.y = pt.y;
-        this.addElement(p);
+        return this.addElement(p);
     }
 
     kicker(pt, angle) {
@@ -115,7 +116,7 @@ class World {
         k.x = pt.x;
         k.y = pt.y;
         k.angle = angle;
-        this.addElement(k);
+        return this.addElement(k);
     }
 
     arcRail(center, radius, count, fromAngle, toAngle, z = 100) {
@@ -128,7 +129,7 @@ class World {
                 z,
             ));
         }
-        this.addElement(new Rail(pts));
+        return this.addElement(new Rail(pts));
     }
 
     tape(center) {
@@ -136,6 +137,6 @@ class World {
         tape.x = center.x;
         tape.y = center.y;
         tape.z = center.z;
-        this.addElement(tape);
+        return this.addElement(tape);
     }
 }

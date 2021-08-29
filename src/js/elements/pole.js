@@ -1,6 +1,6 @@
 class Pole extends Element {
 
-    constructor(points) {
+    constructor() {
         super();
 
         this.base = this.newPoint();
@@ -29,6 +29,15 @@ class Pole extends Element {
             PI,
             '#fff',
         )], this.base)];
+    }
+
+    transformed(transform) {
+        const pt = transform(point(this.x, this.y));
+
+        const pole = new Pole();
+        pole.x = pt.x;
+        pole.y = pt.y;
+        return pole;
     }
 
     updateRenderables() {

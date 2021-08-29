@@ -23,6 +23,10 @@ class Rail extends Element {
         }
     }
 
+    transformed(transform) {
+        return new Rail(this.points.map(transform));
+    }
+
     updateRenderables() {
         const hero = this.world.hero;
 

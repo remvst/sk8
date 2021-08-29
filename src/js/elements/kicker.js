@@ -27,6 +27,15 @@ class Kicker extends Element {
         ];
     }
 
+    transformed(transform) {
+        const pt = transform(point(this.x, this.y));
+
+        const kicker = new Kicker();
+        kicker.x = pt.x;
+        kicker.y = pt.y;
+        return kicker;
+    }
+
     cycle(elapsed) {
         super.cycle(elapsed);
 

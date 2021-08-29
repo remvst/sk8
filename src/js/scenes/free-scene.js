@@ -8,6 +8,33 @@ class FreeScene extends Scene {
 
         this.score = 0;
 
+        const spacing = 1000;
+        const radius = spacing * 2;
+
+        const transforms = [
+            x => point(x.x, -x.y, x.z),
+            x => point(x.y, x.x, x.z),
+            x => point(-x.y, x.x, x.z),
+        ];
+
+        const pole = world.pole(point(-radius, -radius));
+        world.arcRail(pole, spacing / 2 - 50, 15, 0, -PI * 3 / 2);
+
+        for (let x = -radius + spacing ; x <= radius - spacing ; x += spacing) {
+            const pole = world.pole(point(x, -radius));
+            world.arcRail(pole, spacing / 2 - 50, 10, 0, -PI);
+        }
+
+        world.elements.forEach(element => {
+            if (element.transformed) {
+                transforms.forEach((transform) => {
+                    world.addElement(element.transformed(transform));
+                })
+            }
+        });
+
+        return;
+
         const poleMiddle = point(0, 0);
         const poleLeft = point(-800, 0);
         const poleRight = point(800, 0);
