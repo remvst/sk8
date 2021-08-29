@@ -8,6 +8,8 @@ class RotationScene extends Scene {
             nomangle('left and right for rotation.'),
         ]);
         this.nextScene = new GrindScene();
+
+        this.demoDuration = 6;
     }
 
     setupDemoWorld() {
@@ -16,11 +18,6 @@ class RotationScene extends Scene {
         const { hero } = this.demoWorld;
         hero.input.pushing = () => between(0.5, this.demoWorld.age, 2);
         hero.input.squat = () => between(3, this.demoWorld.age, 4);
-    }
-
-    cycle(elapsed) {
-        super.cycle(elapsed);
-        if (this.demoWorld.age > 6) this.setupDemoWorld();
     }
 
     isPerformingCompletingAction(hero) {

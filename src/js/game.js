@@ -10,6 +10,12 @@ class Game {
 
         this.startScene(new IntroScene());
         this.transition('#000', 1);
+
+        document.onpointerlockchange = () => {
+            if (!document.pointerLockElement) {
+                G.menu = G.menu || new PauseMenu();
+            }
+        }
     }
 
     mainMenu() {
@@ -44,7 +50,7 @@ class Game {
         G.clock += elapsed;
 
         if (G.menu) G.menu.cycle(elapsed);
-        G.scene.cycle(elapsed);
+        if (!G.menu || !G.scene.world.hero.input.userControlled) G.scene.cycle(elapsed);
         INTERPOLATIONS.forEach(x => x.cycle(elapsed));
 
         if (G.scene.hud.messageLines != this.lastHudMessage) {
@@ -68,7 +74,7 @@ class Game {
         // });
 
         wrap(() => {
-            if (!document.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled) return;
+            if (!document.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled && !G.menu) return;
 
             fs('#fff');
             ss('#000');

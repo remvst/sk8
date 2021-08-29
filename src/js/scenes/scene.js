@@ -134,7 +134,7 @@ class Scene {
         });
 
         const { hero } = this.world;
-        if (hero) {
+        if (hero && !G.menu) {
             wrap(() => {
                 if (!hero.landed || !hero.input.userControlled) return;
 
