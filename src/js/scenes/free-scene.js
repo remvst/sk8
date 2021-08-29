@@ -110,16 +110,48 @@ class FreeScene extends Scene {
         // ], translate(0, -100));
 
         // Kinked rail without last bit
+        // world.addFeature([
+        //     world.rail([
+        //         point(-400, -50, 200),
+        //         point(-100, -50, 200),
+        //         point(100, 50, 200),
+        //     ]),
+        // ], multi(
+        //     rotate(PI / 4),
+        //     scale(2, 2, 3),
+        // ));
+
+        // Series of rails
+        // world.addFeature([
+        //     world.rail([
+        //         point(-200, 50, 200),
+        //         point(200, 50, 200),
+        //     ]),
+        //     world.rail([
+        //         point(-500, 50, 200),
+        //         point(-900, 50, 200),
+        //     ]),
+        //     world.rail([
+        //         point(500, 50, 200),
+        //         point(900, 50, 200),
+        //     ]),
+        // ], translate(0, -100));
+
+
         world.addFeature([
-            world.rail([
-                point(-400, -50, 200),
-                point(-100, -50, 200),
-                point(100, 50, 200),
-            ]),
-        ], multi(
-            rotate(PI / 4),
-            scale(2, 2, 3),
-        ));
+            world.arcRail(point(), 400, 10, PI / 2, PI * 3 / 2, 400),
+            world.kicker(point(300, 400), PI),
+            world.kicker(point(300, -400), PI),
+            // world.rail([
+            //     point(-500, 50, 200),
+            //     point(-900, 50, 200),
+            // ]),
+            // world.rail([
+            //     point(500, 50, 200),
+            //     point(900, 50, 200),
+            // ]),
+        ], translate(0, -100));
+
 
         return;
 
