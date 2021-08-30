@@ -25,9 +25,22 @@ class Tape extends Element {
         if (dist(this, this.world.hero) < 100 && abs(this.z - (this.world.hero.z + 100)) < 150) {
             this.world.removeElement(this);
 
-            pickupSound();
-
             this.world.hero.comboTracker.checkAllChallenges();
+
+            pickupSound();
+            for (let i = 0 ; i < 50 ; i++) {
+                const angle = random() * TWO_PI;
+                const distance = rnd(50, 100);
+                this.world.particle({
+                    'size': [20, -10],
+                    'color': '#fff',
+                    'duration': rnd(0.2, 0.4),
+                    'x': [this.x + rnd(-20, 20), cos(angle) * distance],
+                    'y': [this.y + rnd(-20, 20), sin(angle) * distance],
+                    'z': [this.z, 0],
+                    'easing': easeOutCirc,
+                });
+            }
         }
     }
 
