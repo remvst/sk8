@@ -34,7 +34,7 @@ class Tape extends Element {
                 this.world.particle({
                     'size': [20, -10],
                     'color': '#fff',
-                    'duration': rnd(0.2, 0.4),
+                    'duration': rnd(0.4, 0.8),
                     'x': [this.x + rnd(-20, 20), cos(angle) * distance],
                     'y': [this.y + rnd(-20, 20), sin(angle) * distance],
                     'z': [this.z, 0],
