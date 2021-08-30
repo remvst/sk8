@@ -16,6 +16,7 @@ class Hero extends Element {
         this.jumpEndAge = 0;
 
         this.center = this.newPoint();
+        this.bottom = this.newPoint();
         this.leftFoot = this.newPoint();
         this.leftKnee = this.newPoint();
         this.rightFoot = this.newPoint();
@@ -64,6 +65,8 @@ class Hero extends Element {
         this.comboTracker = new ComboTracker(this);
 
         this.renderables = [new CompositeRenderable([
+            new Segment(this.bottom, this.center, 'rgba(255,255,255,0.2)', 2),
+
             // Wheels
             new Sphere(this.wheelStartTop, 8, '#fff'),
             new Sphere(this.wheelStartBottom, 8, '#fff'),
@@ -158,6 +161,8 @@ class Hero extends Element {
         );
 
         this.center.projectToActual();
+
+        this.bottom.set(this.x, this.y, 0);
     }
 
     makeRectangle(p1, p2, p3, p4, slope, length, width, offsetZ, angleOffset) {

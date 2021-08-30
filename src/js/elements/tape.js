@@ -11,8 +11,11 @@ class Tape extends Element {
         this.rightBottom = this.newPoint();
         this.sphereLeft = this.newPoint();
         this.sphereRight = this.newPoint();
+        this.bottom = this.newPoint();
+        this.tapeCenter = this.newPoint();
 
         this.renderables = [
+            new Segment(this.bottom, this.tapeCenter, 'rgba(255,255,255,0.2)', 2),
             new Plane([this.leftTop, this.leftBottom, this.rightBottom, this.rightTop], '#000'),
             new Sphere(this.sphereLeft, 12, '#fff'),
             new Sphere(this.sphereRight, 12, '#fff'),
@@ -61,5 +64,8 @@ class Tape extends Element {
         this.adjustPoints();
 
         this.points.forEach(x => x.z += sin(G.clock * PI) * 50)
+
+        this.tapeCenter.set(this.x, this.y, this.z);
+        this.bottom.set(this.x, this.y, 0);
     }
 }
