@@ -23,17 +23,13 @@ class EndMenu extends Menu {
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                520,
+                640,
                 nomangle('CHALLENGES'),
-                () => tweet([
-                    nomangle('I scored '),
-                    numberWithCommas(score),
-                    nomangle('pts on STICK SKATER'),
-                ].join('')),
+                () => G.challenges(),
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                640,
+                760,
                 nomangle('MAIN MENU'),
                 () => G.mainMenu(),
             ),
