@@ -9,7 +9,7 @@ class FreeScene extends Scene {
         this.score = 0;
 
         const spacing = 1000;
-        const radius = spacing * 2;
+        const radius = spacing * 3;
 
         const translate = (x, y = 0, z = 0) => (pt) => point(pt.x + x, pt.y + y, pt.z + z);
         const scale = (x, y = 1, z = 1) => (pt) => point(pt.x * x, pt.y * y, pt.z * z);
@@ -36,122 +36,170 @@ class FreeScene extends Scene {
 
         const identity = x => x;
 
-        const pole = world.pole(point(-radius, -radius));
-        world.arcRail(pole, spacing / 2 - 50, 15, 0, -PI * 3 / 2);
+        [
+            identity,
+            x => point(x.y, x.x, x.z),
+        ].forEach(transformation => {
 
-        for (let x = -radius + spacing ; x <= radius - spacing ; x += spacing) {
-            const pole = world.pole(point(x, -radius));
-            world.arcRail(pole, spacing / 2 - 50, 10, 0, -PI);
-        }
+            const pole = world.pole(point(-radius, -radius));
+            const rail = world.arcRail(pole, spacing / 2 - 50, 15, 0, -PI * 3 / 2);
 
-        world.elements.forEach(element => {
-            if (element.transformed) {
-                transforms.forEach((transform) => {
-                    world.addElement(element.transformed(transform));
-                });
+            const elements = [pole, rail];
+
+            for (let x = -radius + spacing ; x <= radius - spacing ; x += spacing) {
+                const pole = world.pole(point(x, -radius));
+                const rail = world.arcRail(pole, spacing / 2 - 50, 10, 0, -PI);
+                elements.push(pole);
+                elements.push(rail);
             }
+
+            world.addFeature(elements, transformation);
         });
 
         // Two kickers facing each other
-        // world.addFeature([
-        //     world.kicker(point(-300, 0), 0),
-        //     world.kicker(point(300, 0), PI),
-        // ], identity);
+        [
+            translate(800, -100),
+        ].forEach(transformation => {
+            world.addFeature([
+                world.kicker(point(-300, 0), 0),
+                world.kicker(point(300, 0), PI),
+            ], transformation);
+        });
 
         // Two kickers and a rail in between
-        // world.addFeature([
-        //     world.kicker(point(-600, 0), 0),
-        //     world.kicker(point(600, 0), PI),
-        //     world.rail([
-        //         point(-400, 0, 500),
-        //         point(400, 0, 500),
-        //     ]),
-        // ], identity);
+        [
+            translate(-400, 400),
+            // translate(-700, )
+        ].forEach(transformation => {
+            world.addFeature([
+                world.kicker(point(-600, 0), 0),
+                world.kicker(point(600, 0), PI),
+                world.rail([
+                    point(-400, 0, 500),
+                    point(400, 0, 500),
+                ]),
+            ], transformation);
+        });
 
         // Two rail steps
-        // world.addFeature([
-        //     world.rail([
-        //         point(-200, 0, 400),
-        //         point(200, 0, 400),
-        //     ]),
-        //     world.rail([
-        //         point(-800, 0, 200),
-        //         point(-400, 0, 200),
-        //     ]),
-        // ], identity);
+        [
+            translate(-500, 1000),
+        ].forEach(transformation => {
+            world.addFeature([
+                world.rail([
+                    point(-200, 0, 400),
+                    point(200, 0, 400),
+                ]),
+                world.rail([
+                    point(-800, 0, 200),
+                    point(-400, 0, 200),
+                ]),
+            ], transformation);
+        });
 
         // Kinked rail
-        // world.addFeature([
-        //     world.rail([
-        //         point(-400, -50, 200),
-        //         point(-100, -50, 200),
-        //         point(100, 50, 200),
-        //         point(400, 50, 200),
-        //     ]),
-        // ], identity);
+        [
+            translate(300, 1050),
+            multi(rotate(PI), translate(-2000, 950)),
+            multi(rotate(0), translate(-1400, -300), scale(1, 1, 3)),
+        ].forEach(transformation => {
+            world.addFeature([
+                world.rail([
+                    point(-400, -50, 100),
+                    point(-100, -50, 100),
+                    point(100, 50, 100),
+                    point(400, 50, 100),
+                ]),
+            ], transformation);
+        });
+
+        world.kicker(point(-700, -250), PI);
 
         // Kicker rail
-        // world.addFeature([
-        //     world.rail([
-        //         point(-400, 0, 200),
-        //         point(-100, 0, 200),
-        //         point(100, 0, 500),
-        //     ]),
-        // ], identity);
+        [
+            multi(rotate(PI), translate(-1000, -800)),
+            multi(translate(-1600, -800)),
+        ].forEach(transformation => {
+            world.addFeature([
+                world.rail([
+                    point(-400, 0, 100),
+                    point(-100, 0, 100),
+                    point(100, 0, 300),
+                ]),
+            ], transformation);
+        });
+
+        world.kicker(point(-200, -800), 0);
 
         // Zigzag rail
-        // world.addFeature([
-        //     world.rail([
-        //             point(-300, 50, 200),
-        //             point(-100, -50, 200),
-        //             point(100, 50, 200),
-        //             point(300, -50, 200),
-        //     ]),
-        // ], translate(0, -100));
+        [
+            translate(-400, -2000),
+            translate(-1200, -1800),
+            translate(400, -2200),
+        ].forEach(transformation => {
+            world.addFeature([
+                world.rail([
+                    point(-300, 50, 100),
+                    point(-100, -50, 100),
+                    point(100, 50, 100),
+                    point(300, -50, 100),
+                ]),
+            ], transformation);
+        });
 
         // Kinked rail without last bit
-        // world.addFeature([
-        //     world.rail([
-        //         point(-400, -50, 200),
-        //         point(-100, -50, 200),
-        //         point(100, 50, 200),
-        //     ]),
-        // ], multi(
-        //     rotate(PI / 4),
-        //     scale(2, 2, 3),
-        // ));
+        [
+            multi(rotate(-PI / 4), translate(-2200, -300)),
+            // multi(rotate(0), translate(-1400, -350), scale(1, 1, 3)),
+        ].forEach(transformation => {
+            world.addFeature([
+                world.rail([
+                    point(-400, -50, 100),
+                    point(-100, -50, 100),
+                    point(100, 50, 100),
+                ]),
+            ], transformation);
+        });
 
         // Series of rails
-        // world.addFeature([
-        //     world.rail([
-        //         point(-200, 50, 200),
-        //         point(200, 50, 200),
-        //     ]),
-        //     world.rail([
-        //         point(-500, 50, 200),
-        //         point(-900, 50, 200),
-        //     ]),
-        //     world.rail([
-        //         point(500, 50, 200),
-        //         point(900, 50, 200),
-        //     ]),
-        // ], translate(0, -100));
+        [
+            translate(-1500, -2400),
+        ].forEach(transformation => {
+            world.addFeature([
+                world.rail([
+                    point(-200, 50, 200),
+                    point(200, 50, 200),
+                ]),
+                world.rail([
+                    point(-500, 50, 200),
+                    point(-900, 50, 200),
+                ]),
+                world.rail([
+                    point(500, 50, 200),
+                    point(900, 50, 200),
+                ]),
+            ], transformation);
+        });
 
 
+
+        // Arced rail with a kicker on each end
         world.addFeature([
             world.arcRail(point(), 400, 10, PI / 2, PI * 3 / 2, 400),
             world.kicker(point(300, 400), PI),
             world.kicker(point(300, -400), PI),
-            // world.rail([
-            //     point(-500, 50, 200),
-            //     point(-900, 50, 200),
-            // ]),
-            // world.rail([
-            //     point(500, 50, 200),
-            //     point(900, 50, 200),
-            // ]),
-        ], translate(0, -100));
+        ], translate(800, -800));
 
+
+        world.elements.forEach(element => {
+            if (element.transformed) {
+                // world.addFeature([element], identity);
+                // world.addFeature([element], x => point(-x.x, -x.y));
+                // transforms.forEach((transformation) => {
+                    world.addElement(element.transformed(x => point(-x.x, -x.y, x.z)));
+                // });
+            }
+        });
 
         return;
 
