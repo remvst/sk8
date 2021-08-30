@@ -20,6 +20,9 @@ class Camera {
     }
 
     contains(point, radius) {
+        // Disable visibility checks in case we're in a tutorial
+        if (G.scene.demoWorld) return true;
+
         const center = this.center.projectToActual();
         return abs(center.x - point.x) < evaluate(CANVAS_WIDTH / 2) + radius &&
             abs(center.y - point.y) < evaluate(CANVAS_HEIGHT / 2) + radius;
