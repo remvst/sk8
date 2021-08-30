@@ -9,11 +9,19 @@ class Segment extends Renderable {
     }
 
     renderSegment(color, funcName) {
+        const p1 = this.p1[funcName]();
+        const p2 = this.p2[funcName]();
+
+        const { camera } = G.scene.world;
+        if (!camera.contains(p1, this.thickness) && !camera.contains(p2, this.thickness)) {
+            return;
+        }
+
         R.lineWidth = this.thickness;
         ss(color);
         beginPath();
-        moveTo(this.p1[funcName]().x, this.p1[funcName]().y);
-        lineTo(this.p2[funcName]().x, this.p2[funcName]().y);
+        moveTo(p1.x, p1.y);
+        lineTo(p2.x, p2.y);
         stroke();
     }
 

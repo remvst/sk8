@@ -18,4 +18,10 @@ class Camera {
             this.center.set(this.followedTarget.x, this.followedTarget.y, this.followedTarget.z);
         }
     }
+
+    contains(point, radius) {
+        const center = this.center.projectToActual();
+        return abs(center.x - point.x) < evaluate(CANVAS_WIDTH / 2) + radius &&
+            abs(center.y - point.y) < evaluate(CANVAS_HEIGHT / 2) + radius;
+    }
 }

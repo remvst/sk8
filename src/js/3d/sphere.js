@@ -8,9 +8,16 @@ class Sphere extends Renderable {
     }
 
     renderSphere(color, funcName) {
+        const pt = this.center[funcName]();
+
+        const { camera } = G.scene.world;
+        if (!camera.contains(pt, this.radius)) {
+            return;
+        }
+
         fs(color);
         beginPath();
-        arc(this.center[funcName]().x, this.center[funcName]().y, this.radius, 0, TWO_PI);
+        arc(pt.x, pt.y, this.radius, 0, TWO_PI);
         fill();
     }
 

@@ -9,12 +9,18 @@ class Arc extends Renderable {
         this.color = color;
     }
 
-    renderArc(color, func) {
+    renderArc(color, funcName) {
+        const pt = this.center[funcName]();
+
+        const { camera } = G.scene.world;
+        if (!camera.contains(pt, this.radius + 80)) {
+            return;
+        }
+
         ss(color);
-        R.lineWidth = 40;
         R.lineWidth = 80;
 
-        translate(this.center[func]().x, this.center[func]().y);
+        translate(pt.x, pt.y);
         rotate(PI / 10);
         scale(1, 0.3);
         beginPath();

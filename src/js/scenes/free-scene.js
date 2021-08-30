@@ -68,7 +68,7 @@ class FreeScene extends Scene {
 
         // Two kickers and a rail in between
         [
-            translate(-400, 400),
+            translate(1800, -2000),
             // translate(-700, )
         ].forEach(transformation => {
             world.addFeature([
@@ -83,7 +83,8 @@ class FreeScene extends Scene {
 
         // Two rail steps
         [
-            translate(-500, 1000),
+            translate(1500, -2450),
+            multi(scale(-1, 1, 1), translate(2000, -2450)),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -100,8 +101,8 @@ class FreeScene extends Scene {
         // Kinked rail
         [
             translate(300, 1050),
-            multi(rotate(PI), translate(-2000, 950)),
-            multi(rotate(0), translate(-1400, -300), scale(1, 1, 3)),
+            multi(scale(1, -1, 1), translate(100, -2400)),
+            multi(translate(-1400, -300), scale(1, 1, 4)),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -133,9 +134,9 @@ class FreeScene extends Scene {
 
         // Zigzag rail
         [
-            translate(-400, -2000),
-            translate(-1200, -1800),
-            translate(400, -2200),
+            translate(-400, -1800),
+            translate(-1200, -1600),
+            translate(400, -2000),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -181,8 +182,6 @@ class FreeScene extends Scene {
             ], transformation);
         });
 
-
-
         // Arced rail with a kicker on each end
         world.addFeature([
             world.arcRail(point(), 400, 10, PI / 2, PI * 3 / 2, 400),
@@ -201,6 +200,11 @@ class FreeScene extends Scene {
             }
         });
 
+        world.tape(point(-1300, -800, 600));
+        world.tape(point(1800, -2000, 700));
+        world.tape(point(1750, -2450, 700));
+        world.tape(point(1400, 300, 600));
+        world.tape(point(400, -800, 600));
         return;
 
         const poleMiddle = point(0, 0);
