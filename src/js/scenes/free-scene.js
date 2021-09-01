@@ -105,6 +105,7 @@ class FreeScene extends Scene {
             translate(300, 1050),
             multi(scale(1, -1, 1), translate(100, -2400)),
             multi(translate(-1400, -300), scale(1, 1, 4)),
+            multi(translate(-2200, -1500)),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
