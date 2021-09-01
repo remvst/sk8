@@ -73,6 +73,7 @@
     "src/js/input.js",
     "src/js/camera.js",
     "src/js/game.js",
+    "src/js/storage.js",
     "src/js/social.js",
     "src/js/main.js"
 ]

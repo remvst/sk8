@@ -4,6 +4,9 @@
     "const": "let",
     "null": 0,
 
+    "HIGHSCORE_KEY": "1",
+    "BESTCOMBO_KEY": "2",
+
     "CANVAS_WIDTH": 1600,
     "CANVAS_HEIGHT": 900,
 

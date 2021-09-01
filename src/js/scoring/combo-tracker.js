@@ -25,6 +25,7 @@ class ComboTracker {
 
     cycle(elapsed) {
         const { combo, hero } = this;
+        const { scene } = hero.world;
 
         if (hero.velocityZ > 0 && (this.previous.landed || this.previous.grinding)) {
             if (this.hero.kickerUnder(this.hero)) {
@@ -68,7 +69,6 @@ class ComboTracker {
 
         if ((hero.landed || hero.bailed) && combo.tricks.length) {
             if (!hero.bailed) {
-                const { scene } = hero.world;
                 if (!this.locked) {
                     const base = scene instanceof SessionScene ? scene.score : 0;
                     scene.score = base + combo.total;
@@ -101,6 +101,11 @@ class ComboTracker {
 
             this.lastCombo = combo;
             this.lastComboAge = hero.world.age;
+
+            if (scene instanceof ParkScene) {
+                maxToLocalStorage(HIGHSCORE_KEY, scene.score);
+                maxToLocalStorage(BESTCOMBO_KEY, combo.total);
+            }
 
             this.combo = new Combo();
         }

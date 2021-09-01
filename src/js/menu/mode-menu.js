@@ -25,8 +25,8 @@ class ModeMenu extends Menu {
             ),
         ];
 
-        // if (!document.monetization || document.monetization.state !== nomangle('started')) {
-        //     setTimeout(() => G.startScene(new SessionScene()), 0);
-        // }
+        if (!document.monetization || document.monetization.state !== nomangle('started')) {
+            setTimeout(() => G.startScene(new SessionScene()), 0);
+        }
     }
 }
