@@ -40,7 +40,6 @@ class FreeScene extends Scene {
             identity,
             x => point(x.y, x.x, x.z),
         ].forEach(transformation => {
-
             const pole = world.pole(point(-radius, -radius));
             const rail = world.arcRail(pole, spacing / 2 - 50, 15, 0, -PI * 3 / 2);
 
@@ -54,6 +53,9 @@ class FreeScene extends Scene {
             }
 
             world.addFeature(elements, transformation);
+
+            world.pole(point(pole.x, -pole.y));
+            world.arcRail(point(pole.x, -pole.y), spacing / 2 - 50, 15, 0, PI * 3 / 2);
         });
 
         // Two kickers facing each other
@@ -192,11 +194,7 @@ class FreeScene extends Scene {
 
         world.elements.forEach(element => {
             if (element.transformed) {
-                // world.addFeature([element], identity);
-                // world.addFeature([element], x => point(-x.x, -x.y));
-                // transforms.forEach((transformation) => {
-                    world.addElement(element.transformed(x => point(-x.x, -x.y, x.z)));
-                // });
+                world.addElement(element.transformed(x => point(-x.x, -x.y, x.z)));
             }
         });
 
