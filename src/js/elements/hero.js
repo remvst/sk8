@@ -332,7 +332,7 @@ class Hero extends Element {
             });
 
             const rotationDirection = this.input.rotation();
-            this.balance += this.balance * elapsed + rotationDirection * elapsed;
+            this.balance += this.balance * elapsed * 2 + rotationDirection * elapsed;
             this.balance = limit(-1, this.balance, 1);
         }
 
