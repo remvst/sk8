@@ -47,6 +47,8 @@
     "src/js/scenes/trick-scene.js",
     "src/js/scenes/rotation-scene.js",
     "src/js/scenes/grind-scene.js",
+    "src/js/scenes/park-scene.js",
+    "src/js/scenes/session-scene.js",
     "src/js/scenes/free-scene.js",
     "src/js/scenes/intro-scene.js",
     "src/js/scenes/menu-scene.js",
@@ -58,6 +60,7 @@
     "src/js/menu/challenges-menu.js",
     "src/js/menu/end-menu.js",
     "src/js/menu/pause-menu.js",
+    "src/js/menu/mode-menu.js",
 
     "src/js/sound/ZzFXMicro.js",
     "src/js/sound/sounds.js",

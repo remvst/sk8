@@ -9,7 +9,7 @@ class EndMenu extends Menu {
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 400,
                 nomangle('TRY AGAIN'),
-                () => G.startScene(new FreeScene()),
+                () => G.startScene(new SessionScene()),
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,

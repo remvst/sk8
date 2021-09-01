@@ -15,7 +15,7 @@ class MainMenu extends Menu {
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 520,
                 nomangle('NEW SESSION'),
-                () => G.startScene(new FreeScene()),
+                () => G.setMenu(new ModeMenu()),
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,

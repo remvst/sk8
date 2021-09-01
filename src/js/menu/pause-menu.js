@@ -9,10 +9,7 @@ class PauseMenu extends Menu {
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
                 400,
                 nomangle('RESUME'),
-                () => {
-                    G.transition();
-                    G.menu = null;
-                },
+                () => G.setMenu(null),
             ),
             new Button(
                 (CANVAS_WIDTH - BUTTON_WIDTH) / 2,

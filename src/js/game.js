@@ -12,25 +12,28 @@ class Game {
         this.transition('#000', 1);
 
         document.onpointerlockchange = () => {
-            if (!document.pointerLockElement) {
-                G.menu = G.menu || new PauseMenu();
+            if (!document.pointerLockElement && !G.menu) {
+                G.setMenu(new PauseMenu());
             }
         }
     }
 
+    setMenu(menu) {
+        G.menu = menu;
+        G.transition();
+    }
+
     mainMenu() {
         G.startScene(new MenuScene());
-        G.menu = new MainMenu();
+        G.setMenu(new MainMenu());
     }
 
     challenges() {
-        G.menu = new ChallengesMenu();
+        G.setMenu(new ChallengesMenu());
     }
 
     startScene(scene) {
-        this.transition();
-
-        this.menu = null;
+        this.setMenu(null);
         this.scene = scene;
         scene.restart();
     }

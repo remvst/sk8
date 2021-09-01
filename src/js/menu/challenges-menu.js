@@ -12,7 +12,7 @@ class ChallengesMenu extends Menu {
                 nomangle('BACK'),
                 () => {
                     G.transition();
-                    G.menu = previousMenu;
+                    G.setMenu(previousMenu);
                 },
             )
         ];

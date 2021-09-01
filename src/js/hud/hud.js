@@ -65,9 +65,9 @@ class HUD {
         }
 
         // Score
-        if (this.scene.score >= 0) {
-            R.textBaseline = 'top';
-            R.textAlign = 'left';
+        if (this.scene instanceof ParkScene) {
+            R.textBaseline = nomangle('top');
+            R.textAlign = nomangle('left');
             whiteText(nomangle('SCORE'), 50, 50, 0.5);
             whiteText(numberWithCommas(~~this.displayedScore), 50, 100, 1);
         }
