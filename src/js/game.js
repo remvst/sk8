@@ -12,7 +12,7 @@ class Game {
         this.transition('#000', 1);
 
         document.onpointerlockchange = () => {
-            if (!document.pointerLockElement && !G.menu) {
+            if (!document.pointerLockElement && !G.menu && !G.scene.ended) {
                 G.setMenu(new PauseMenu());
             }
         }
