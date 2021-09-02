@@ -34,9 +34,8 @@ class HUD {
     }
 
     render() {
-        R.font = 'italic 72pt Impact';
         R.textAlign = nomangle('center');
-        R.textBaseline = 'top';
+        R.textBaseline = nomangle('top');
 
         // Timer
         if (this.scene.timeLeft >= 0) {

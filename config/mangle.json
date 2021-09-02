@@ -92,6 +92,10 @@
         "source",
         "buffer",
         "attack",
-        "lineHeight"
+        "lineHeight",
+        "clone",
+        "slope",
+        "input",
+        "qualifier"
     ]
 }

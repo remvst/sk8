@@ -2,18 +2,18 @@ rotationCount = rotation => {
     return abs(round(rotation / PI));
 };
 
-trickToString = ([name, value, count, rotation]) => {
+trickToString = ([name, x, trickCount, rotation]) => {
     const qualifier = [
         nomangle('DOUBLE '),
         nomangle('TRIPLE '),
         nomangle('QUADRUPLE '),
-    ][floor(count - 0.1) - 1] || '';
+    ][floor(trickCount - 0.1) - 1] || '';
 
     return (rotationCount(rotation) * 180 || '') + ' ' + qualifier + name;
 };
 
-trickValue = ([name, value, count, rotation]) => {
-    return count * ~~value * (1 + rotationCount(rotation));
+trickValue = ([name, trickValue, trickCount, rotation]) => {
+    return trickCount * ~~trickValue * (1 + rotationCount(rotation));
 };
 
 class Combo {
@@ -26,11 +26,11 @@ class Combo {
     }
 
     get asString() {
-        return this.stringRecap + ' ' + this.value + ' x' + this.tricks.length;
+        return this.stringRecap + ' ' + this.total + ' x' + this.tricks.length;
     }
 
-    pushTrick(name, value = 0) {
-        this.tricks.push([name, value, 1, 0]);
+    pushTrick(name, baseValue = 0) {
+        this.tricks.push([name, baseValue, 1, 0]);
     }
 
     accumulate(value) {

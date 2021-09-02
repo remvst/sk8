@@ -14,23 +14,25 @@ canvasProto.ss = function(x) {
     this.strokeStyle = x;
 };
 
-canvasProto.whiteText = function(t, x, y, scale) {
-    this.fatText('#fff', t, x, y, scale)
+canvasProto.whiteText = function(t, x, y, textScale) {
+    this.fatText('#fff', t, x, y, textScale)
 }
 
-canvasProto.fatText = function(color, t, x, y, scale) {
-    this.wrap(() => {
-        this.translate(x, y);
-        this.scale(scale, scale);
+canvasProto.fatText = function(color, t, x, y, textScale) {
+    with (this) {
+        wrap(() => {
+            translate(x, y);
+            scale(textScale, textScale);
 
-        this.font = nomangle('italic 72pt Impact');
-        this.fs('#000');
-        this.fillText(t, 0, 10);
+            font = nomangle('italic 72pt Impact');
+            fs('#000');
+            fillText(t, 0, 10);
 
-        this.lineWidth = 4;
-        this.fs(color);
-        this.ss('#000');
-        this.fillText(t, 0, 0);
-        this.strokeText(t, 0, 0);
-    });
+            lineWidth = 4;
+            fs(color);
+            ss('#000');
+            fillText(t, 0, 0);
+            strokeText(t, 0, 0);
+        });
+    }
 };

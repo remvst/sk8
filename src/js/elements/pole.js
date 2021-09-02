@@ -4,26 +4,26 @@ class Pole extends Element {
         super();
 
         this.base = this.newPoint();
-        this.top = this.newPoint();
+        this.topPoint = this.newPoint();
 
             // Link to ground
         this.renderables = [new CompositeRenderable([new Segment(
             this.base,
-            this.top,
+            this.topPoint,
             '#eee',
             40
         ), new Arc(
-            this.top,
+            this.topPoint,
             150,
             PI,
             0,
             '#fff',
         ), new Sphere(
-            this.top,
+            this.topPoint,
             100,
             '#ccc',
         ), new Arc(
-            this.top,
+            this.topPoint,
             150,
             0,
             PI,
@@ -42,7 +42,7 @@ class Pole extends Element {
 
     updateRenderables() {
         this.base.set(this.x, this.y, 0);
-        this.top.set(this.x, this.y, 800);
+        this.topPoint.set(this.x, this.y, 800);
     }
 
     collides(hero) {
