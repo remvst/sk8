@@ -15,13 +15,10 @@ class Menu {
 
     render() {
         R.globalAlpha = this.animationRatio;
-
-        R.font = nomangle('italic 72pt Impact');
         R.textAlign = nomangle('center');
         R.textBaseline = nomangle('middle');
-        fs('#000');
 
-        fatText('#fff', this.title, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4, 2);
+        whiteText(this.title, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4, 2);
 
         this.buttons.forEach(x => wrap(() => x.render()));
     }
