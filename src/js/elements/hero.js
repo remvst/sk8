@@ -59,6 +59,7 @@ class Hero extends Element {
 
         this.performingTrick = false;
         this.trickProgress = 0;
+        this.releasedPush = false;
 
         this.balance = 0;
 
@@ -311,6 +312,10 @@ class Hero extends Element {
             }
         }
 
+        if (!this.input.pushing()) {
+            this.releasedPush = true;
+        }
+
         this.pushAge += elapsed;
 
         if (!this.grinding && !this.pushing && this.landed) {
@@ -341,7 +346,7 @@ class Hero extends Element {
         }
 
         // Trick progress
-        this.performingTrick = !this.landed && this.input.trick() && !this.grinding;
+        this.performingTrick = !this.landed && this.input.trick() && !this.grinding && this.releasedPush;
 
         const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.4);
         if (this.performingTrick) {
@@ -452,6 +457,8 @@ class Hero extends Element {
 
     jump() {
         this.stopLanding();
+
+        this.releasedPush = false;
 
         let squatRatio = min(1, this.age - this.squatStart);
         if (this.kickerUnder(this)) {
