@@ -339,6 +339,8 @@ class Hero extends Element {
             const rotationDirection = this.input.rotation();
             this.balance += this.balance * elapsed + rotationDirection * elapsed;
             this.balance = limit(-1, this.balance, 1);
+
+            this.speed = max(100, this.speed);
         }
 
         if (this.landed) {

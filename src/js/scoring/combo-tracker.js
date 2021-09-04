@@ -13,6 +13,8 @@ class ComboTracker {
 
     updatePrevious() {
         const { hero } = this;
+        this.previous.x = hero.x;
+        this.previous.y = hero.y;
         this.previous.angle = hero.angle;
         this.previous.velocityZ = hero.velocityZ;
         this.previous.landed = hero.landed;
@@ -24,43 +26,43 @@ class ComboTracker {
     }
 
     cycle(elapsed) {
-        const { combo, hero } = this;
+        const { combo, hero, previous } = this;
         const { scene } = hero.world;
 
-        if (hero.velocityZ > 0 && (this.previous.landed || this.previous.grinding)) {
+        if (hero.velocityZ > 0 && (previous.landed || previous.grinding)) {
             if (this.hero.kickerUnder(this.hero)) {
                 combo.pushTrick(nomangle('OFF THE KICKER'), 100);
             }
             combo.pushTrick(nomangle('OLLIE'), 100);
         }
 
-        if (hero.lastRail && this.previous.lastRail && hero.lastRail != this.previous.lastRail) {
+        if (hero.lastRail && previous.lastRail && hero.lastRail != previous.lastRail) {
             combo.pushTrick(nomangle('RAIL TO RAIL'), 400);
         }
 
         if (hero.grinding) {
 
-            if (!this.previous.grinding) {
+            if (!previous.grinding) {
                 const slide = round(hero.grindingOffsetAngle / (PI / 2)) % 2;
                 combo.pushTrick(slide ? nomangle('SLIDE') : nomangle('GRIND'), 500);
             }
 
-            combo.accumulate(elapsed * 1000);
+            combo.accumulate(dist(hero, previous) * 0.5);
         }
 
         if (hero.landed || hero.grinding) {
             this.rotationAcc = 0;
         } else {
-            this.rotationAcc += this.previous.angle - hero.angle;
+            this.rotationAcc += previous.angle - hero.angle;
             combo.setRotation(this.rotationAcc);
         }
 
         if (hero.trickProgress > 0) {
-            if (this.previous.trickProgress == 0) {
+            if (previous.trickProgress == 0) {
                 combo.pushTrick(nomangle('FLIPPITY'), 500);
             }
 
-            if (ceil(this.previous.trickProgress) < ceil(hero.trickProgress) && hero.input.userControlled) {
+            if (ceil(previous.trickProgress) < ceil(hero.trickProgress) && hero.input.userControlled) {
                 trickSound();
             }
 
@@ -74,8 +76,8 @@ class ComboTracker {
                     scene.score = base + combo.total;
                 }
 
-                // if (this.previous.rotationAcc > PI / 2) {
-                //     let angleRatio = abs(normalize(this.previous.rotationAcc) / PI);
+                // if (previous.rotationAcc > PI / 2) {
+                //     let angleRatio = abs(normalize(previous.rotationAcc) / PI);
                 //     if (angleRatio > 0.5) {
                 //         angleRatio = 1 - angleRatio;
                 //     }
