@@ -100,6 +100,7 @@
         "frequency",
         "release",
         "challenge",
-        "backgroundColor"
+        "backgroundColor",
+        "position"
     ]
 }

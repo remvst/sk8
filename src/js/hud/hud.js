@@ -109,7 +109,6 @@ class HUD {
                 lineTo(200, CANVAS_HEIGHT - 50);
                 stroke();
 
-                R.font = nomangle('36pt Impact');
                 R.textAlign = nomangle('center');
                 R.textBaseline = nomangle('middle');
 

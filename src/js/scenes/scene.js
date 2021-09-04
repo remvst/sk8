@@ -122,8 +122,8 @@ class Scene {
             if (this.age % 1 > 0.5) {
                 R.font = nomangle('72pt Impact');
                 R.textAlign = nomangle('center');
-                R.textBaseline = 'middle';
-                fillText(nomangle('DEMO'), CANVAS_WIDTH / 2, 80);
+                R.textBaseline = nomangle('middle');
+                fillText(nomangle('DEMO'), evaluate(CANVAS_WIDTH / 2), 80);
             }
         });
 
