@@ -8,7 +8,13 @@ class Button {
     }
 
     render() {
-        translate(this.x, this.y);
+        translate(this.x + BUTTON_WIDTH / 2, this.y + BUTTON_HEIGHT / 2);
+
+        if (this.contains(MOUSE_POSITION)) {
+            scale(1.1, 1.1);
+        }
+
+        translate(-BUTTON_WIDTH / 2, -BUTTON_HEIGHT / 2);
 
         if (!this.enabled) {
             R.globalAlpha *= 0.5;
