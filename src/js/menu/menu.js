@@ -1,8 +1,12 @@
 class Menu {
 
-    constructor() {
+    constructor(title, buttons) {
         this.age = 0;
-        this.buttons = [];
+        this.title = title;
+        this.buttons = buttons;
+        this.buttons.forEach((button, i) => {
+            button.y = 400 + i * evaluate(BUTTON_HEIGHT + 20);
+        });
     }
 
     cycle(elapsed) {

@@ -54,7 +54,6 @@
     "src/js/scenes/menu-scene.js",
 
     "src/js/menu/button.js",
-    "src/js/menu/challenge-button.js",
     "src/js/menu/menu.js",
     "src/js/menu/main-menu.js",
     "src/js/menu/challenges-menu.js",

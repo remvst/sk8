@@ -1,7 +1,7 @@
 class Button {
-    constructor(x, y, label, onClick) {
-        this.x = x;
-        this.y = y;
+    constructor(label, onClick) {
+        this.x = evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2);
+        this.y = 0;
         this.label = label.call ? label : () => label;
         this.onClick = onClick;
         this.enabled = true;
@@ -33,23 +33,17 @@ class Button {
     }
 }
 
-mainMenuButton = (y) => new Button(
-    evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2),
-    y,
+mainMenuButton = () => new Button(
     nomangle('MAIN MENU'),
     () => G.mainMenu(),
 );
 
-gameSpeedButton = (y) => new Button(
-    evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2),
-    y,
+gameSpeedButton = () => new Button(
     () => nomangle('GAME SPEED: ') + round(G.gameSpeed * 100) + '%',
     () => G.gameSpeed = roundToNearest(0.6 + ((G.gameSpeed - 0.6) + 0.9) % 0.5, 0.1),
 );
 
-challengesButton = (y) => new Button(
-    evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2),
-    y,
+challengesButton = () => new Button(
     () => nomangle('CHALLENGES'),
     () => G.challenges(),
 );
