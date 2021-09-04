@@ -119,12 +119,6 @@ class Scene {
             clip();
             this.demoWorld.render();
 
-            fs('#000');
-            fr(0, CANVAS_HEIGHT - 50, CANVAS_WIDTH, 50);
-
-            fs('#fff');
-            fr(0, CANVAS_HEIGHT - 50, CANVAS_WIDTH * this.demoWorld.age / this.demoDuration, 50);
-
             if (this.age % 1 > 0.5) {
                 R.font = nomangle('72pt Impact');
                 R.textAlign = nomangle('center');
