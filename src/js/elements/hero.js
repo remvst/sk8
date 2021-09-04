@@ -319,7 +319,7 @@ class Hero extends Element {
         this.pushAge += elapsed;
 
         if (!this.grinding && !this.pushing && this.landed) {
-            this.speed = max(0, this.speed - elapsed * 20);
+            this.speed -= sign(this.speed) * elapsed * (this.speed > 0 ? 20 : 600);
         }
 
         if (this.grinding) {
@@ -569,6 +569,11 @@ class Hero extends Element {
             if (element instanceof Rail) {
                 const hardCollision = element.collides(this, RAIL_BAIL_PADDING);
                 if (hardCollision && between(this.z + RAIL_BAIL_PADDING, hardCollision.positionOnRail.z, this.headCenter.z)) {
+                    if (this.landed) {
+                        this.speed = -300;
+                        return;
+                    }
+
                     return true;
                 }
             }
