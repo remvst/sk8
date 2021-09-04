@@ -116,10 +116,12 @@ class ComboTracker {
     }
 
     checkAllChallenges() {
-        CHALLENGES.forEach(x => {
-            if (x.checkCompleted(this.hero, this.combo)) {
-                G.scene.hud.showMessage(nomangle('Challenge completed: ') + x.label, 4);
-            }
-        });
+        const completed = CHALLENGES
+            .filter(x => x.checkCompleted(this.hero, this.combo))
+            .map(x => x.label)
+            .join(', ');
+        if (completed) {
+            G.scene.hud.showMessage(nomangle('Challenge completed: ') + completed, 4);
+        }
     }
 }
