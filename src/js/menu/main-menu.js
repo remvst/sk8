@@ -23,15 +23,7 @@ class MainMenu extends Menu {
                 nomangle('CHALLENGES'),
                 () => G.challenges(),
             ),
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                760,
-                () => nomangle('GAME SPEED: ') + round(G.gameSpeed * 100) + '%',
-                () => {
-                    // this.speedButton
-                    G.gameSpeed = roundToNearest(0.6 + ((G.gameSpeed - 0.6) + 0.1) % 0.5, 0.1);
-                }
-            )
+            gameSpeedButton(760),
         ];
 
         this.buttons[1].enabled = localStorage[nomangle('tut')];

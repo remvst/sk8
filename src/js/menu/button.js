@@ -32,3 +32,10 @@ class Button {
         return this.enabled && between(this.x, pt.x, this.x + BUTTON_WIDTH) && between(this.y, pt.y, this.y + BUTTON_HEIGHT);
     }
 }
+
+gameSpeedButton = (y) => new Button(
+    evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2),
+    y,
+    () => nomangle('GAME SPEED: ') + round(G.gameSpeed * 100) + '%',
+    () => G.gameSpeed = roundToNearest(0.6 + ((G.gameSpeed - 0.6) + 0.9) % 0.5, 0.1),
+);
