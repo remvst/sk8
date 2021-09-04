@@ -9,7 +9,7 @@ class PauseMenu extends Menu {
                 ),
                 new Button(
                     nomangle('RESTART'),
-                    () => G.startScene(G.scene),
+                    () => G.startScene(new G.scene.__proto__.constructor()),
                 ),
                 challengesButton(520),
                 gameSpeedButton(640),
