@@ -17,12 +17,7 @@ class MainMenu extends Menu {
                 nomangle('NEW SESSION'),
                 () => G.setMenu(new ModeMenu()),
             ),
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                640,
-                nomangle('CHALLENGES'),
-                () => G.challenges(),
-            ),
+            challengesButton(640),
             gameSpeedButton(760),
         ];
 

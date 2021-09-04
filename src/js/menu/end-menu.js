@@ -21,12 +21,7 @@ class EndMenu extends Menu {
                     nomangle('pts on STICK SKATER'),
                 ].join('')),
             ),
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                640,
-                nomangle('CHALLENGES'),
-                () => G.challenges(),
-            ),
+            challengesButton(640),
             mainMenuButton(760),
         ]
     }

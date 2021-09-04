@@ -46,3 +46,10 @@ gameSpeedButton = (y) => new Button(
     () => nomangle('GAME SPEED: ') + round(G.gameSpeed * 100) + '%',
     () => G.gameSpeed = roundToNearest(0.6 + ((G.gameSpeed - 0.6) + 0.9) % 0.5, 0.1),
 );
+
+challengesButton = (y) => new Button(
+    evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2),
+    y,
+    () => nomangle('CHALLENGES'),
+    () => G.challenges(),
+);
