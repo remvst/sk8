@@ -148,10 +148,12 @@ class Game {
         });
 
         // High score
-        R.textBaseline = nomangle('top');
-        R.textAlign = nomangle('right');
-        whiteText(nomangle('HIGHSCORE: ') + numberWithCommas(parseLocalStorage(HIGHSCORE_KEY)), CANVAS_WIDTH - 20, 20, 0.25);
-        whiteText(nomangle('BEST COMBO: ') + numberWithCommas(parseLocalStorage(BESTCOMBO_KEY)), CANVAS_WIDTH - 20, 50, 0.25);
+        if (!G.scene.demoWorld) {
+            R.textBaseline = nomangle('top');
+            R.textAlign = nomangle('right');
+            whiteText(nomangle('HIGHSCORE: ') + numberWithCommas(parseLocalStorage(HIGHSCORE_KEY)), CANVAS_WIDTH - 20, 20, 0.25);
+            whiteText(nomangle('BEST COMBO: ') + numberWithCommas(parseLocalStorage(BESTCOMBO_KEY)), CANVAS_WIDTH - 20, 50, 0.25);
+        }
     }
 
     transition(pattern, duration = 0.3) {
