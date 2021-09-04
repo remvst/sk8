@@ -27,12 +27,7 @@ class EndMenu extends Menu {
                 nomangle('CHALLENGES'),
                 () => G.challenges(),
             ),
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                760,
-                nomangle('MAIN MENU'),
-                () => G.mainMenu(),
-            ),
+            mainMenuButton(760),
         ]
     }
 }

@@ -17,12 +17,7 @@ class ModeMenu extends Menu {
                 nomangle('FREE SKATE'),
                 () => G.startScene(new FreeScene()),
             ),
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                640,
-                nomangle('MAIN MENU'),
-                () => G.mainMenu(),
-            ),
+            mainMenuButton(640),
         ];
 
         if (!document.monetization || document.monetization.state !== nomangle('started')) {

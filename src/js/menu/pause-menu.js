@@ -18,12 +18,7 @@ class PauseMenu extends Menu {
                 () => G.challenges(),
             ),
             gameSpeedButton(640),
-            new Button(
-                (CANVAS_WIDTH - BUTTON_WIDTH) / 2,
-                760,
-                nomangle('MAIN MENU'),
-                () => G.mainMenu(),
-            ),
+            mainMenuButton(760),
         ];
     }
 }

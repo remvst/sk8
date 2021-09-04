@@ -33,6 +33,13 @@ class Button {
     }
 }
 
+mainMenuButton = (y) => new Button(
+    evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2),
+    y,
+    nomangle('MAIN MENU'),
+    () => G.mainMenu(),
+);
+
 gameSpeedButton = (y) => new Button(
     evaluate(CANVAS_WIDTH / 2 - BUTTON_WIDTH / 2),
     y,
