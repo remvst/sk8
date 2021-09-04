@@ -5,7 +5,7 @@ class Menu {
         this.title = title;
         this.buttons = buttons;
         this.buttons.forEach((button, i) => {
-            button.y = 400 + i * evaluate(BUTTON_HEIGHT + 20);
+            button.y = 400 + i * evaluate(BUTTON_HEIGHT + BUTTON_SPACING);
         });
     }
 

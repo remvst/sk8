@@ -21,11 +21,9 @@ class Button {
             fr(0, 0, BUTTON_WIDTH, BUTTON_HEIGHT);
         });
 
-        R.font = nomangle('36pt Impact');
         R.textAlign = nomangle('center');
         R.textBaseline = nomangle('middle');
-        fs('#fff');
-        fillText(this.label(), BUTTON_WIDTH / 2, BUTTON_HEIGHT / 2);
+        whiteText(this.label(), BUTTON_WIDTH / 2, BUTTON_HEIGHT / 2, 0.5);
     }
 
     contains(pt) {

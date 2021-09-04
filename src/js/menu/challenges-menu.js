@@ -33,11 +33,9 @@ class ChallengesMenu extends Menu {
                 fs('#000');
                 fr(0, 0, CHALLENGE_BUTTON_WIDTH, CHALLENGE_BUTTON_HEIGHT);
 
-                R.font = nomangle('24pt Impact');
                 R.textAlign = nomangle('center');
                 R.textBaseline = nomangle('middle');
-                fs('#fff');
-                fillText(challenge.label, CHALLENGE_BUTTON_WIDTH / 2, CHALLENGE_BUTTON_HEIGHT / 2);
+                whiteText(challenge.label, CHALLENGE_BUTTON_WIDTH / 2, CHALLENGE_BUTTON_HEIGHT / 2, 0.25);
             });
         });
     }
