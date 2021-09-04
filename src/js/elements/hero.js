@@ -216,7 +216,7 @@ class Hero extends Element {
             angleDiff = abs(normalize(this.angle - momentumAngle));
         }
 
-        if (angleDiff > PI / 3 && this.speed > 50) {
+        if (angleDiff > PI / 3 && this.speed > 300) {
             this.bail();
         }
 

@@ -29,6 +29,8 @@ class ComboTracker {
         const { combo, hero, previous } = this;
         const { scene } = hero.world;
 
+        if (!hero.input.userControlled) return;
+
         if (hero.velocityZ > 0 && (previous.landed || previous.grinding)) {
             if (this.hero.kickerUnder(this.hero)) {
                 combo.pushTrick(nomangle('OFF THE KICKER'), 100);
@@ -82,17 +84,14 @@ class ComboTracker {
                         angleRatio = 1 - angleRatio;
                     }
 
-                    console.log(angleRatio);
-
                     let msg;
                     if (angleRatio < 0.1) {
-                        msg = nomangle('PERFECT LANDING!');
+                        msg = nomangle('PERFECT LANDING! +2000');
+                        combo.pushTrick(msg, 2000);
                     } else if (angleRatio > 0.2) {
                         msg = nomangle('SKETCHY LANDING!');
                     }
                     if (msg) G.scene.hud.showWorldMessage(msg);
-
-                    // TODO record good/bad landing
                 }
 
                 if (scene instanceof ParkScene) {
