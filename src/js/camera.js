@@ -13,7 +13,6 @@ class Camera {
     }
 
     cycle(elapsed) {
-        // console.log('yo');
         if (this.followedTarget) {
             this.center.set(this.followedTarget.x, this.followedTarget.y, this.followedTarget.z);
         }

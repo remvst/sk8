@@ -69,13 +69,6 @@ class Game {
             wrap(() => this.menu.render());
         }
 
-        // const fadeAlpha = limit(0, 1 - this.clock / 1, 1);
-        // wrap(() => {
-        //     R.globalAlpha = fadeAlpha;
-        //     fs('#000');
-        //     fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-        // });
-
         wrap(() => {
             if (!document.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled && !G.menu) return;
 
@@ -111,14 +104,14 @@ class Game {
 
         wrap(() => {
             R.globalAlpha = 0.5 + 0.5 * (mobileDirection() < 0);
-            translate(CANVAS_WIDTH / 8, CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2);
+            translate(evaluate(CANVAS_WIDTH / 8), evaluate(CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2));
             scale(-1, 1);
             renderMobileArrow();
         });
 
         wrap(() => {
             R.globalAlpha = 0.5 + 0.5 * (mobileDirection() > 0);
-            translate(CANVAS_WIDTH * 3 / 8, CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2);
+            translate(evaluate(CANVAS_WIDTH * 3 / 8), evaluate(CANVAS_HEIGHT + MOBILE_CONTROLS_HEIGHT / 2));
             renderMobileArrow();
         });
 

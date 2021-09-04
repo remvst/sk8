@@ -95,6 +95,11 @@
         "clone",
         "slope",
         "input",
-        "qualifier"
+        "qualifier",
+        "newValue",
+        "frequency",
+        "release",
+        "challenge",
+        "backgroundColor"
     ]
 }

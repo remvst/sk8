@@ -16,8 +16,6 @@ class MainMenu extends Menu {
             ],
         );
 
-        this.title = nomangle('STICK SKATER');
-
         this.buttons[1].enabled = localStorage[nomangle('tut')];
     }
 }

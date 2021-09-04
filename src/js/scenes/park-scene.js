@@ -11,9 +11,9 @@ class ParkScene extends Scene {
         const spacing = 1000;
         const radius = spacing * 3;
 
-        const translate = (x, y = 0, z = 0) => (pt) => point(pt.x + x, pt.y + y, pt.z + z);
-        const scale = (x, y = 1, z = 1) => (pt) => point(pt.x * x, pt.y * y, pt.z * z);
-        const rotate = (rotation) => pt => {
+        const translateFeature = (x, y = 0, z = 0) => (pt) => point(pt.x + x, pt.y + y, pt.z + z);
+        const scaleFeature = (x, y = 1, z = 1) => (pt) => point(pt.x * x, pt.y * y, pt.z * z);
+        const rotateFeature = (rotation) => pt => {
             const distance = dist(pt, point());
             const angle = atan2(pt.y, pt.x);
             return point(
@@ -60,7 +60,7 @@ class ParkScene extends Scene {
 
         // Two kickers facing each other
         [
-            translate(800, -100),
+            translateFeature(800, -100),
         ].forEach(transformation => {
             world.addFeature([
                 world.kicker(point(-300, 0), 0),
@@ -70,8 +70,8 @@ class ParkScene extends Scene {
 
         // Two kickers and a rail in between
         [
-            translate(1800, -2000),
-            // translate(-700, )
+            translateFeature(1800, -2000),
+            // translateFeature(-700, )
         ].forEach(transformation => {
             world.addFeature([
                 world.kicker(point(-600, 0), 0),
@@ -85,8 +85,8 @@ class ParkScene extends Scene {
 
         // Two rail steps
         [
-            translate(1500, -2450),
-            multi(scale(-1, 1, 1), translate(2000, -2450)),
+            translateFeature(1500, -2450),
+            multi(scaleFeature(-1, 1, 1), translateFeature(2000, -2450)),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -102,10 +102,10 @@ class ParkScene extends Scene {
 
         // Kinked rail
         [
-            translate(300, 1050),
-            multi(scale(1, -1, 1), translate(100, -2400)),
-            multi(translate(-1400, -300), scale(1, 1, 4)),
-            multi(translate(-2200, -1500)),
+            translateFeature(300, 1050),
+            multi(scaleFeature(1, -1, 1), translateFeature(100, -2400)),
+            multi(translateFeature(-1400, -300), scaleFeature(1, 1, 4)),
+            multi(translateFeature(-2200, -1500)),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -121,8 +121,8 @@ class ParkScene extends Scene {
 
         // Kicker rail
         [
-            multi(rotate(PI), translate(-1000, -800)),
-            multi(translate(-1600, -800)),
+            multi(rotateFeature(PI), translateFeature(-1000, -800)),
+            multi(translateFeature(-1600, -800)),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -137,9 +137,9 @@ class ParkScene extends Scene {
 
         // Zigzag rail
         [
-            translate(-400, -1800),
-            translate(-1200, -1600),
-            translate(400, -2000),
+            translateFeature(-400, -1800),
+            translateFeature(-1200, -1600),
+            translateFeature(400, -2000),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -153,8 +153,8 @@ class ParkScene extends Scene {
 
         // Kinked rail without last bit
         [
-            multi(rotate(-PI / 4), translate(-2200, -300)),
-            // multi(rotate(0), translate(-1400, -350), scale(1, 1, 3)),
+            multi(rotateFeature(-PI / 4), translateFeature(-2200, -300)),
+            // multi(rotateFeature(0), translateFeature(-1400, -350), scaleFeature(1, 1, 3)),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -167,7 +167,7 @@ class ParkScene extends Scene {
 
         // Series of rails
         [
-            translate(-1500, -2400),
+            translateFeature(-1500, -2400),
         ].forEach(transformation => {
             world.addFeature([
                 world.rail([
@@ -190,7 +190,7 @@ class ParkScene extends Scene {
             world.arcRail(point(), 400, 10, PI / 2, PI * 3 / 2, 400),
             world.kicker(point(300, 400), PI),
             world.kicker(point(300, -400), PI),
-        ], translate(800, -800));
+        ], translateFeature(800, -800));
 
 
         world.elements.forEach(element => {
