@@ -76,22 +76,24 @@ class ComboTracker {
                     scene.score = base + combo.total;
                 }
 
-                // if (previous.rotationAcc > PI / 2) {
-                //     let angleRatio = abs(normalize(previous.rotationAcc) / PI);
-                //     if (angleRatio > 0.5) {
-                //         angleRatio = 1 - angleRatio;
-                //     }
-                //
-                //     console.log(angleRatio);
-                //
-                //     if (angleRatio < 0.1) {
-                //         console.log('good landing!')
-                //     } else if (angleRatio > 0.4) {
-                //         console.log('bad landing!')
-                //     }
-                //
-                //     // TODO record good/bad landing
-                // }
+                if (abs(previous.rotationAcc) > PI / 2) {
+                    let angleRatio = abs(normalize(previous.rotationAcc) / PI);
+                    if (angleRatio > 0.5) {
+                        angleRatio = 1 - angleRatio;
+                    }
+
+                    console.log(angleRatio);
+
+                    let msg;
+                    if (angleRatio < 0.1) {
+                        msg = nomangle('PERFECT LANDING!');
+                    } else if (angleRatio > 0.2) {
+                        msg = nomangle('SKETCHY LANDING!');
+                    }
+                    if (msg) G.scene.hud.showWorldMessage(msg);
+
+                    // TODO record good/bad landing
+                }
 
                 if (scene instanceof ParkScene) {
                     this.checkAllChallenges();

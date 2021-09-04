@@ -6,6 +6,8 @@ class HUD {
         this.displayedScore = 0;
         this.targetScore = 0;
         this.messageLines = [];
+
+        this.worldMessageAge = -9;
     }
 
     cycle(elapsed) {
@@ -36,6 +38,16 @@ class HUD {
     render() {
         R.textAlign = nomangle('center');
         R.textBaseline = nomangle('top');
+
+        wrap(() => {
+            R.globalAlpha = 1 - limit(0, (this.scene.age - this.worldMessageAge - 0.5) / 1, 1);
+            whiteText(
+                this.worldMessage,
+                CANVAS_WIDTH / 2,
+                CANVAS_HEIGHT / 2 - 250,
+                0.5,
+            );
+        });
 
         // Timer
         if (this.scene.timeLeft >= 0) {
@@ -121,5 +133,10 @@ class HUD {
 
     setPermanentMessage(messageLines) {
         this.showMessage(messageLines, 999);
+    }
+
+    showWorldMessage(worldMessage) {
+        this.worldMessage = worldMessage;
+        this.worldMessageAge = this.scene.age;
     }
 }
