@@ -9,7 +9,7 @@ class ModeMenu extends Menu {
                 ),
                 new Button(
                     nomangle('FREE SKATE (COIL ONLY)'),
-                    () => G.startScene(new FreeScene()),
+                    () => G.startScene(new ParkScene()),
                 ),
                 mainMenuButton(640),
             ],

@@ -49,7 +49,6 @@
     "src/js/scenes/grind-scene.js",
     "src/js/scenes/park-scene.js",
     "src/js/scenes/session-scene.js",
-    "src/js/scenes/free-scene.js",
     "src/js/scenes/intro-scene.js",
     "src/js/scenes/menu-scene.js",
 
