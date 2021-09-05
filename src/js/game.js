@@ -141,7 +141,7 @@ class Game {
         });
 
         // High score
-        if (!G.scene.demoWorld) {
+        if (!G.scene.demoWorld && !(G.scene instanceof IntroScene)) {
             R.textBaseline = nomangle('top');
             R.textAlign = nomangle('right');
             whiteText(nomangle('HIGHSCORE: ') + numberWithCommas(parseLocalStorage(HIGHSCORE_KEY)), CANVAS_WIDTH - 20, 20, 0.3, 6);
