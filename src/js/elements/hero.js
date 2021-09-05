@@ -372,10 +372,10 @@ class Hero extends Element {
             const ratio = easeOutQuad(limit(0, (this.age - this.jumpStartAge) / jumpDuration, 1));
             const ratioBefore = easeOutQuad(limit(0, (this.age - elapsed - this.jumpStartAge) / jumpDuration, 1));
             const newZ = this.jumpStartZ + ratio * (this.jumpEndZ - this.jumpStartZ);
-            this.velocityZ = (ratio - max(0, ratioBefore)) * (this.jumpEndZ - this.jumpStartZ);
+            this.velocityZ = (ratio - ratioBefore) * (this.jumpEndZ - this.jumpStartZ);
         } else {
             const gravity = (this.input.grind() ? 3 : 1) * 20;
-            this.velocityZ -= elapsed * gravity;
+            this.velocityZ = min(0, this.velocityZ - elapsed * gravity);
         }
 
         this.z = max(0, this.z + this.velocityZ);
