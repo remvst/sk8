@@ -554,7 +554,7 @@ class Hero extends Element {
 
         const footDistance = dist(this.leftFoot, this.rightFoot);
         const slope = (this.rightFoot.z - this.leftFoot.z) / footDistance;
-        if (abs(slope > 2)) {
+        if (abs(slope) > 2) {
             return true;
         }
 
