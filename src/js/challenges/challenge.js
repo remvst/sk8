@@ -87,7 +87,7 @@ CHALLENGES = [
     new TrickChallenge(nomangle('RAIL TO RAIL')),
     new TrickChallenge(nomangle('540')),
     new TrickChallenge(nomangle('DOUBLE FLIPPITY')),
-    new TrickChallenge(nomangle('TRIPLE FLIPPITY')),
+    new TrickChallenge(nomangle('360 TRIPLE FLIPPITY')),
     new TrickChallenge(nomangle('QUADRUPLE FLIPPITY')),
     new TrickChallenge(nomangle('720 DOUBLE FLIPPITY')),
     new TapesChallenge(),
