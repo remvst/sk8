@@ -4,12 +4,12 @@ class Plane extends Renderable {
         this.points = points;
         this.color = color;
 
-        this.segments = [];
-        for (let i = 0 ; i < points.length ; i++) {
-            const current = points[i];
-            const next = points[(i + 1) % points.length];
-            this.segments.push(segment(current, next));
-        }
+        this.segments = this.points.map((x, i) => {
+            return segment(
+                x,
+                points[(i + 1) % points.length],
+            );
+        });
     }
 
     renderPlane(color, funcName) {
@@ -37,8 +37,6 @@ class Plane extends Renderable {
     animateToGround(origin) {
         this.makePointsFall(this.points, origin);
     }
-
-
 
     renderOnTopOfHero(hero) {
         for (const segment of this.segments) {
