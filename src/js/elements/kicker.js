@@ -78,16 +78,14 @@ class Kicker extends Element {
     }
 
     relativePosition(pos) {
-        const pt = point(pos.x, pos.y, pos.z);
-        pt.x -= this.x;
-        pt.y -= this.y;
-        pt.z -= this.z;
+        const x = pos.x - this.x;
+        const y = pos.y - this.y;
+        const z = pos.z - this.z;
 
-        const rotated = point();
-        rotated.x = pt.x * cos(this.angle) + pt.y * sin(this.angle);
-        rotated.y = -pt.x * sin(this.angle) + pt.y * cos(this.angle);
-
-        return rotated;
+        return point(
+            x * cos(this.angle) + y * sin(this.angle),
+            -x * sin(this.angle) + y * cos(this.angle),
+        );
     }
 
     edgeCenter() {
