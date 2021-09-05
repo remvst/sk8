@@ -11,8 +11,8 @@ class Game {
         this.startScene(new IntroScene());
         this.transition('#000', 1);
 
-        document.onpointerlockchange = () => {
-            if (!document.pointerLockElement && !G.menu && !G.scene.ended) {
+        DOCUMENT.onpointerlockchange = () => {
+            if (!DOCUMENT.pointerLockElement && !G.menu && !G.scene.ended) {
                 G.setMenu(new PauseMenu());
             }
         }
@@ -70,7 +70,7 @@ class Game {
         }
 
         wrap(() => {
-            if (!document.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled && !G.menu) return;
+            if (!DOCUMENT.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled && !G.menu) return;
 
             fs(COLOR_WHITE);
             ss('#000');

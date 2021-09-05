@@ -9,7 +9,7 @@ toGamePosition = (e, out) => {
     const canvasCoords = CANVAS.getBoundingClientRect();
 
     const height = CANVAS_HEIGHT + MOBILE * MOBILE_CONTROLS_HEIGHT;
-    if (document.pointerLockElement) {
+    if (DOCUMENT.pointerLockElement) {
         out.x += CANVAS_WIDTH * e.movementX / canvasCoords.width;
         out.y += height * e.movementY / canvasCoords.height;
     } else {
@@ -51,7 +51,7 @@ onmousemove = e => {
 
 onmousedown = () => {
     MOUSE_IS_DOWN = true;
-    document.body.requestPointerLock();
+    DOCUMENT.body.requestPointerLock();
 };
 onmouseup = () => MOUSE_IS_DOWN = false;
 

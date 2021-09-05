@@ -15,6 +15,6 @@ class ModeMenu extends Menu {
             ],
         );
 
-        this.buttons[1].enabled = (document.monetization || {}).state == nomangle('started');
+        this.buttons[1].enabled = (DOCUMENT.monetization || {}).state == nomangle('started');
     }
 }

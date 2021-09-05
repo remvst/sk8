@@ -22,6 +22,6 @@ moduloWithNegative = (x, y) => {
 
 // Make Math global
 const math = Math;
-Object.getOwnPropertyNames(math).forEach(n => w[n] = w[n] || math[n]);
+Object.getOwnPropertyNames(math).forEach(n => WINDOW[n] = WINDOW[n] || math[n]);
 
 TWO_PI = PI * 2;

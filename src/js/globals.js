@@ -1,6 +1,7 @@
 let R, // canvas context
     G, // Game instance
-    w = window,
+    WINDOW = window,
+    DOCUMENT = document,
     CANVAS = nomangle(g),
     MOBILE,
     COLOR_WHITE = '#fff',

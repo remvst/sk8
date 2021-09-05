@@ -15,7 +15,7 @@ onload = () => {
     // Shortcut for all canvas methods to the main canvas
     Object.getOwnPropertyNames(canvasProto).forEach(n => {
         if (R[n].call) {
-            w[n] = canvasProto[n].bind(R);
+            WINDOW[n] = canvasProto[n].bind(R);
         }
     });
 
