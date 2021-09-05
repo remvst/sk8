@@ -73,13 +73,13 @@ class TapesChallenge extends Challenge {
 }
 
 CHALLENGES = [
-    new ScoreChallenge(100000),
-    new ScoreChallenge(500000),
-    new ScoreChallenge(1000000),
+    new ScoreChallenge(1e5),
+    new ScoreChallenge(5e5),
+    new ScoreChallenge(1e6),
 
-    new ComboValueChallenge(50000),
-    new ComboValueChallenge(250000),
-    new ComboValueChallenge(500000),
+    new ComboValueChallenge(5e4),
+    new ComboValueChallenge(25e4),
+    new ComboValueChallenge(5e4),
 
     new ComboSizeChallenge(10),
     new ComboSizeChallenge(20),
