@@ -103,6 +103,8 @@
         "backgroundColor",
         "position",
         "Element",
-        "padding"
+        "padding",
+        "deltaX",
+        "deltaY"
     ]
 }
