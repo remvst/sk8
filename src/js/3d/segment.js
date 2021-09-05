@@ -30,7 +30,7 @@ class Segment extends Renderable {
     }
 
     renderShadow() {
-        this.renderSegment(SHADOW_COLOR, 'projectToShadow');
+        this.renderSegment(COLOR_SHADOW, 'projectToShadow');
     }
 
     clone() {

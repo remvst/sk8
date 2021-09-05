@@ -33,7 +33,7 @@ class Arc extends Renderable {
     }
 
     renderShadow() {
-        this.renderArc(SHADOW_COLOR, 'projectToShadow');
+        this.renderArc(COLOR_SHADOW, 'projectToShadow');
     }
 
     clone() {

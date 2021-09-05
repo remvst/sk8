@@ -26,7 +26,7 @@ class Sphere extends Renderable {
     }
 
     renderShadow() {
-        this.renderSphere(SHADOW_COLOR, 'projectToShadow');
+        this.renderSphere(COLOR_SHADOW, 'projectToShadow');
     }
 
     clone() {

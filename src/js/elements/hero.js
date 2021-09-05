@@ -66,7 +66,7 @@ class Hero extends Element {
         this.comboTracker = new ComboTracker(this);
 
         this.renderables = [new CompositeRenderable([
-            segment(this.floorReference, this.center, 'rgba(255,255,255,0.2)', 2),
+            segment(this.floorReference, this.center, '#fff3', 2),
 
             // Wheels
             sphere(this.wheelStartTop, 8, COLOR_WHITE),

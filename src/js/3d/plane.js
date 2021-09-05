@@ -24,7 +24,7 @@ class Plane extends Renderable {
     }
 
     renderShadow() {
-        this.renderPlane(SHADOW_COLOR, 'projectToShadow');
+        this.renderPlane(COLOR_SHADOW, 'projectToShadow');
     }
 
     clone() {
