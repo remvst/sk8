@@ -548,8 +548,8 @@ class Hero extends Element {
     }
 
     shouldBail() {
-        if (this.grinding && abs(this.balance) >= 1) {
-            return true;
+        if (this.grinding) {
+            return abs(this.balance) >= 1;
         }
 
         const footDistance = dist(this.leftFoot, this.rightFoot);
@@ -559,12 +559,6 @@ class Hero extends Element {
         }
 
         const currentMomentumAngle = atan2(this.momentum.y, this.momentum.x);
-
-        const wasGrinding = this.grinding;
-
-        if (this.grinding) {
-            return;
-        }
 
         for (const element of this.world.elements) {
             if (element instanceof Rail) {
