@@ -436,8 +436,8 @@ class Hero extends Element {
         const kicker = this.kickerUnder(foot);
         if (kicker) {
             const relative = kicker.relativePosition(foot);
-            const progress = 1 - (kicker.radius - relative.x) / kicker.length;
-            foot.z = max(foot.z, progress * kicker.height);
+            const progress = 1 - (kicker.radius - relative.x) / kicker.kickerLength;
+            foot.z = max(foot.z, progress * kicker.kickerHeight);
         }
     }
 
