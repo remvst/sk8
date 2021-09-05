@@ -166,29 +166,29 @@ class Hero extends Element {
         this.floorReference.set(this.x, this.y, 0);
     }
 
-    makeRectangle(p1, p2, p3, p4, slope, length, width, offsetZ, angleOffset) {
+    makeRectangle(p1, p2, p3, p4, slope, rectangleLength, rectangleWidth, offsetZ, angleOffset) {
         const angle = this.angle + angleOffset;
         const anglePlus90 = angle + PI / 2;
 
         p1.set(
-            this.x - cos(angle) * length - cos(anglePlus90) * width,
-            this.y - sin(angle) * length - sin(anglePlus90) * width,
-            this.z - slope * length + offsetZ,
+            this.x - cos(angle) * rectangleLength - cos(anglePlus90) * rectangleWidth,
+            this.y - sin(angle) * rectangleLength - sin(anglePlus90) * rectangleWidth,
+            this.z - slope * rectangleLength + offsetZ,
         );
         p2.set(
-            this.x - cos(angle) * length + cos(anglePlus90) * width,
-            this.y - sin(angle) * length + sin(anglePlus90) * width,
-            this.z - slope * length + offsetZ,
+            this.x - cos(angle) * rectangleLength + cos(anglePlus90) * rectangleWidth,
+            this.y - sin(angle) * rectangleLength + sin(anglePlus90) * rectangleWidth,
+            this.z - slope * rectangleLength + offsetZ,
         );
         p3.set(
-            this.x + cos(angle) * length + cos(anglePlus90) * width,
-            this.y + sin(angle) * length + sin(anglePlus90) * width,
-            this.z + slope * length + offsetZ,
+            this.x + cos(angle) * rectangleLength + cos(anglePlus90) * rectangleWidth,
+            this.y + sin(angle) * rectangleLength + sin(anglePlus90) * rectangleWidth,
+            this.z + slope * rectangleLength + offsetZ,
         );
         p4.set(
-            this.x + cos(angle) * length - cos(anglePlus90) * width,
-            this.y + sin(angle) * length - sin(anglePlus90) * width,
-            this.z + slope * length + offsetZ,
+            this.x + cos(angle) * rectangleLength - cos(anglePlus90) * rectangleWidth,
+            this.y + sin(angle) * rectangleLength - sin(anglePlus90) * rectangleWidth,
+            this.z + slope * rectangleLength + offsetZ,
         );
     }
 
@@ -359,8 +359,7 @@ class Hero extends Element {
 
         // Come off a kicker
         if (this.landed && this.z > 0) {
-            const kicker = this.world && this.kickerUnder(this);
-            if (!kicker) this.stopLanding();
+            if (!this.kickerUnder(this)) this.stopLanding();
         }
 
         if (this.input.grind()) {
