@@ -8,15 +8,13 @@ class ModeMenu extends Menu {
                     () => G.startScene(new SessionScene()),
                 ),
                 new Button(
-                    nomangle('FREE SKATE'),
+                    nomangle('FREE SKATE (COIL ONLY)'),
                     () => G.startScene(new FreeScene()),
                 ),
                 mainMenuButton(640),
             ],
         );
 
-        if (!document.monetization || document.monetization.state !== nomangle('started')) {
-            setTimeout(() => G.startScene(new SessionScene()), 0);
-        }
+        this.buttons[1].enabled = (document.monetization || {}).state == nomangle('started');
     }
 }
