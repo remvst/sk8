@@ -3,9 +3,9 @@ class Kicker extends Element {
     constructor() {
         super();
 
-        this.length = 200;
-        this.height = 200;
-        this.radius = this.length / 2;
+        this.kickerLength = 200;
+        this.kickerHeight = 200;
+        this.radius = this.kickerLength / 2;
 
         this.leftTop = this.newPoint();
         this.leftBottom = this.newPoint();
@@ -44,8 +44,8 @@ class Kicker extends Element {
         this.world.elements.forEach(element => {
             if (element instanceof Hero && this.contains(element)) {
                 const relative = this.relativePosition(element);
-                const progress = 1 - (this.radius - relative.x) / this.length;
-                const kickerZ = progress * this.height;
+                const progress = 1 - (this.radius - relative.x) / this.kickerLength;
+                const kickerZ = progress * this.kickerHeight;
 
                 if (element.z < kickerZ && element.velocityZ <= 0) {
                     element.z = kickerZ;
@@ -70,7 +70,7 @@ class Kicker extends Element {
 
     distanceToEdge(pos) {
         const distance = 9999;
-        const angleToPos = atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x)
+        const angleToPos = angleBetween(this.edgeCenter, pos);
 
         const angle = atan2(pos.y - this.edgeCenter().y, pos.x - this.edgeCenter().x) - this.angle;
         const distanceToEdge = cos(angle) * distance;
@@ -95,14 +95,14 @@ class Kicker extends Element {
     }
 
     updateRenderables() {
-        const radius = this.length / 2;
+        const radius = this.kickerLength / 2;
 
         this.leftTop.set(-radius, -radius, 0);
         this.leftBottom.set(-radius, radius, 0);
         this.rightTop.set(radius, -radius, 0);
         this.rightBottom.set(radius, radius, 0);
-        this.highTop.set(radius, -radius, this.height);
-        this.highBottom.set(radius, radius, this.height);
+        this.highTop.set(radius, -radius, this.kickerHeight);
+        this.highBottom.set(radius, radius, this.kickerHeight);
 
         this.adjustPoints();
     }
