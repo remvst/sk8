@@ -1,7 +1,7 @@
 class MainMenu extends Menu {
     constructor() {
         super(
-            nomangle('STICK SKATER'),
+            DOCUMENT.title,
             [
                 new Button(
                     nomangle('TUTORIAL'),
