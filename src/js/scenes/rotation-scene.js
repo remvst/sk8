@@ -10,6 +10,8 @@ class RotationScene extends Scene {
         this.nextScene = new GrindScene();
 
         this.demoDuration = 6;
+
+        this.requiredCompletionActionCount = 3;
     }
 
     setupDemoWorld() {

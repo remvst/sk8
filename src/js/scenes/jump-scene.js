@@ -6,6 +6,8 @@ class JumpScene extends Scene {
         this.hud.setPermanentMessage([
             nomangle('Click and release to jump'),
         ]);
+
+        this.requiredCompletionActionCount = 3;
     }
 
     completionMessage() {

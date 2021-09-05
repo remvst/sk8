@@ -18,6 +18,6 @@ class PushScene extends Scene {
     }
 
     isPerformingCompletingAction(hero) {
-        return hero.speed > 200;
+        return hero.speed > 300;
     }
 }

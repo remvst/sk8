@@ -4,6 +4,8 @@ class Scene {
         this.score = Number.MIN_SAFE_INTEGER;
         this.timeLeft = -1;
         this.completionAge = -1;
+        this.completionActionCount = 0;
+        this.requiredCompletionActionCount = 1;
 
         this.previousRoundedTimeLeft = 0;
     }
@@ -83,8 +85,17 @@ class Scene {
             this.didTryCompletingAction = this.didTryCompletingAction || this.isPerformingCompletingAction(hero);
 
             if (this.completionAge < 0 && hero.landed && this.didTryCompletingAction && !this.completed) {
-                this.completionAge = this.age + this.completionDelay();
-                this.hud.setPermanentMessage(this.completionMessage());
+                this.completionActionCount++;
+                this.didTryCompletingAction = false;
+
+                if (this.requiredCompletionActionCount > 1) {
+                    this.hud.showWorldMessage(this.completionActionCount + '/' + this.requiredCompletionActionCount);
+                }
+
+                if (this.completionActionCount >= this.requiredCompletionActionCount) {
+                    this.completionAge = this.age + this.completionDelay();
+                    this.hud.setPermanentMessage(this.completionMessage());
+                }
             }
         }
 

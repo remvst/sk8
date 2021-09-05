@@ -10,6 +10,8 @@ class TrickScene extends Scene {
         ]);
 
         this.nextScene = new RotationScene();
+
+        this.requiredCompletionActionCount = 3;
     }
 
     setupDemoWorld() {
