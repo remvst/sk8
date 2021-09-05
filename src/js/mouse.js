@@ -24,6 +24,8 @@ toGamePosition = (e, out) => {
 };
 
 onmousemove = e => {
+    if (MOBILE) return;
+
     PREVIOUS_MOUSE_POSITION.x = MOUSE_POSITION.x;
     PREVIOUS_MOUSE_POSITION.y = MOUSE_POSITION.y;
 
