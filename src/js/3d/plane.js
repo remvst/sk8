@@ -46,14 +46,5 @@ class Plane extends Renderable {
         }
 
         return true;
-
-        let minY = 9999999;
-        for (const point of this.points) {
-            minY = min(minY, point.projectToActual().y);
-        }
-
-        if (minY < this.y) {
-            return true;
-        }
     }
 }
