@@ -41,3 +41,5 @@ class Sphere extends Renderable {
         return this.center.y > hero.y;
     }
 }
+
+sphere = (...args) => new Sphere(...args);

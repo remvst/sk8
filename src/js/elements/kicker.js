@@ -15,13 +15,13 @@ class Kicker extends Element {
         this.highBottom = this.newPoint();
 
         this.renderables = [
-            new Segment(this.leftTop, this.leftBottom, COLOR_WHITE, 8),
-            new Segment(this.rightTop, this.rightBottom, COLOR_WHITE, 8),
-            new Segment(this.highTop, this.highBottom, COLOR_WHITE, 8),
-            new Segment(this.leftTop, this.highTop, COLOR_WHITE, 8),
-            new Segment(this.leftBottom, this.highBottom, COLOR_WHITE, 8),
-            new Segment(this.highTop, this.rightTop, COLOR_WHITE, 8),
-            new Segment(this.highBottom, this.rightBottom, COLOR_WHITE, 8),
+            segment(this.leftTop, this.leftBottom, COLOR_WHITE, 8),
+            segment(this.rightTop, this.rightBottom, COLOR_WHITE, 8),
+            segment(this.highTop, this.highBottom, COLOR_WHITE, 8),
+            segment(this.leftTop, this.highTop, COLOR_WHITE, 8),
+            segment(this.leftBottom, this.highBottom, COLOR_WHITE, 8),
+            segment(this.highTop, this.rightTop, COLOR_WHITE, 8),
+            segment(this.highBottom, this.rightBottom, COLOR_WHITE, 8),
 
             new Plane([this.leftTop, this.highTop, this.highBottom, this.leftBottom], '#ccc'),
         ];

@@ -66,31 +66,31 @@ class Hero extends Element {
         this.comboTracker = new ComboTracker(this);
 
         this.renderables = [new CompositeRenderable([
-            new Segment(this.floorReference, this.center, 'rgba(255,255,255,0.2)', 2),
+            segment(this.floorReference, this.center, 'rgba(255,255,255,0.2)', 2),
 
             // Wheels
-            new Sphere(this.wheelStartTop, 8, COLOR_WHITE),
-            new Sphere(this.wheelStartBottom, 8, COLOR_WHITE),
-            new Sphere(this.wheelEndTop, 8, COLOR_WHITE),
-            new Sphere(this.wheelEndBottom, 8, COLOR_WHITE),
+            sphere(this.wheelStartTop, 8, COLOR_WHITE),
+            sphere(this.wheelStartBottom, 8, COLOR_WHITE),
+            sphere(this.wheelEndTop, 8, COLOR_WHITE),
+            sphere(this.wheelEndBottom, 8, COLOR_WHITE),
 
             // Board
             new Plane([this.boardEndBottom, this.boardEndTop, this.boardStartTop, this.boardStartBottom], '#ccc'),
-            new Segment(this.boardEndBottom, this.boardEndTop, COLOR_WHITE, 4),
-            new Segment(this.boardStartBottom, this.boardStartTop, COLOR_WHITE, 4),
-            new Segment(this.boardStartBottom, this.boardEndBottom, COLOR_WHITE, 4),
-            new Segment(this.boardStartTop, this.boardEndTop, COLOR_WHITE, 4),
+            segment(this.boardEndBottom, this.boardEndTop, COLOR_WHITE, 4),
+            segment(this.boardStartBottom, this.boardStartTop, COLOR_WHITE, 4),
+            segment(this.boardStartBottom, this.boardEndBottom, COLOR_WHITE, 4),
+            segment(this.boardStartTop, this.boardEndTop, COLOR_WHITE, 4),
 
             // Character
-            new Segment(this.leftFoot, this.leftKnee, COLOR_WHITE, 16),
-            new Segment(this.rightFoot, this.rightKnee, COLOR_WHITE, 16),
-            new Segment(this.hips, this.leftKnee, COLOR_WHITE, 16),
-            new Segment(this.hips, this.rightKnee, COLOR_WHITE, 16),
-            new Segment(this.hips, this.shoulders, COLOR_WHITE, 16),
-            new Segment(this.shoulders, this.leftHand, COLOR_WHITE, 16),
-            new Segment(this.shoulders, this.rightHand, COLOR_WHITE, 16),
-            new Segment(this.shoulders, this.headCenter, COLOR_WHITE, 16),
-            new Sphere(this.headCenter, 20, COLOR_WHITE),
+            segment(this.leftFoot, this.leftKnee, COLOR_WHITE, 16),
+            segment(this.rightFoot, this.rightKnee, COLOR_WHITE, 16),
+            segment(this.hips, this.leftKnee, COLOR_WHITE, 16),
+            segment(this.hips, this.rightKnee, COLOR_WHITE, 16),
+            segment(this.hips, this.shoulders, COLOR_WHITE, 16),
+            segment(this.shoulders, this.leftHand, COLOR_WHITE, 16),
+            segment(this.shoulders, this.rightHand, COLOR_WHITE, 16),
+            segment(this.shoulders, this.headCenter, COLOR_WHITE, 16),
+            sphere(this.headCenter, 20, COLOR_WHITE),
         ], this.center)];
     }
 

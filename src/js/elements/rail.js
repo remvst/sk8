@@ -11,11 +11,11 @@ class Rail extends Element {
 
             // Link to next
             if (nextPoint) {
-                this.renderables.push(new Segment(current, nextPoint, COLOR_WHITE, 8));
+                this.renderables.push(segment(current, nextPoint, COLOR_WHITE, 8));
             }
 
             // Link to ground
-            this.renderables.push(new Segment(
+            this.renderables.push(segment(
                 current,
                 point(current.x, current.y, 0),
                 COLOR_WHITE, 8

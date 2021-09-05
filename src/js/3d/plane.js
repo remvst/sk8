@@ -8,7 +8,7 @@ class Plane extends Renderable {
         for (let i = 0 ; i < points.length ; i++) {
             const current = points[i];
             const next = points[(i + 1) % points.length];
-            this.segments.push(new Segment(current, next));
+            this.segments.push(segment(current, next));
         }
     }
 

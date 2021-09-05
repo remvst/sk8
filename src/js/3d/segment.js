@@ -34,7 +34,7 @@ class Segment extends Renderable {
     }
 
     clone() {
-        return new Segment(this.p1.clone(), this.p2.clone(), this.color, this.thickness);
+        return segment(this.p1.clone(), this.p2.clone(), this.color, this.thickness);
     }
 
     animateToGround(origin) {
@@ -54,3 +54,5 @@ class Segment extends Renderable {
         }
     }
 }
+
+segment = (...args) => new Segment(...args);

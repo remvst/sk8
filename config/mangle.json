@@ -101,6 +101,7 @@
         "release",
         "challenge",
         "backgroundColor",
-        "position"
+        "position",
+        "Element"
     ]
 }

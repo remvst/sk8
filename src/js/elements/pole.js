@@ -7,7 +7,7 @@ class Pole extends Element {
         this.topPoint = this.newPoint();
 
             // Link to ground
-        this.renderables = [new CompositeRenderable([new Segment(
+        this.renderables = [new CompositeRenderable([segment(
             this.base,
             this.topPoint,
             '#eee',
@@ -18,7 +18,7 @@ class Pole extends Element {
             PI,
             0,
             COLOR_WHITE,
-        ), new Sphere(
+        ), sphere(
             this.topPoint,
             100,
             '#ccc',

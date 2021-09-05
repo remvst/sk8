@@ -15,10 +15,10 @@ class Tape extends Element {
         this.tapeCenter = this.newPoint();
 
         this.renderables = [
-            new Segment(this.bottom, this.tapeCenter, 'rgba(255,255,255,0.2)', 2),
+            segment(this.bottom, this.tapeCenter, 'rgba(255,255,255,0.2)', 2),
             new Plane([this.leftTop, this.leftBottom, this.rightBottom, this.rightTop], '#000'),
-            new Sphere(this.sphereLeft, 12, COLOR_WHITE),
-            new Sphere(this.sphereRight, 12, COLOR_WHITE),
+            sphere(this.sphereLeft, 12, COLOR_WHITE),
+            sphere(this.sphereRight, 12, COLOR_WHITE),
         ];
     }
 

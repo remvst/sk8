@@ -4,4 +4,4 @@ let R, // canvas context
     CANVAS = nomangle(g),
     SHADOW_COLOR = 'rgba(20, 20, 20, 1)',
     MOBILE,
-    WHITE = '#fff';
+    COLOR_WHITE = '#fff';
