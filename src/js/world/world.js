@@ -72,7 +72,7 @@ class World {
             after.forEach(renderable => wrap(() => renderable.renderActual()));
         });
 
-        if (this.hero.input.userControlled && this.hero.grinding) {
+        if ((this.hero.input.userControlled || this.scene.demoWorld) && this.hero.grinding) {
             wrap(() => {
                 R.lineWidth = 20;
                 translate(this.hero.center.projectToActual().x - this.camera.x, this.hero.center.projectToActual().y - this.camera.y);

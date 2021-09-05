@@ -44,7 +44,7 @@ class GrindScene extends Scene {
     cycle(elapsed) {
         super.cycle(elapsed);
 
-        this.demoWorld.balance = sin(this.age * PI) * 0.5;
+        this.demoWorld.hero.balance = sin(this.age * PI) * 0.5;
     }
 
     isPerformingCompletingAction(hero) {
