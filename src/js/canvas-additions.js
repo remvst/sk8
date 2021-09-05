@@ -15,7 +15,7 @@ canvasProto.ss = function(x) {
 };
 
 canvasProto.whiteText = function(t, x, y, textScale) {
-    this.fatText('#fff', t, x, y, textScale)
+    this.fatText(COLOR_WHITE, t, x, y, textScale)
 }
 
 canvasProto.fatText = function(color, t, x, y, textScale) {

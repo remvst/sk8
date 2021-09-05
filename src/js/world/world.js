@@ -77,7 +77,7 @@ class World {
                 R.lineWidth = 20;
                 translate(this.hero.center.projectToActual().x - this.camera.x, this.hero.center.projectToActual().y - this.camera.y);
                 rotate(-PI / 2);
-                ss('#fff');
+                ss(COLOR_WHITE);
                 beginPath();
                 arc(0, 0, 200, -PI / 4, PI / 4);
                 stroke();

@@ -11,14 +11,14 @@ class Rail extends Element {
 
             // Link to next
             if (nextPoint) {
-                this.renderables.push(new Segment(current, nextPoint, '#fff', 8));
+                this.renderables.push(new Segment(current, nextPoint, COLOR_WHITE, 8));
             }
 
             // Link to ground
             this.renderables.push(new Segment(
                 current,
                 point(current.x, current.y, 0),
-                '#fff', 8
+                COLOR_WHITE, 8
             ));
         }
     }
@@ -37,7 +37,7 @@ class Rail extends Element {
         }
 
         this.renderables.forEach(renderable => {
-            renderable.color = collides ? '#0f0' : '#fff';
+            renderable.color = collides ? '#0f0' : COLOR_WHITE;
         });
     }
 

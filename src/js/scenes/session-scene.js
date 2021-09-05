@@ -18,7 +18,7 @@ class SessionScene extends ParkScene {
             this.world.hero.comboTracker.locked = true;
             this.world.hero.input = new EmptyInput();
 
-            G.transition('#fff', 1);
+            G.transition(COLOR_WHITE, 1);
 
             setTimeout(() => G.setMenu(new EndMenu(this.score)), 2000);
         }

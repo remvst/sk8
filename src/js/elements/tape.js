@@ -17,8 +17,8 @@ class Tape extends Element {
         this.renderables = [
             new Segment(this.bottom, this.tapeCenter, 'rgba(255,255,255,0.2)', 2),
             new Plane([this.leftTop, this.leftBottom, this.rightBottom, this.rightTop], '#000'),
-            new Sphere(this.sphereLeft, 12, '#fff'),
-            new Sphere(this.sphereRight, 12, '#fff'),
+            new Sphere(this.sphereLeft, 12, COLOR_WHITE),
+            new Sphere(this.sphereRight, 12, COLOR_WHITE),
         ];
     }
 
@@ -36,7 +36,7 @@ class Tape extends Element {
                 const distance = rnd(50, 100);
                 this.world.particle({
                     'size': [20, -10],
-                    'color': '#fff',
+                    'color': COLOR_WHITE,
                     'duration': rnd(0.4, 0.8),
                     'x': [this.x + rnd(-20, 20), cos(angle) * distance],
                     'y': [this.y + rnd(-20, 20), sin(angle) * distance],

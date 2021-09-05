@@ -1,5 +1,5 @@
 renderArrow = () => {
-    R.fillStyle = '#fff';
+    R.fillStyle = COLOR_WHITE;
     R.globalAlpha = 0.2;
     beginPath();
 

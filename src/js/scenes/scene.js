@@ -110,7 +110,7 @@ class Scene {
                 evaluate(CANVAS_WIDTH - 50 - CANVAS_WIDTH * DEMO_SCALE),
                 50,
             );
-            fs('#fff');
+            fs(COLOR_WHITE);
             fr(-2, -2, evaluate(CANVAS_WIDTH * DEMO_SCALE + 4), evaluate(CANVAS_HEIGHT * DEMO_SCALE + 4));
 
             scale(DEMO_SCALE, DEMO_SCALE);

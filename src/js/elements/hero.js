@@ -69,28 +69,28 @@ class Hero extends Element {
             new Segment(this.floorReference, this.center, 'rgba(255,255,255,0.2)', 2),
 
             // Wheels
-            new Sphere(this.wheelStartTop, 8, '#fff'),
-            new Sphere(this.wheelStartBottom, 8, '#fff'),
-            new Sphere(this.wheelEndTop, 8, '#fff'),
-            new Sphere(this.wheelEndBottom, 8, '#fff'),
+            new Sphere(this.wheelStartTop, 8, COLOR_WHITE),
+            new Sphere(this.wheelStartBottom, 8, COLOR_WHITE),
+            new Sphere(this.wheelEndTop, 8, COLOR_WHITE),
+            new Sphere(this.wheelEndBottom, 8, COLOR_WHITE),
 
             // Board
             new Plane([this.boardEndBottom, this.boardEndTop, this.boardStartTop, this.boardStartBottom], '#ccc'),
-            new Segment(this.boardEndBottom, this.boardEndTop, '#fff', 4),
-            new Segment(this.boardStartBottom, this.boardStartTop, '#fff', 4),
-            new Segment(this.boardStartBottom, this.boardEndBottom, '#fff', 4),
-            new Segment(this.boardStartTop, this.boardEndTop, '#fff', 4),
+            new Segment(this.boardEndBottom, this.boardEndTop, COLOR_WHITE, 4),
+            new Segment(this.boardStartBottom, this.boardStartTop, COLOR_WHITE, 4),
+            new Segment(this.boardStartBottom, this.boardEndBottom, COLOR_WHITE, 4),
+            new Segment(this.boardStartTop, this.boardEndTop, COLOR_WHITE, 4),
 
             // Character
-            new Segment(this.leftFoot, this.leftKnee, '#fff', 16),
-            new Segment(this.rightFoot, this.rightKnee, '#fff', 16),
-            new Segment(this.hips, this.leftKnee, '#fff', 16),
-            new Segment(this.hips, this.rightKnee, '#fff', 16),
-            new Segment(this.hips, this.shoulders, '#fff', 16),
-            new Segment(this.shoulders, this.leftHand, '#fff', 16),
-            new Segment(this.shoulders, this.rightHand, '#fff', 16),
-            new Segment(this.shoulders, this.headCenter, '#fff', 16),
-            new Sphere(this.headCenter, 20, '#fff'),
+            new Segment(this.leftFoot, this.leftKnee, COLOR_WHITE, 16),
+            new Segment(this.rightFoot, this.rightKnee, COLOR_WHITE, 16),
+            new Segment(this.hips, this.leftKnee, COLOR_WHITE, 16),
+            new Segment(this.hips, this.rightKnee, COLOR_WHITE, 16),
+            new Segment(this.hips, this.shoulders, COLOR_WHITE, 16),
+            new Segment(this.shoulders, this.leftHand, COLOR_WHITE, 16),
+            new Segment(this.shoulders, this.rightHand, COLOR_WHITE, 16),
+            new Segment(this.shoulders, this.headCenter, COLOR_WHITE, 16),
+            new Sphere(this.headCenter, 20, COLOR_WHITE),
         ], this.center)];
     }
 
@@ -230,7 +230,7 @@ class Hero extends Element {
                 const distance = rnd(50, 100);
                 this.world.particle({
                     'size': [20, -10],
-                    'color': '#fff',
+                    'color': COLOR_WHITE,
                     'duration': rnd(0.2, 0.4),
                     'x': [this.x + rnd(-20, 20), cos(angle) * distance],
                     'y': [this.y + rnd(-20, 20), sin(angle) * distance],

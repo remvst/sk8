@@ -52,7 +52,7 @@ class HUD {
         // Timer
         if (this.scene.timeLeft >= 0) {
             fatText(
-                this.scene.timeLeft > 15 ? '#fff' : '#f00',
+                this.scene.timeLeft > 15 ? COLOR_WHITE : '#f00',
                 formatTime(this.scene.timeLeft),
                 CANVAS_WIDTH / 2,
                 50,
@@ -70,7 +70,7 @@ class HUD {
             ));
             wrap(() => this.renderCombo(
                 hero.comboTracker.combo,
-                '#fff',
+                COLOR_WHITE,
                 0,
             ));
         }
@@ -92,14 +92,14 @@ class HUD {
             });
 
             wrap(() => {
-                fs('#fff');
+                fs(COLOR_WHITE);
 
                 beginPath();
                 arc(300, CANVAS_HEIGHT - 350, 100, 0, PI * 2);
                 fill();
 
                 R.lineWidth = 80;
-                ss('#fff');
+                ss(COLOR_WHITE);
                 beginPath();
                 moveTo(300, CANVAS_HEIGHT - 350);
                 lineTo(300, CANVAS_HEIGHT);

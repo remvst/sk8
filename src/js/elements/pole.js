@@ -17,7 +17,7 @@ class Pole extends Element {
             150,
             PI,
             0,
-            '#fff',
+            COLOR_WHITE,
         ), new Sphere(
             this.topPoint,
             100,
@@ -27,7 +27,7 @@ class Pole extends Element {
             150,
             0,
             PI,
-            '#fff',
+            COLOR_WHITE,
         )], this.base)];
     }
 

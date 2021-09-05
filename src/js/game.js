@@ -72,7 +72,7 @@ class Game {
         wrap(() => {
             if (!document.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled && !G.menu) return;
 
-            fs('#fff');
+            fs(COLOR_WHITE);
             ss('#000');
             R.lineWidth = 2;
 
@@ -100,7 +100,7 @@ class Game {
         fs('#000');
         fr(0, CANVAS_HEIGHT, CANVAS_WIDTH, MOBILE_CONTROLS_HEIGHT);
 
-        fs('#fff');
+        fs(COLOR_WHITE);
 
         wrap(() => {
             R.globalAlpha = 0.5 + 0.5 * (mobileDirection() < 0);
