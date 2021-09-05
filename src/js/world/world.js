@@ -37,7 +37,7 @@ class World {
     }
 
     render() {
-        this.elements.forEach(e => e.prerender());
+        this.elements.forEach(e => e.updateRenderables());
 
         wrap(() => {
             fs(this.backgroundColor);

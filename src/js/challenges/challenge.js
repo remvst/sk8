@@ -3,19 +3,19 @@ class Challenge {
         this.label = label;
     }
 
-    check(hero, lastCombo) {
-
-    }
+    // check(hero, lastCombo) {
+    //
+    // }
 
     checkCompleted(hero, lastCombo) {
         if (!this.wasCompleted() && this.check(hero, lastCombo)) {
-            localStorage[nomangle('ch') + this.label] = true;
+            localStorage[this.label] = true;
             return true;
         }
     }
 
     wasCompleted() {
-        return !!localStorage[nomangle('ch') + this.label];
+        return !!localStorage[this.label];
     }
 }
 
@@ -57,6 +57,7 @@ class ScoreChallenge extends Challenge {
         return hero.world.scene.score >= this.targetScore;
     }
 }
+
 class TapesChallenge extends Challenge {
     constructor() {
         super();
@@ -65,7 +66,7 @@ class TapesChallenge extends Challenge {
 
     check(hero) {
         for (const element of hero.world.elements) {
-            if (element instanceof Tape) return false;
+            if (element instanceof Tape) return;
         }
         return true;
     }

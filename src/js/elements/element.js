@@ -10,11 +10,7 @@ class Element {
         this.age += elapsed;
         this.previous.set(this.x, this.y, this.z);
     }
-
-    prerender() {
-        this.updateRenderables();
-    }
-
+    
     updateRenderables() {
 
     }
@@ -43,9 +39,5 @@ class Element {
             pt.x = x + currentDist * cos(rotation + currentAngle);
             pt.y = y + currentDist * sin(rotation + currentAngle);
         });
-    }
-
-    contains(position) {
-        return false;
     }
 }
