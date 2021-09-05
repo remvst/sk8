@@ -105,6 +105,7 @@
         "Element",
         "padding",
         "deltaX",
-        "deltaY"
+        "deltaY",
+        "enabled"
     ]
 }
