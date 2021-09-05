@@ -14,11 +14,11 @@ canvasProto.ss = function(x) {
     this.strokeStyle = x;
 };
 
-canvasProto.whiteText = function(t, x, y, textScale) {
-    this.fatText(COLOR_WHITE, t, x, y, textScale)
+canvasProto.whiteText = function(t, x, y, textScale, lineThickness) {
+    this.fatText(COLOR_WHITE, t, x, y, textScale, lineThickness)
 }
 
-canvasProto.fatText = function(color, t, x, y, textScale) {
+canvasProto.fatText = function(color, t, x, y, textScale, lineThickness = 4) {
     with (this) {
         wrap(() => {
             translate(x, y);
@@ -28,7 +28,7 @@ canvasProto.fatText = function(color, t, x, y, textScale) {
             fs('#000');
             fillText(t, 0, 10);
 
-            lineWidth = 4;
+            lineWidth = lineThickness;
             fs(color);
             ss('#000');
             fillText(t, 0, 0);
