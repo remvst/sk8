@@ -106,6 +106,8 @@
         "padding",
         "deltaX",
         "deltaY",
-        "enabled"
+        "enabled",
+        "spacing",
+        "identity"
     ]
 }

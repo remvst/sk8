@@ -28,16 +28,8 @@ class ParkScene extends Scene {
             return transformed;
         };
 
-        const transforms = [
-            x => point(x.x, -x.y, x.z),
-            x => point(x.y, x.x, x.z),
-            x => point(-x.y, x.x, x.z),
-        ];
-
-        const identity = x => x;
-
         [
-            identity,
+            x => x,
             x => point(x.y, x.x, x.z),
         ].forEach(transformation => {
             const pole = world.pole(point(-radius, -radius));
