@@ -79,15 +79,13 @@ class Rail extends Element {
     relativePosition(p1, p2, pos) { // TODO dupe
         const angle = angleBetween(p1, p2);
 
-        const pt = point(pos.x, pos.y, pos.z);
-        pt.x -= p1.x;
-        pt.y -= p1.y;
-        pt.z -= p1.z;
+        const x = pos.x - p1.x;
+        const y = pos.y - p1.y;
+        const z = pos.z - p1.z;
 
-        const rotated = point();
-        rotated.x = pt.x * cos(angle) + pt.y * sin(angle);
-        rotated.y = -pt.x * sin(angle) + pt.y * cos(angle);
-
-        return rotated;
+        return point(
+            x * cos(angle) + y * sin(angle),
+            -x * sin(angle) + y * cos(angle),
+        );
     }
 }
