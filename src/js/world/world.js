@@ -46,7 +46,7 @@ class World {
             translate(-this.camera.x, -this.camera.y);
 
             fs(groundTexture);
-            fr(this.camera.x, this.camera.y, CANVAS_WIDTH * 2, CANVAS_HEIGHT * 2);
+            fr(this.camera.x, this.camera.y, evaluate(CANVAS_WIDTH * 20), evaluate(CANVAS_HEIGHT * 2));
 
             const before = [];
             const after = [];
@@ -54,21 +54,19 @@ class World {
                 for (const renderable of element.renderables) {
                     wrap(() => renderable.renderShadow());
 
-                    if (this.hero && renderable === this.hero.renderables[0] || !renderable.visible) {
-                        continue;
-                    }
-
-                    if (!this.hero || !renderable.renderOnTopOfHero(this.hero)) {
-                        before.push(renderable);
-                    } else {
-                        after.push(renderable);
+                    if (renderable != this.hero.renderables[0] && renderable.visible) {
+                        if (!renderable.renderOnTopOfHero(this.hero)) {
+                            before.push(renderable);
+                        } else {
+                            after.push(renderable);
+                        }
                     }
                 }
             }
 
             before.forEach(renderable => wrap(() => renderable.renderActual()));
             this.particles.forEach(particle => wrap(() => particle.render()));
-            if (this.hero && !this.hero.bailed) wrap(() => this.hero.renderables[0].renderActual());
+            if (!this.hero.bailed) wrap(() => this.hero.renderables[0].renderActual());
             after.forEach(renderable => wrap(() => renderable.renderActual()));
         });
 

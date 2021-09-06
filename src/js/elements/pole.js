@@ -31,8 +31,8 @@ class Pole extends Element {
         )], this.base)];
     }
 
-    transformed(transform) {
-        const pt = transform(point(this.x, this.y));
+    transformed(transformation) {
+        const pt = transformation(point(this.x, this.y));
 
         const pole = new Pole();
         pole.x = pt.x;

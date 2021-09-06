@@ -30,7 +30,7 @@ const zzfxP = (...samples)=>  // play samples
         source = zzfxX.createBufferSource();
 
     // copy samples to buffer and play
-    samples.map((d,i)=> buffer.getChannelData(i).set(d));
+    samples.map((d,i)=> buffer.getChannelData(i).nomangle(set)(d));
     source.buffer = buffer;
     source.connect(zzfxX.destination);
     return source;

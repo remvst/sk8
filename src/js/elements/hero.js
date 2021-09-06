@@ -118,7 +118,7 @@ class Hero extends Element {
             if (this.grinding) point.z += rnd(0, 10) * this.speed / 600;
         });
 
-        const pushRatio = sin(this.pushAge * PI * 2 / PUSH_PERIOD);
+        const pushRatio = sin(this.pushAge * TWO_PI / PUSH_PERIOD);
         this.leftFoot.y += (pushRatio * 30) * this.pushingAnimationRatio;
         this.leftKnee.y += (pushRatio * 20 + 10) * this.pushingAnimationRatio;
         this.rotateAroundAxis(this.rightFoot.x, 0, -PI / 2 * this.positionSign * this.pushingAnimationRatio);

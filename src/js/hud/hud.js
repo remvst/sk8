@@ -95,7 +95,7 @@ class HUD {
                 fs(COLOR_WHITE);
 
                 beginPath();
-                arc(300, CANVAS_HEIGHT - 350, 100, 0, PI * 2);
+                arc(300, CANVAS_HEIGHT - 350, 100, 0, TWO_PI);
                 fill();
 
                 R.lineWidth = 80;

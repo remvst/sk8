@@ -27,9 +27,9 @@ class Kicker extends Element {
         ];
     }
 
-    transformed(transform) {
-        const pt = transform(point(this.x, this.y));
-        const ptForward = transform(point(this.x + cos(this.angle), this.y + sin(this.angle)));
+    transformed(transformation) {
+        const pt = transformation(point(this.x, this.y));
+        const ptForward = transformation(point(this.x + cos(this.angle), this.y + sin(this.angle)));
 
         const kicker = new Kicker();
         kicker.x = pt.x;

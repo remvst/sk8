@@ -108,6 +108,7 @@
         "deltaY",
         "enabled",
         "spacing",
-        "identity"
+        "identity",
+        "set"
     ]
 }

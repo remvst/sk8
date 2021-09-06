@@ -1,7 +1,7 @@
 class Scene {
     constructor() {
         this.hud = new HUD(this);
-        this.score = Number.MIN_SAFE_INTEGER;
+        this.score = -9e10;
         this.timeLeft = -1;
         this.completionAge = -1;
         this.completionActionCount = 0;
@@ -49,7 +49,6 @@ class Scene {
         return pick([
             nomangle('Nice!'),
             nomangle('Perfect!'),
-            nomangle('You\'re a natural!'),
             nomangle('Sick!'),
         ]);
     }

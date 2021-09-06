@@ -4,13 +4,13 @@ class Renderable {
         this.visible = true;
     }
 
-    clone() {
-
-    }
-
-    animateToGround() {
-
-    }
+    // clone() {
+    //
+    // }
+    //
+    // animateToGround() {
+    //
+    // }
 
     makePointsFall(points, origin) {
         const angle = rnd(-1, 1) * PI / 32 + atan2(points[0].y - origin.y, points[0].x - origin.x);
@@ -25,6 +25,6 @@ class Renderable {
     }
 
     renderOnTopOfHero(hero) {
-    
+
     }
 }

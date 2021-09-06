@@ -34,10 +34,6 @@ class Input {
 }
 
 class EmptyInput {
-    get userControlled() {
-        return false;
-    }
-
     squat() {
         return false;
     }

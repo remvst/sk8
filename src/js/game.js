@@ -69,6 +69,7 @@ class Game {
             wrap(() => this.menu.render());
         }
 
+        // Cursor
         wrap(() => {
             if (!DOCUMENT.pointerLockElement || this.scene.world.hero && this.scene.world.hero.input.userControlled && !G.menu) return;
 
