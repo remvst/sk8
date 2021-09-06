@@ -44,7 +44,7 @@ compiler.run((tasks) => {
         }
 
         if (uglify) {
-            sequence.push(tasks.uglifyES());
+            sequence.push(tasks.terser());
         }
 
         return tasks.sequence(sequence);
