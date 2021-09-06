@@ -5,8 +5,7 @@ class Rail extends Element {
 
         this.points = points;
 
-        for (let i = 0 ; i < points.length ; i++) {
-            const current = points[i];
+        points.forEach((current, i) => {
             const nextPoint = points[i+1];
 
             // Link to next
@@ -20,7 +19,7 @@ class Rail extends Element {
                 point(current.x, current.y, 0),
                 COLOR_WHITE, 8
             ));
-        }
+        });
     }
 
     transformed(transform) {
