@@ -533,8 +533,10 @@ class Hero extends Element {
                         this.grindingAngle += PI;
                     }
 
-                    MOVEMENT_TARGET_DIRECTION.x = 400 * cos(this.grindingAngle);
-                    MOVEMENT_TARGET_DIRECTION.y = 400 * sin(this.grindingAngle);
+                    if (this.input.userControlled) {
+                        MOVEMENT_TARGET_DIRECTION.x = 400 * cos(this.grindingAngle);
+                        MOVEMENT_TARGET_DIRECTION.y = 400 * sin(this.grindingAngle);
+                    }
 
                     this.x = grindCollision.positionOnRail.x;
                     this.y = grindCollision.positionOnRail.y;
