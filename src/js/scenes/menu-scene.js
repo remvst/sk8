@@ -36,7 +36,6 @@ class MenuScene extends Scene {
     }
 
     cycle(elapsed) {
-        // console.log(this.world.hero.x - evaluate(CANVAS_WIDTH / 2));
         if (this.world.hero.bailed || abs(this.world.hero.x) > evaluate(CANVAS_WIDTH / 2 + 100)) {
             this.setupActualWorld();
         }

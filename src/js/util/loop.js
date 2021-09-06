@@ -1,4 +1,4 @@
-loop = (func, nextFrameFunc) => {
+loopFunc = (func, nextFrameFunc) => {
     let lastFrame = performance.now();
     const iteration = () => {
         const n = performance.now();

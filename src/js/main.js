@@ -24,7 +24,7 @@ onload = () => {
 
     // Run the game at 200 FPS
     let didCycle = false;
-    loop(
+    loopFunc(
         (e, fps) => {
             G.cycle(e);
             didCycle = true;
@@ -37,7 +37,7 @@ onload = () => {
     );
 
     // Render at 60 FPS
-    loop(
+    loopFunc(
         (e, fps) => {
             // Don't render if nothing was updated
             if (didCycle) {

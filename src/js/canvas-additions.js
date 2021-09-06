@@ -19,20 +19,18 @@ canvasProto.whiteText = function(t, x, y, textScale, lineThickness) {
 }
 
 canvasProto.fatText = function(color, t, x, y, textScale, lineThickness = 4) {
-    with (this) {
-        wrap(() => {
-            translate(x, y);
-            scale(textScale, textScale);
+    this.wrap(() => {
+        this.translate(x, y);
+        this.scale(textScale, textScale);
 
-            font = nomangle('italic 72pt Impact');
-            fs('#000');
-            fillText(t, 0, 10);
+        this.font = nomangle('italic 72pt Impact');
+        this.fs('#000');
+        this.fillText(t, 0, 10);
 
-            lineWidth = lineThickness;
-            fs(color);
-            ss('#000');
-            fillText(t, 0, 0);
-            strokeText(t, 0, 0);
-        });
-    }
+        this.lineWidth = lineThickness;
+        this.fs(color);
+        this.ss('#000');
+        this.fillText(t, 0, 0);
+        this.strokeText(t, 0, 0);
+    });
 };
