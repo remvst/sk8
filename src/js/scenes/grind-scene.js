@@ -21,10 +21,12 @@ class GrindScene extends Scene {
     setupWorld(world) {
         super.setupWorld(world);
 
-        world.addElement(new Rail([
-            point(railStartX, 0, 100),
-            point(railFinalX, 0, 100),
-        ]));
+        for (let x = 0 ; x <= 6000 ; x += 2000) {
+            world.addElement(new Rail([
+                point(railStartX + x, 0, 100),
+                point(railFinalX + x, 0, 100),
+            ]));
+        }
     }
 
     proceed() {
