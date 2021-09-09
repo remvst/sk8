@@ -1,10 +1,10 @@
 class Menu {
 
-    constructor(menuTitle, buttons) {
+    constructor(menuTitle, menuButtons) {
         this.age = 0;
         this.menuTitle = menuTitle;
-        this.buttons = buttons;
-        this.buttons.forEach((button, i) => {
+        this.menuButtons = menuButtons;
+        this.menuButtons.forEach((button, i) => {
             button.y = 400 + i * evaluate(BUTTON_HEIGHT + BUTTON_SPACING);
         });
     }
@@ -24,7 +24,7 @@ class Menu {
 
         whiteText(this.menuTitle, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4, 2);
 
-        this.buttons.forEach(x => wrap(() => x.render()));
+        this.menuButtons.forEach(x => wrap(() => x.render()));
     }
 
 }

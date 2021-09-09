@@ -16,6 +16,6 @@ class MainMenu extends Menu {
             ],
         );
 
-        this.buttons[1].enabled = localStorage[nomangle('tut')];
+        this.menuButtons[1].enabled = localStorage[nomangle('tut')];
     }
 }

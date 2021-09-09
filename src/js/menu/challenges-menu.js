@@ -13,7 +13,7 @@ class ChallengesMenu extends Menu {
                 )
             ],
         );
-        this.buttons[0].y = 700;
+        this.menuButtons[0].y = 700;
     }
 
     render() {
