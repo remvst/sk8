@@ -13,7 +13,8 @@ class Segment extends Renderable {
         const p2 = this.p2[funcName]();
 
         const { camera } = G.scene.world;
-        if (!camera.contains(p1, this.thickness) && !camera.contains(p2, this.thickness)) {
+        const x = dist(this.p1, this.p2) + this.thickness;
+        if (!camera.contains(p1, x) && !camera.contains(p2, x)) {
             return;
         }
 
