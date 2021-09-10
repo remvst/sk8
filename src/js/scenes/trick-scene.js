@@ -5,8 +5,8 @@ class TrickScene extends Scene {
 
         this.demoDuration = 6;
 
-        this.hud.setPermanentMessage( [
-            nomangle('While jumping, press SPACE to perform a FLIPPITY'),
+        this.hud.setPermanentMessage([
+            nomangle('While jumping, press SPACE to perform a trick'),
         ]);
 
         this.nextScene = new RotationScene();
