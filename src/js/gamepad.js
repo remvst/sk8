@@ -2,7 +2,7 @@ gamepads = () => (navigator.getGamepads ? Array.from(navigator.getGamepads()) : 
 
 isGamepadButtonPressed = buttonIndex => {
     const pads = gamepads();
-    for (var i = 0; i < pads.length; i++) {
+    for (let i = 0; i < pads.length; i++) {
         try {
             if (pads[i].buttons[buttonIndex].pressed) {
                 return true;
@@ -13,7 +13,7 @@ isGamepadButtonPressed = buttonIndex => {
 
 gamepadAxisValue = (axisIndex) => {
     const pads = gamepads();
-    for (var i = 0; i < pads.length; i++) {
+    for (let i = 0; i < pads.length; i++) {
         try {
             const value = pads[i].axes[axisIndex];
             if (abs(value) < 0.1) return 0;
