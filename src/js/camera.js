@@ -5,16 +5,16 @@ class Camera {
     }
 
     get x() {
-        return this.center.projectToActual().x - evaluate(CANVAS_WIDTH / 2);
+        return ~~this.center.projectToActual().x - evaluate(CANVAS_WIDTH / 2);
     }
 
     get y() {
-        return this.center.projectToActual().y - evaluate(CANVAS_HEIGHT / 2);
+        return ~~this.center.projectToActual().y - evaluate(CANVAS_HEIGHT / 2);
     }
 
     cycle(elapsed) {
         if (this.followedTarget) {
-            this.center.set(~~this.followedTarget.x, ~~this.followedTarget.y, ~~this.followedTarget.z);
+            this.center.set(this.followedTarget.x, this.followedTarget.y, this.followedTarget.z);
         }
     }
 
