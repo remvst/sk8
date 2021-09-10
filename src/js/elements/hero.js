@@ -350,7 +350,7 @@ class Hero extends Element {
         // Trick progress
         this.performingTrick = !this.landed && this.input.trick() && !this.grinding && this.releasedPush;
 
-        const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.4);
+        const addedTrickProgress = min(ceil(this.trickProgress) - this.trickProgress, elapsed / 0.3);
         if (this.performingTrick) {
             addedTrickProgress = elapsed / 0.4;
         }
