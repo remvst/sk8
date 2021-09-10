@@ -6,13 +6,14 @@ class WelcomeScene extends Scene {
         this.hud.setPermanentMessage([
             nomangle('Welcome to STICK SKATER!'),
         ]);
+
+        this.nextScene = new PushScene();
     }
 
     setupActualWorld() {
         super.setupActualWorld();
 
         this.world.hero.input = new EmptyInput();
-        this.nextScene = new PushScene();
     }
 
     completionMessage() {
