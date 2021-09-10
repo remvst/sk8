@@ -59,10 +59,10 @@ onmouseup = () => MOUSE_IS_DOWN = false;
 
 onclick = () => {
     if (G.menu) {
-        G.menu.menuButtons.forEach(button => {
-            if (button.contains(MOUSE_POSITION)) {
+        G.menu.menuButtons.forEach(x => {
+            if (x.contains(MOUSE_POSITION)) {
                 clickSound();
-                button.onClick();
+                x.onClick();
             }
         });
     }

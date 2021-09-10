@@ -12,7 +12,7 @@ class EndMenu extends Menu {
                     () => tweet([
                         nomangle('I scored '),
                         numberWithCommas(score),
-                        nomangle('pts on STICK SKATER'),
+                        nomangle('pts on STICK SKATER by @remvst'),
                     ].join('')),
                 ),
                 challengesButton(),

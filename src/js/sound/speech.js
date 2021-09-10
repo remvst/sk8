@@ -5,7 +5,7 @@ say = (message) => {
 
     const idealVoice = (
         voices.filter(x => x.lang == nomangle('en-US'))
-            .concat(voices.filter((x) => x.lang.split('-')[0] == nomangle('en')))
+            .concat(voices.filter((x) => x.lang.indexOf(nomangle('en') == 0)))
     )[0];
 
     const x = new SpeechSynthesisUtterance(message);

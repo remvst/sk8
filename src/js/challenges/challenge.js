@@ -3,10 +3,6 @@ class Challenge {
         this.label = label;
     }
 
-    // check(hero, lastCombo) {
-    //
-    // }
-
     checkCompleted(hero, lastCombo) {
         if (!this.wasCompleted() && this.check(hero, lastCombo)) {
             localStorage[this.label] = true;

@@ -1,10 +1,10 @@
 gamepads = () => (navigator.getGamepads ? Array.from(navigator.getGamepads()) : []).filter(x => !!x);
 
-isGamepadButtonPressed = buttonIndex => {
+isGamepadButtonPressed = x => {
     const pads = gamepads();
     for (let i = 0; i < pads.length; i++) {
         try {
-            if (pads[i].buttons[buttonIndex].pressed) {
+            if (pads[i].buttons[x].pressed) {
                 return true;
             }
         } catch (e) {}
