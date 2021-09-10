@@ -9,12 +9,10 @@ class MenuScene extends Scene {
         super.setupActualWorld();
 
         const { hero } = this.world;
-        hero.input = new EmptyInput();;
+        hero.input = new EmptyInput();
 
-        const signX = pick([-1, 1]);
-        const signY = pick([-1, 1]);
-        hero.x = evaluate(-(CANVAS_WIDTH / 2 + 100)) * signX;
-        hero.y = evaluate(CANVAS_HEIGHT / 2) * rnd(-0.8, 0.8) * signY;
+        hero.x = evaluate(-(CANVAS_WIDTH / 2 + 100)) * pick([-1, 1]);
+        hero.y = evaluate(CANVAS_HEIGHT / 2) * rnd(-0.8, 0.8) * pick([-1, 1]);
 
         const squatX = rnd(-0.3, 0.3) * evaluate(CANVAS_WIDTH / 2);
 
@@ -25,10 +23,9 @@ class MenuScene extends Scene {
         hero.input.squat = () => between(squatX, hero.x, squatX + 200);
 
         if (random() < 0.5) hero.input.trick = () => hero.velocityZ > 0;
-        if (random() < 0.5) {
-            const targetAngle = hero.angle + pick([-1, 1, 2, -2]) * PI;
-            hero.input.rotation = () => sign(targetAngle - hero.angle);
-        }
+
+        const targetAngle = hero.angle + pick([0, -1, 1, 2, -2]) * PI;
+        hero.input.rotation = () => sign(targetAngle - hero.angle);
     }
 
     setupDemoWorld() {
