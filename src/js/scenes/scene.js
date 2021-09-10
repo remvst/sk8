@@ -8,6 +8,7 @@ class Scene {
         this.requiredCompletionActionCount = 1;
 
         this.previousRoundedTimeLeft = 0;
+        this.demoDuration = 5;
     }
 
     isPerformingCompletingAction(hero) {
@@ -22,7 +23,6 @@ class Scene {
 
     restart() {
         this.age = 0;
-        this.demoDuration = 5;
         this.setupActualWorld();
         this.setupDemoWorld();
     }
