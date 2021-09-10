@@ -2,7 +2,7 @@ onload = () => {
     CANVAS.width = CANVAS_WIDTH;
     CANVAS.height = CANVAS_HEIGHT;
 
-    MOBILE = navigator.userAgent.match(nomangle(/andro|ipho|ipa|ipo/i));
+    MOBILE = !!navigator.userAgent.match(nomangle(/andro|ipho|ipa|ipo/i));
     if (MOBILE) {
         CANVAS.height += MOBILE_CONTROLS_HEIGHT;
     }
